@@ -163,7 +163,7 @@
     .tag-green { background: var(--accent-green-bg); color: var(--accent-green); }
     .tag-purple { background: var(--ai-purple-light); color: var(--ai-purple); }
 
-    /* Плиточная сетка карточек отделов и подблоков */
+    /* Плиточная сетка карточек */
     .dashboard-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -182,16 +182,19 @@
     .dash-card-desc { font-size: 0.82rem; color: var(--text-muted); line-height: 1.4; margin-bottom: 12px; flex: 1; }
     .dash-card-footer { font-size: 0.78rem; font-weight: 600; color: var(--brand-blue); display: flex; justify-content: space-between; align-items: center; }
     
+    /* Тулбар на карточке */
     .dash-card-actions {
-      position: absolute; top: 8px; right: 8px; display: flex; gap: 4px;
-      background: rgba(255, 255, 255, 0.92); padding: 3px 6px; border-radius: 6px; box-shadow: 0 2px 6px rgba(0,0,0,0.1); z-index: 5;
+      position: absolute; top: 8px; right: 8px; display: flex; gap: 3px;
+      background: rgba(255, 255, 255, 0.94); padding: 3px 5px; border-radius: 6px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.12); z-index: 10;
     }
     .card-tool-btn {
       background: none; border: none; font-size: 0.8rem; cursor: pointer; padding: 2px 4px; border-radius: 4px;
+      color: var(--brand-deep); transition: background 0.15s;
     }
     .card-tool-btn:hover { background: #E2E8F0; }
 
-    /* Блоки статьи и медиа */
+    /* Блоки статьи */
     .page-block-wrapper { position: relative; margin-bottom: 22px; border-radius: 8px; }
     .page-block-wrapper:hover { outline: 1.5px dashed var(--brand-blue); outline-offset: 4px; }
     .page-block-tools {
@@ -271,7 +274,7 @@
 </head>
 <body>
 
-  <!-- Авторизация -->
+  <!-- Экран входа -->
   <div class="auth-overlay" id="authScreen">
     <div class="auth-box">
       <img id="authLogoImg" class="auth-logo-img" src="" alt="Логотип Надежда">
@@ -280,7 +283,7 @@
       
       <form class="auth-form" onsubmit="handleLogin(event)">
         <label>Логин или Email</label>
-        <input type="text" id="loginUsername" placeholder="korotets или admin" required autocomplete="username">
+        <input type="text" id="loginUsername" placeholder="admin или korotets" required autocomplete="username">
         
         <label>Пароль</label>
         <div class="pass-input-row">
@@ -290,10 +293,6 @@
 
         <button type="submit" id="loginSubmitBtn" class="btn btn-primary" style="width: 100%; padding: 12px; justify-content: center; font-size: 0.95rem;">Войти в систему</button>
       </form>
-
-      <div style="font-size:0.75rem; color:var(--text-muted); margin-top:16px;">
-        🔒 Облачная синхронизация Google Firebase активна.
-      </div>
     </div>
   </div>
 
@@ -311,7 +310,6 @@
 
       <button class="btn btn-outline" id="adminTrainingBtn" style="display:none;" onclick="openManageTrainingModal()">🎓 Назначение обучения</button>
       <button class="btn btn-outline" id="usersManageBtn" style="display:none;" onclick="openUsersModal()">👥 Сотрудники и права</button>
-      <button class="btn btn-primary" id="newDocBtn" style="display:none;" onclick="openCreateModuleModal()">+ Создать блок</button>
 
       <a id="headerYandexBtn" href="https://disk.yandex.ru/d/5HlCdgS2idp2Gg" target="_blank" class="btn btn-yandex" title="Открыть диск клиники">
         📁 Яндекс Диск
@@ -423,12 +421,12 @@
     </div>
   </div>
 
-  <!-- Управление обучением (Курсы, ввод в должность, тесты) -->
+  <!-- Управление обучением -->
   <div class="modal-overlay" id="trainingModal">
     <div class="modal-window" style="max-width: 820px;">
       <div class="modal-title">Адаптация, ввод в должность и обучение</div>
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
-        <p style="font-size:0.85rem; color:var(--text-muted);">Назначайте курсы и тестирование персонально на сотрудников:</p>
+        <p style="font-size:0.85rem; color:var(--text-muted);">Назначайте курсы персонально на сотрудников:</p>
         <button class="btn btn-primary" onclick="openCreateCourseModal()">+ Создать курс обучения</button>
       </div>
       <table class="styled-table" style="margin-top:0;">
@@ -594,7 +592,7 @@
       }
     ];
 
-    /* ЭТАП 4: ОБУЧАЮЩИЕ КУРСЫ (АДАПТАЦИЯ И ВВОД В ДОЛЖНОСТЬ) */
+    /* ЭТАП 4: ОБУЧАЮЩИЕ КУРСЫ */
     const DEFAULT_COURSES = [
       {
         id: "course_assistant_intro",
@@ -602,21 +600,21 @@
         desc: "Адаптационный курс: асептика, забор крови, фиксация и экстренные алгоритмы клиники.",
         linkedTopicId: "top_surg_prep",
         passScore: 85,
-        assignedUsers: ["u_korotets"] // кому открыт доступ
+        assignedUsers: ["u_korotets"]
       }
     ];
 
-    let departments = JSON.parse(localStorage.getItem('nadezhda_depts_v17')) || DEFAULT_DEPARTMENTS;
-    let topicsList = JSON.parse(localStorage.getItem('nadezhda_topics_v17')) || DEFAULT_TOPICS;
-    let coursesList = JSON.parse(localStorage.getItem('nadezhda_courses_v17')) || DEFAULT_COURSES;
-    let usersList = JSON.parse(localStorage.getItem('nadezhda_users_v17')) || DEFAULT_USERS;
+    let departments = JSON.parse(localStorage.getItem('nadezhda_depts_v18')) || DEFAULT_DEPARTMENTS;
+    let topicsList = JSON.parse(localStorage.getItem('nadezhda_topics_v18')) || DEFAULT_TOPICS;
+    let coursesList = JSON.parse(localStorage.getItem('nadezhda_courses_v18')) || DEFAULT_COURSES;
+    let usersList = JSON.parse(localStorage.getItem('nadezhda_users_v18')) || DEFAULT_USERS;
 
     let currentUser = JSON.parse(sessionStorage.getItem('nadezhda_active_user')) || null;
     let currentNav = { type: 'home', deptId: null, topicId: null };
 
     /* ОБЛАЧНАЯ СИНХРОНИЗАЦИЯ */
     function syncToCloud(key, data) {
-      localStorage.setItem('nadezhda_' + key + '_v17', JSON.stringify(data));
+      localStorage.setItem('nadezhda_' + key + '_v18', JSON.stringify(data));
       if (firebaseDb && isCloudOnline) {
         firebaseDb.ref(key).set(data).catch(e => console.error("Firebase write error:", e));
       }
@@ -635,7 +633,6 @@
       firebaseDb.ref('users').on('value', s => { if (s.val()) { usersList = s.val(); } });
     }
 
-    /* ИНИЦИАЛИЗАЦИЯ */
     function initApp() {
       document.getElementById('authLogoImg').src = DEFAULT_LOGO_DATA_URL;
       document.getElementById('headerLogoImg').src = DEFAULT_LOGO_DATA_URL;
@@ -713,10 +710,8 @@
       const canManage = currentUser.role === 'admin' || currentUser.role === 'head';
       document.getElementById('usersManageBtn').style.display = canManage ? 'inline-flex' : 'none';
       document.getElementById('adminTrainingBtn').style.display = canManage ? 'inline-flex' : 'none';
-      document.getElementById('newDocBtn').style.display = canManage ? 'inline-flex' : 'none';
     }
 
-    /* САЙДБАР */
     function renderSidebar() {
       const nav = document.getElementById('navContainer');
       nav.innerHTML = '';
@@ -748,7 +743,7 @@
       nav.appendChild(section);
     }
 
-    /* НАВИГАЦИЯ МЕЖДУ ЭТАПАМИ */
+    /* НАВИГАЦИЯ */
     function openDoc(type) {
       currentNav = { type: 'home', deptId: null, topicId: null };
       renderCurrentView();
@@ -775,6 +770,104 @@
       renderSidebar();
     }
 
+    /* ПЕРЕМЕЩЕНИЕ И КОПИРОВАНИЕ НАПРАВЛЕНИЙ (ЭТАП 1) */
+    function moveDept(index, direction, e) {
+      if (e) e.stopPropagation();
+      const newIndex = index + direction;
+      if (newIndex < 0 || newIndex >= departments.length) return;
+      const temp = departments[index];
+      departments[index] = departments[newIndex];
+      departments[newIndex] = temp;
+      syncToCloud('depts', departments);
+      renderCurrentView();
+      renderSidebar();
+    }
+
+    function duplicateDept(deptId, e) {
+      if (e) e.stopPropagation();
+      const original = departments.find(d => d.id === deptId);
+      if (!original) return;
+      const newId = 'dept_' + Date.now();
+      const copy = { ...original, id: newId, title: original.title + ' (Копия)' };
+      departments.push(copy);
+
+      // Копируем также все привязанные темы
+      const relatedTopics = topicsList.filter(t => t.deptId === deptId);
+      relatedTopics.forEach(t => {
+        const newTopicId = 'top_' + Math.random().toString(36).substring(2, 9);
+        topicsList.push({
+          ...t,
+          id: newTopicId,
+          deptId: newId,
+          blocks: JSON.parse(JSON.stringify(t.blocks || []))
+        });
+      });
+
+      syncToCloud('depts', departments);
+      syncToCloud('topics', topicsList);
+      renderCurrentView();
+      renderSidebar();
+    }
+
+    /* ПЕРЕМЕЩЕНИЕ И КОПИРОВАНИЕ ТЕМ/ПОДБЛОКОВ (ЭТАП 2) */
+    function moveTopic(index, direction, e) {
+      if (e) e.stopPropagation();
+      const currentDeptTopics = topicsList.filter(t => t.deptId === currentNav.deptId);
+      const newIndex = index + direction;
+      if (newIndex < 0 || newIndex >= currentDeptTopics.length) return;
+      
+      const itemA = currentDeptTopics[index];
+      const itemB = currentDeptTopics[newIndex];
+      
+      const realIdxA = topicsList.indexOf(itemA);
+      const realIdxB = topicsList.indexOf(itemB);
+
+      topicsList[realIdxA] = itemB;
+      topicsList[realIdxB] = itemA;
+
+      syncToCloud('topics', topicsList);
+      renderCurrentView();
+    }
+
+    function duplicateTopic(topicId, e) {
+      if (e) e.stopPropagation();
+      const original = topicsList.find(t => t.id === topicId);
+      if (!original) return;
+      const newTopicId = 'top_' + Date.now();
+      const copy = {
+        ...original,
+        id: newTopicId,
+        title: original.title + ' (Копия)',
+        blocks: JSON.parse(JSON.stringify(original.blocks || []))
+      };
+      topicsList.push(copy);
+      syncToCloud('topics', topicsList);
+      renderCurrentView();
+    }
+
+    /* ПЕРЕМЕЩЕНИЕ И КОПИРОВАНИЕ ПУНКТОВ ВНУТРИ ТЕМЫ (ЭТАП 3) */
+    function moveArticleBlock(index, direction) {
+      const topic = topicsList.find(t => t.id === currentNav.topicId);
+      if (!topic || !topic.blocks) return;
+      const newIndex = index + direction;
+      if (newIndex < 0 || newIndex >= topic.blocks.length) return;
+      const temp = topic.blocks[index];
+      topic.blocks[index] = topic.blocks[newIndex];
+      topic.blocks[newIndex] = temp;
+      syncToCloud('topics', topicsList);
+      renderCurrentView();
+    }
+
+    function duplicateArticleBlock(index) {
+      const topic = topicsList.find(t => t.id === currentNav.topicId);
+      if (!topic || !topic.blocks[index]) return;
+      const copy = JSON.parse(JSON.stringify(topic.blocks[index]));
+      copy.title = (copy.title || '') + ' (Копия)';
+      topic.blocks.splice(index + 1, 0, copy);
+      syncToCloud('topics', topicsList);
+      renderCurrentView();
+    }
+
     /* РЕНДЕР ТЕКУЩЕГО ЭКРАНА */
     function renderCurrentView() {
       const area = document.getElementById('documentArea');
@@ -782,12 +875,15 @@
 
       // 1. ЭТАП 1: ГЛАВНЫЕ НАПРАВЛЕНИЯ КЛИНИКИ
       if (currentNav.type === 'home') {
-        const cardsHtml = departments.map(d => {
+        const cardsHtml = departments.map((d, idx) => {
           const subCount = topicsList.filter(t => t.deptId === d.id).length;
           const editTools = canEdit ? `
             <div class="dash-card-actions">
-              <button class="card-tool-btn" onclick="event.stopPropagation(); openEditDeptModal('${d.id}')">✏️</button>
-              <button class="card-tool-btn" style="color:var(--accent-red);" onclick="event.stopPropagation(); deleteDept('${d.id}')">🗑️</button>
+              <button class="card-tool-btn" title="Сдвинуть влево" onclick="moveDept(${idx}, -1, event)">◀</button>
+              <button class="card-tool-btn" title="Сдвинуть вправо" onclick="moveDept(${idx}, 1, event)">▶</button>
+              <button class="card-tool-btn" title="Копировать блок" onclick="duplicateDept('${d.id}', event)">📋</button>
+              <button class="card-tool-btn" title="Редактировать" onclick="openEditDeptModal('${d.id}', event)">✏️</button>
+              <button class="card-tool-btn" title="Удалить" style="color:var(--accent-red);" onclick="deleteDept('${d.id}', event)">🗑️</button>
             </div>
           ` : '';
 
@@ -827,11 +923,14 @@
         if (!dept) return openDoc('home');
 
         const subTopics = topicsList.filter(t => t.deptId === dept.id);
-        const topicsGridHtml = subTopics.map(t => {
+        const topicsGridHtml = subTopics.map((t, idx) => {
           const editTools = canEdit ? `
             <div class="dash-card-actions">
-              <button class="card-tool-btn" onclick="event.stopPropagation(); openEditTopicModal('${t.id}')">✏️</button>
-              <button class="card-tool-btn" style="color:var(--accent-red);" onclick="event.stopPropagation(); deleteTopic('${t.id}')">🗑️</button>
+              <button class="card-tool-btn" title="Сдвинуть влево" onclick="moveTopic(${idx}, -1, event)">◀</button>
+              <button class="card-tool-btn" title="Сдвинуть вправо" onclick="moveTopic(${idx}, 1, event)">▶</button>
+              <button class="card-tool-btn" title="Копировать тему" onclick="duplicateTopic('${t.id}', event)">📋</button>
+              <button class="card-tool-btn" title="Редактировать" onclick="openEditTopicModal('${t.id}', event)">✏️</button>
+              <button class="card-tool-btn" title="Удалить" style="color:var(--accent-red);" onclick="deleteTopic('${t.id}', event)">🗑️</button>
             </div>
           ` : '';
 
@@ -879,8 +978,11 @@
         let blocksHtml = (topic.blocks || []).map((b, idx) => {
           const editBlockTools = canEdit ? `
             <div class="page-block-tools">
-              <button class="card-tool-btn" onclick="openEditArticleBlockModal(${idx})">✏️ Изменить</button>
-              <button class="card-tool-btn" style="color:var(--accent-red);" onclick="deleteArticleBlock(${idx})">🗑️ Удалить</button>
+              <button class="card-tool-btn" title="Вверх" onclick="moveArticleBlock(${idx}, -1)">▲</button>
+              <button class="card-tool-btn" title="Вниз" onclick="moveArticleBlock(${idx}, 1)">▼</button>
+              <button class="card-tool-btn" title="Копировать пункт" onclick="duplicateArticleBlock(${idx})">📋</button>
+              <button class="card-tool-btn" title="Изменить" onclick="openEditArticleBlockModal(${idx})">✏️</button>
+              <button class="card-tool-btn" title="Удалить" style="color:var(--accent-red);" onclick="deleteArticleBlock(${idx})">🗑️</button>
             </div>
           ` : '';
 
@@ -957,7 +1059,7 @@
         return;
       }
 
-      // 4. ЭТАП 4: МОДУЛЬ «МОЕ ОБУЧЕНИЕ И АДАПТАЦИЯ» ДЛЯ СОТРУДНИКА
+      // 4. ЭТАП 4: ОБУЧЕНИЕ
       if (currentNav.type === 'my_training') {
         const myCourses = coursesList.filter(c => (c.assignedUsers || []).includes(currentUser.id));
         let coursesHtml = myCourses.map(c => {
@@ -994,7 +1096,7 @@
       }
     }
 
-    /* УПРАВЛЕНИЕ КАРТОЧКАМИ НАПРАВЛЕНИЙ (ЭТАП 1) */
+    /* МОДАЛЬНЫЕ ОКНА НАПРАВЛЕНИЙ */
     function openCreateDeptModal() {
       document.getElementById('modalTargetType').value = 'dept';
       document.getElementById('modalItemId').value = '';
@@ -1006,7 +1108,8 @@
       document.getElementById('moduleModal').classList.add('active');
     }
 
-    function openEditDeptModal(deptId) {
+    function openEditDeptModal(deptId, e) {
+      if (e) e.stopPropagation();
       const d = departments.find(x => x.id === deptId);
       if (!d) return;
       document.getElementById('modalTargetType').value = 'dept';
@@ -1019,7 +1122,8 @@
       document.getElementById('moduleModal').classList.add('active');
     }
 
-    function deleteDept(deptId) {
+    function deleteDept(deptId, e) {
+      if (e) e.stopPropagation();
       if (confirm('Удалить направление со всеми вложенными темами?')) {
         departments = departments.filter(d => d.id !== deptId);
         topicsList = topicsList.filter(t => t.deptId !== deptId);
@@ -1029,7 +1133,7 @@
       }
     }
 
-    /* УПРАВЛЕНИЕ ПОДБЛОКАМИ И ТЕМАМИ (ЭТАП 2) */
+    /* МОДАЛЬНЫЕ ОКНА ТЕМ */
     function openCreateTopicModal(presetDeptId) {
       document.getElementById('modalTargetType').value = 'topic';
       document.getElementById('modalItemId').value = '';
@@ -1045,7 +1149,8 @@
       document.getElementById('moduleModal').classList.add('active');
     }
 
-    function openEditTopicModal(topicId) {
+    function openEditTopicModal(topicId, e) {
+      if (e) e.stopPropagation();
       const t = topicsList.find(x => x.id === topicId);
       if (!t) return;
       document.getElementById('modalTargetType').value = 'topic';
@@ -1062,7 +1167,8 @@
       document.getElementById('moduleModal').classList.add('active');
     }
 
-    function deleteTopic(topicId) {
+    function deleteTopic(topicId, e) {
+      if (e) e.stopPropagation();
       if (confirm('Удалить эту тему?')) {
         const t = topicsList.find(x => x.id === topicId);
         const deptId = t ? t.deptId : 'home';
@@ -1117,17 +1223,11 @@
       }
     }
 
-    /* УПРАВЛЕНИЕ МУЛЬТИМЕДИА И СТАТЬЯМИ (ЭТАП 3) */
+    /* МОДАЛЬНЫЕ ОКНА ПУНКТОВ СТАТЬИ */
     function toggleArticleBlockFields() {
       const type = document.getElementById('articleBlockTypeSelect').value;
-      const grpText = document.getElementById('grpBlockText');
       const grpUrl = document.getElementById('grpBlockUrl');
-
-      if (type === 'image' || type === 'video' || type === 'file') {
-        grpUrl.style.display = 'block';
-      } else {
-        grpUrl.style.display = 'none';
-      }
+      grpUrl.style.display = (type === 'image' || type === 'video' || type === 'file') ? 'block' : 'none';
     }
 
     function openCreateArticleBlockModal() {
@@ -1198,7 +1298,7 @@
       }
     }
 
-    /* УПРАВЛЕНИЕ ОБУЧЕНИЕМ И ДОСТУПАМИ (ЭТАП 4) */
+    /* ОБУЧЕНИЕ */
     function openManageTrainingModal() {
       renderTrainingTable();
       document.getElementById('trainingModal').classList.add('active');
@@ -1246,7 +1346,6 @@
       syncToCloud('courses', coursesList);
       document.getElementById('createCourseModal').classList.remove('active');
       renderTrainingTable();
-      alert('Курс обучения успешно создан!');
     }
 
     function openAssignCourseModal(courseId) {
@@ -1294,7 +1393,7 @@
 
     function startCourseExam(courseId) {
       const c = coursesList.find(x => x.id === courseId);
-      alert(`Итоговое тестирование по курсу «${c.title}».\nПроходной балл: ${c.passScore}%.\nДля успешной сдачи повторите материал в регламентах.`);
+      alert(`Итоговое тестирование по курсу «${c.title}».\nПроходной балл: ${c.passScore}%.\nМатериалы доступны во вложенной теме.`);
     }
 
     /* ПОЛЬЗОВАТЕЛИ */
