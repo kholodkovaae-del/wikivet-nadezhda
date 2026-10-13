@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>База знаний | Ветклиника «Надежда»</title>
+  <title>База знаний и корпоративное обучение | Ветклиника «Надежда»</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:ital@1&display=swap" rel="stylesheet">
@@ -46,46 +46,23 @@
 
     /* Авторизация */
     .auth-overlay {
-      position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(11, 37, 62, 0.88);
-      backdrop-filter: blur(6px);
-      z-index: 2500;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 16px;
+      position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(11, 37, 62, 0.88); backdrop-filter: blur(6px);
+      z-index: 3000; display: flex; align-items: center; justify-content: center; padding: 16px;
     }
     .auth-box {
-      background: #FFFFFF;
-      width: 100%;
-      max-width: 440px;
-      padding: 32px 24px;
-      border-radius: 14px;
-      box-shadow: 0 15px 35px rgba(11, 53, 88, 0.25);
-      border-top: 5px solid var(--brand-blue);
-      text-align: center;
+      background: #FFFFFF; width: 100%; max-width: 440px; padding: 32px 24px;
+      border-radius: 14px; box-shadow: 0 15px 35px rgba(11, 53, 88, 0.25);
+      border-top: 5px solid var(--brand-blue); text-align: center;
     }
-    .auth-logo-img {
-      max-height: 64px;
-      max-width: 220px;
-      margin: 0 auto 14px;
-      object-fit: contain;
-      display: block;
-    }
+    .auth-logo-img { max-height: 64px; max-width: 220px; margin: 0 auto 14px; object-fit: contain; display: block; }
     .auth-box h2 { font-size: 1.35rem; color: var(--brand-deep); margin-bottom: 4px; font-weight: 800; }
     .auth-box p { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 22px; text-transform: uppercase; letter-spacing: 0.5px; }
     .auth-form { text-align: left; }
     .auth-form label { display: block; font-size: 0.78rem; font-weight: 700; color: var(--brand-deep); margin-bottom: 6px; text-transform: uppercase; }
     .auth-form input {
-      width: 100%;
-      padding: 11px 14px;
-      border: 1.5px solid var(--brand-border);
-      border-radius: 8px;
-      font-size: 0.95rem;
-      outline: none;
-      margin-bottom: 14px;
-      font-family: inherit;
+      width: 100%; padding: 11px 14px; border: 1.5px solid var(--brand-border);
+      border-radius: 8px; font-size: 0.95rem; outline: none; margin-bottom: 14px; font-family: inherit;
     }
     .auth-form input:focus { border-color: var(--brand-blue); box-shadow: 0 0 0 3px rgba(0, 136, 212, 0.15); }
     
@@ -95,67 +72,21 @@
       position: absolute; right: 10px; top: 50%; transform: translateY(-50%);
       background: none; border: none; cursor: pointer; font-size: 1.1rem; opacity: 0.6;
     }
-    .pass-toggle-btn:hover { opacity: 1; }
-
-    .auth-links-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 18px;
-      font-size: 0.82rem;
-    }
-    .auth-link { color: var(--brand-blue); text-decoration: none; cursor: pointer; font-weight: 600; }
-    .auth-link:hover { text-decoration: underline; }
-    .auth-hint { font-size: 0.75rem; color: var(--text-muted); margin-top: 16px; line-height: 1.4; text-align: center; }
 
     /* Шапка сайта */
     .header {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      height: 72px;
-      background: #FFFFFF;
-      border-bottom: 3px solid var(--brand-blue);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 18px;
-      z-index: 1000;
-      box-shadow: 0 2px 8px rgba(11, 53, 88, 0.05);
+      position: fixed; top: 0; left: 0; right: 0; height: 72px;
+      background: #FFFFFF; border-bottom: 3px solid var(--brand-blue);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 18px; z-index: 1000; box-shadow: 0 2px 8px rgba(11, 53, 88, 0.05);
     }
-    .header-left {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
+    .header-left { display: flex; align-items: center; gap: 12px; }
     .btn-mobile-menu {
-      display: none;
-      background: none;
-      border: 1px solid var(--brand-border);
-      border-radius: 6px;
-      font-size: 1.3rem;
-      padding: 4px 9px;
-      cursor: pointer;
-      color: var(--brand-deep);
+      display: none; background: none; border: 1px solid var(--brand-border);
+      border-radius: 6px; font-size: 1.3rem; padding: 4px 9px; cursor: pointer; color: var(--brand-deep);
     }
     .header-logo { display: flex; align-items: center; cursor: pointer; }
     .header-logo-img { height: 48px; max-width: 210px; object-fit: contain; display: block; }
-
-    .header-search-container { display: flex; align-items: center; gap: 6px; position: relative; }
-    .header-search { width: 280px; position: relative; }
-    .header-search input {
-      width: 100%; padding: 8px 12px 8px 36px;
-      border: 1.5px solid var(--brand-border); border-radius: 8px;
-      font-size: 0.85rem; background: #FAFCFE; color: var(--text-main);
-      outline: none; transition: all 0.2s;
-    }
-    .header-search input:focus { border-color: var(--brand-blue); background: #FFFFFF; }
-    .header-search::before { content: "✨"; position: absolute; left: 10px; top: 50%; transform: translateY(-50%); font-size: 0.9rem; }
-
-    .btn-ai-search {
-      background: linear-gradient(135deg, var(--brand-blue), var(--ai-purple));
-      color: white; border: none; padding: 8px 12px; border-radius: 8px;
-      font-size: 0.8rem; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 5px;
-    }
 
     .header-actions { display: flex; align-items: center; gap: 8px; }
     .btn {
@@ -183,15 +114,9 @@
     .user-profile-badge {
       display: flex; align-items: center; gap: 8px; padding-left: 8px; border-left: 1px solid var(--brand-border); position: relative;
     }
-    .avatar-wrapper { position: relative; cursor: pointer; }
     .user-avatar {
       width: 34px; height: 34px; border-radius: 50%; background: var(--brand-deep); color: white;
       font-weight: 700; font-size: 0.85rem; display: flex; align-items: center; justify-content: center;
-    }
-    .tests-badge-counter {
-      position: absolute; top: -5px; right: -6px; background: var(--accent-red); color: white;
-      font-size: 0.68rem; font-weight: 800; min-width: 17px; height: 17px; border-radius: 9px;
-      display: flex; align-items: center; justify-content: center; padding: 0 4px; box-shadow: 0 0 0 2px #fff;
     }
     .user-info { font-size: 0.8rem; text-align: left; }
     .user-name { font-weight: 700; color: var(--brand-deep); }
@@ -202,8 +127,7 @@
       width: 290px; background: #FFFFFF; border-right: 1px solid var(--brand-border); margin-top: 72px;
       height: calc(100vh - 72px); overflow-y: auto; padding: 16px 0; flex-shrink: 0;
       display: flex; flex-direction: column; justify-content: space-between;
-      transition: transform 0.25s ease;
-      z-index: 1200;
+      transition: transform 0.25s ease; z-index: 1200;
     }
     .sidebar-overlay {
       display: none; position: fixed; top: 72px; left: 0; right: 0; bottom: 0;
@@ -218,12 +142,9 @@
     .nav-item:hover { background: var(--brand-light); color: var(--brand-blue); }
     .nav-item.active { background: var(--brand-light); color: var(--brand-blue); font-weight: 600; border-left-color: var(--brand-blue); }
 
-    .sidebar-footer { padding: 14px 16px; border-top: 1px solid var(--brand-border); background: #FAFCFE; }
-    .sidebar-footer button { width: 100%; margin-bottom: 6px; font-size: 0.75rem; }
-
     /* Контентная зона */
     .main-content { flex: 1; margin-top: 72px; height: calc(100vh - 72px); overflow-y: auto; padding: 24px 32px; }
-    .content-wrap { max-width: 1060px; margin: 0 auto; }
+    .content-wrap { max-width: 1080px; margin: 0 auto; }
 
     .doc-nav-row { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
     .breadcrumbs { font-size: 0.85rem; color: var(--text-muted); }
@@ -240,12 +161,12 @@
     .tag { padding: 3px 8px; border-radius: 4px; font-weight: 600; font-size: 0.75rem; }
     .tag-blue { background: var(--brand-light); color: var(--brand-blue); }
     .tag-green { background: var(--accent-green-bg); color: var(--accent-green); }
+    .tag-purple { background: var(--ai-purple-light); color: var(--ai-purple); }
 
-    /* Плиточная сетка карточек направлений и подблоков */
-    .dashboard-header-row { display: flex; justify-content: space-between; align-items: center; margin: 20px 0 14px; flex-wrap: wrap; gap: 10px; }
+    /* Плиточная сетка карточек отделов и подблоков */
     .dashboard-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
       gap: 18px;
       margin-bottom: 24px;
     }
@@ -255,7 +176,7 @@
       cursor: pointer;
     }
     .dash-card:hover { transform: translateY(-3px); box-shadow: 0 8px 18px rgba(11, 53, 88, 0.12); border-color: var(--brand-blue); }
-    .dash-card-img { height: 105px; display: flex; align-items: center; justify-content: center; font-size: 2.8rem; color: white; }
+    .dash-card-img { height: 110px; display: flex; align-items: center; justify-content: center; font-size: 2.8rem; color: white; }
     .dash-card-content { padding: 16px; flex: 1; display: flex; flex-direction: column; }
     .dash-card-title { font-size: 1.05rem; font-weight: 700; color: var(--brand-deep); margin-bottom: 6px; }
     .dash-card-desc { font-size: 0.82rem; color: var(--text-muted); line-height: 1.4; margin-bottom: 12px; flex: 1; }
@@ -265,20 +186,19 @@
       position: absolute; top: 8px; right: 8px; display: flex; gap: 4px;
       background: rgba(255, 255, 255, 0.92); padding: 3px 6px; border-radius: 6px; box-shadow: 0 2px 6px rgba(0,0,0,0.1); z-index: 5;
     }
+    .card-tool-btn {
+      background: none; border: none; font-size: 0.8rem; cursor: pointer; padding: 2px 4px; border-radius: 4px;
+    }
+    .card-tool-btn:hover { background: #E2E8F0; }
 
-    /* Содержимое статьи регламента */
-    .page-block-wrapper { position: relative; margin-bottom: 20px; border-radius: 8px; }
+    /* Блоки статьи и медиа */
+    .page-block-wrapper { position: relative; margin-bottom: 22px; border-radius: 8px; }
     .page-block-wrapper:hover { outline: 1.5px dashed var(--brand-blue); outline-offset: 4px; }
     .page-block-tools {
       position: absolute; top: -12px; right: 12px; display: none; gap: 4px; background: #FFFFFF;
       border: 1px solid var(--brand-border); box-shadow: 0 2px 8px rgba(0,0,0,0.08); border-radius: 6px; padding: 2px 6px; z-index: 10;
     }
     .page-block-wrapper:hover .page-block-tools { display: flex; }
-    .block-tool-btn {
-      background: none; border: none; font-size: 0.75rem; font-weight: 600; color: var(--brand-deep);
-      cursor: pointer; padding: 2px 6px; border-radius: 4px;
-    }
-    .block-tool-btn:hover { background: var(--brand-light); color: var(--brand-blue); }
 
     .info-banner {
       background: #FFFFFF; border-left: 4px solid var(--brand-blue); padding: 18px 20px; border-radius: 0 8px 8px 0;
@@ -291,15 +211,24 @@
     .check-item input[type="checkbox"] { margin-top: 3px; accent-color: var(--brand-blue); width: 17px; height: 17px; cursor: pointer; }
     .check-item.done span { text-decoration: line-through; color: var(--text-muted); }
 
-    .yandex-integration-card {
-      background: #FFFFFF; border: 1.5px solid var(--brand-border); border-radius: 10px;
-      padding: 16px 20px; display: flex; justify-content: space-between; align-items: center; gap: 14px;
+    /* Медиа-контейнеры */
+    .media-card {
+      background: #FFFFFF; border: 1px solid var(--brand-border); border-radius: 10px; overflow: hidden;
+      margin: 14px 0; box-shadow: 0 2px 6px rgba(11, 53, 88, 0.04);
+    }
+    .media-card img { width: 100%; max-height: 460px; object-fit: contain; display: block; background: #F8FAFD; }
+    .media-video-wrap { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; background: #000; }
+    .media-video-wrap iframe, .media-video-wrap video { position: absolute; top:0; left: 0; width: 100%; height: 100%; border: 0; }
+    .media-card-title { padding: 10px 16px; font-weight: 700; font-size: 0.9rem; color: var(--brand-deep); border-bottom: 1px solid #E2E8F0; }
+    .file-attachment-box {
+      background: #FFFFFF; border: 1.5px solid var(--brand-border); border-radius: 8px;
+      padding: 12px 16px; display: flex; align-items: center; justify-content: space-between; margin: 10px 0;
     }
 
     /* Модальные окна */
     .modal-overlay {
       display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(11, 37, 62, 0.55); z-index: 2200; align-items: center; justify-content: center; backdrop-filter: blur(2px);
+      background: rgba(11, 37, 62, 0.55); z-index: 2500; align-items: center; justify-content: center; backdrop-filter: blur(2px);
       padding: 14px;
     }
     .modal-overlay.active { display: flex; }
@@ -315,46 +244,28 @@
       font-size: 0.9rem; font-family: inherit; outline: none;
     }
     .form-group textarea { min-height: 80px; resize: vertical; }
-    .form-group input:focus, .form-group textarea:focus { border-color: var(--brand-blue); }
     .modal-actions { display: flex; justify-content: flex-end; gap: 10px; margin-top: 18px; }
 
-    /* Таблицы прав доступа */
+    /* Таблицы */
     .styled-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; margin-top: 12px; }
     .styled-table th { background: #EBF4FA; padding: 9px 12px; text-align: left; color: var(--brand-deep); }
     .styled-table td { padding: 9px 12px; border-bottom: 1px solid #E2E8F0; }
-    .perm-grid-table { width: 100%; border-collapse: collapse; font-size: 0.8rem; background: #fff; border: 1px solid #CBD5E1; }
-    .perm-grid-table th { background: #E2E8F0; padding: 8px; text-align: center; border: 1px solid #CBD5E1; }
-    .perm-grid-table td { padding: 6px; border: 1px solid #E2E8F0; text-align: center; }
-    .cell-perm { background: #FEE2E2; cursor: pointer; }
-    .cell-perm.checked { background: #D1FAE5; }
 
-    /* АДАПТИВНОСТЬ ПОД МОБИЛЬНЫЕ УСТРОЙСТВА */
+    /* Мобильная адаптация */
     @media (max-width: 900px) {
       .header { padding: 0 12px; }
       .btn-mobile-menu { display: inline-flex; }
-      .header-search-container { display: none; }
       .header-logo-img { height: 38px; max-width: 150px; }
-      .cloud-indicator { display: none; }
-      #headerYandexBtn { display: none; }
-      #usersManageBtn { display: none; }
-      #newDocBtn { display: none; }
-      .user-info { display: none; }
-
+      .cloud-indicator, #headerYandexBtn, #usersManageBtn, #adminTrainingBtn, .user-info { display: none; }
       .sidebar {
-        position: fixed;
-        left: 0; top: 0; bottom: 0;
-        margin-top: 72px;
-        transform: translateX(-100%);
-        box-shadow: 4px 0 16px rgba(0,0,0,0.15);
+        position: fixed; left: 0; top: 0; bottom: 0; margin-top: 72px;
+        transform: translateX(-100%); box-shadow: 4px 0 16px rgba(0,0,0,0.15);
       }
       .sidebar.open { transform: translateX(0); }
       .sidebar-overlay.active { display: block; }
-
       .main-content { padding: 18px 14px; }
       .doc-header { flex-direction: column; align-items: stretch; }
-      .doc-header > div:last-child { display: flex; flex-wrap: wrap; width: 100%; }
       .dashboard-grid { grid-template-columns: 1fr; }
-      .dash-card-img { height: 90px; }
     }
   </style>
 </head>
@@ -365,7 +276,7 @@
     <div class="auth-box">
       <img id="authLogoImg" class="auth-logo-img" src="" alt="Логотип Надежда">
       <h2>Клиника «Надежда»</h2>
-      <p>Корпоративная база знаний</p>
+      <p>Корпоративная база знаний и обучение</p>
       
       <form class="auth-form" onsubmit="handleLogin(event)">
         <label>Логин или Email</label>
@@ -376,17 +287,12 @@
           <input type="password" id="loginPassword" placeholder="••••••••" required autocomplete="current-password">
           <button type="button" class="pass-toggle-btn" onclick="togglePassVisibility('loginPassword', this)">👁️</button>
         </div>
-        
-        <div class="auth-links-row">
-          <a class="auth-link" style="font-size:0.75rem; color:var(--text-muted);" onclick="alert('Доступные логины:\n• korotets (пароль korotets)\n• admin (пароль admin123)\n• head_med (пароль 1234)')">Подсказка</a>
-          <a class="auth-link" onclick="openPasswordRecoveryModal()">Забыли пароль?</a>
-        </div>
 
         <button type="submit" id="loginSubmitBtn" class="btn btn-primary" style="width: 100%; padding: 12px; justify-content: center; font-size: 0.95rem;">Войти в систему</button>
       </form>
 
-      <div class="auth-hint">
-        🔒 Синхронизация данных через Google Firebase активна.
+      <div style="font-size:0.75rem; color:var(--text-muted); margin-top:16px;">
+        🔒 Облачная синхронизация Google Firebase активна.
       </div>
     </div>
   </div>
@@ -400,37 +306,23 @@
       </div>
     </div>
 
-    <div class="header-search-container">
-      <div class="header-search">
-        <input type="text" id="searchInput" placeholder="ИИ поиск: «у кота судороги», «наркоз диета»..." onkeydown="handleSearchKeyDown(event)">
-      </div>
-      <button class="btn-ai-search" onclick="runAISearch()" title="Найти по смыслу с помощью нейросети">
-        ✨ ИИ Поиск
-      </button>
-    </div>
-
     <div class="header-actions">
-      <div class="cloud-indicator" id="cloudStatusBadge" title="Облачная база активна: данные общие для всех ПК и телефонов">
-        ☁️ Облако онлайн
-      </div>
+      <div class="cloud-indicator" id="cloudStatusBadge">☁️ Облако онлайн</div>
+
+      <button class="btn btn-outline" id="adminTrainingBtn" style="display:none;" onclick="openManageTrainingModal()">🎓 Назначение обучения</button>
+      <button class="btn btn-outline" id="usersManageBtn" style="display:none;" onclick="openUsersModal()">👥 Сотрудники и права</button>
+      <button class="btn btn-primary" id="newDocBtn" style="display:none;" onclick="openCreateModuleModal()">+ Создать блок</button>
 
       <a id="headerYandexBtn" href="https://disk.yandex.ru/d/5HlCdgS2idp2Gg" target="_blank" class="btn btn-yandex" title="Открыть диск клиники">
         📁 Яндекс Диск
       </a>
-
-      <button class="btn btn-outline" id="usersManageBtn" style="display:none;" onclick="openUsersModal()">👥 Сотрудники и права</button>
-      <button class="btn btn-primary" id="newDocBtn" style="display:none;" onclick="openCreateTopicModal()">+ Новая тема</button>
       
       <div class="user-profile-badge">
-        <div class="avatar-wrapper" onclick="openDoc('my_tests')">
-          <div class="user-avatar" id="headerAvatar">?</div>
-          <div class="tests-badge-counter" id="headerTestsBadge" style="display:none;">0</div>
-        </div>
+        <div class="user-avatar" id="headerAvatar">?</div>
         <div class="user-info">
           <div class="user-name" id="headerName">Имя</div>
           <div class="user-role" id="headerRole">Должность</div>
         </div>
-        <button class="btn btn-outline" style="padding: 4px 7px; font-size: 0.75rem;" onclick="openSelfProfileModal()" title="Настройки аккаунта">Ключ</button>
         <button class="btn btn-outline" style="padding: 4px 7px; font-size: 0.75rem;" onclick="logout()">Выход</button>
       </div>
     </div>
@@ -438,77 +330,151 @@
 
   <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleMobileSidebar()"></div>
 
-  <!-- Боковое меню -->
+  <!-- Сайдбар -->
   <aside class="sidebar" id="sidebar">
     <div id="navContainer"></div>
-    <div class="sidebar-footer" id="adminSidebarFooter" style="display:none;">
-      <button class="btn btn-outline" onclick="exportData()">📥 Бэкап (JSON)</button>
-    </div>
   </aside>
 
-  <!-- Главное окно контента -->
+  <!-- Рабочая зона -->
   <main class="main-content">
     <div class="content-wrap" id="documentArea"></div>
   </main>
 
-  <!-- МОДАЛЬНЫЕ ОКНА РЕДАКТИРОВАНИЯ И СОЗДАНИЯ -->
-  <!-- Создание/редактирование темы (подблока) -->
-  <div class="modal-overlay" id="topicModal">
+  <!-- МОДАЛЬНЫЕ ОКНА КОНСТРУКТОРА -->
+  <!-- Создание/редактирование карточки модуля/направления или подблока темы -->
+  <div class="modal-overlay" id="moduleModal">
     <div class="modal-window">
-      <div class="modal-title" id="topicModalTitle">Тема / Подблок регламента</div>
-      <input type="hidden" id="topicIdInput">
-      <div class="form-group">
-        <label>Операционный отдел</label>
-        <select id="topicCategorySelect">
-          <option value="operators">Колл-центр и операторы</option>
-          <option value="heads">Заведующие отделениями</option>
-          <option value="surgery">Хирургия и оперблок</option>
-          <option value="admin">Администраторы и служба заботы</option>
-          <option value="doctors">Терапия и врачи-эксперты</option>
-          <option value="assist">Ассистенты врачей</option>
-          <option value="equip">Оборудование и ТО</option>
-          <option value="academy">Академия и обучение</option>
-        </select>
+      <div class="modal-title" id="moduleModalTitle">Карточка блока</div>
+      <input type="hidden" id="modalTargetType"> <!-- 'dept' или 'topic' -->
+      <input type="hidden" id="modalItemId">
+
+      <div class="form-group" id="modalDeptSelectGroup" style="display:none;">
+        <label>В какой отдел поместить</label>
+        <select id="modalDeptSelect"></select>
       </div>
+
       <div class="form-group">
-        <label>Название темы / регламента</label>
-        <input type="text" id="topicTitleInput" placeholder="Скрипты звонков и консультаций">
+        <label>Название</label>
+        <input type="text" id="modalTitleInput" placeholder="Название направления или темы...">
       </div>
       <div class="form-group">
         <label>Краткое описание на карточке</label>
-        <textarea id="topicDescInput" style="min-height:60px;" placeholder="Алгоритм приема входящего звонка, запись..."></textarea>
+        <textarea id="modalDescInput" placeholder="Опишите назначение или алгоритм..."></textarea>
       </div>
-      <div class="form-group">
-        <label>Иконка / Эмодзи</label>
-        <input type="text" id="topicIconInput" placeholder="🎧 или 📄">
+      <div style="display:grid; grid-template-columns: 1fr 1fr; gap:12px;">
+        <div class="form-group">
+          <label>Иконка / Эмодзи</label>
+          <input type="text" id="modalIconInput" placeholder="⚡, 🩺, 📄">
+        </div>
+        <div class="form-group">
+          <label>Цвет градиента</label>
+          <select id="modalColorSelect">
+            <option value="linear-gradient(135deg, #0088D4, #00A6FF)">Голубой (Надежда)</option>
+            <option value="linear-gradient(135deg, #0B3558, #185285)">Глубокий синий</option>
+            <option value="linear-gradient(135deg, #0F766E, #14B8A6)">Изумрудный</option>
+            <option value="linear-gradient(135deg, #7C3AED, #A78BFA)">Фиолетовый</option>
+            <option value="linear-gradient(135deg, #6366F1, #818CF8)">Индиго</option>
+          </select>
+        </div>
       </div>
       <div class="modal-actions">
-        <button class="btn btn-outline" onclick="closeTopicModal()">Отмена</button>
-        <button class="btn btn-primary" onclick="saveTopic()">Сохранить подблок</button>
+        <button class="btn btn-outline" onclick="closeModuleModal()">Отмена</button>
+        <button class="btn btn-primary" onclick="saveModuleItem()">Сохранить карточку</button>
       </div>
     </div>
   </div>
 
-  <!-- Редактирование блока содержания -->
-  <div class="modal-overlay" id="singleBlockModal">
+  <!-- Добавление пункта с текстом, фото, видео или файлом на страницу статьи -->
+  <div class="modal-overlay" id="articleBlockModal">
     <div class="modal-window">
-      <div class="modal-title">Редактирование пункта регламента</div>
-      <input type="hidden" id="singleBlockIndex">
-      <div class="form-group"><label>Заголовок блока</label><input type="text" id="singleBlockTitleInput"></div>
-      <div class="form-group"><label>Развернутый текст / Алгоритм</label><textarea id="singleBlockTextInput" style="min-height:140px;"></textarea></div>
+      <div class="modal-title" id="articleBlockModalTitle">Пункт регламента / Материал</div>
+      <input type="hidden" id="articleBlockIndex">
+      
+      <div class="form-group">
+        <label>Тип материала</label>
+        <select id="articleBlockTypeSelect" onchange="toggleArticleBlockFields()">
+          <option value="banner">Текстовый регламент / Алгоритм</option>
+          <option value="checklist">Контрольный чек-лист</option>
+          <option value="image">Изображение / Инфографика / Фото</option>
+          <option value="video">Обучающее видео (YouTube, Rutube, Ссылка)</option>
+          <option value="file">Файл / Документ / Бланк для скачивания</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Заголовок / Название пункта</label>
+        <input type="text" id="articleBlockTitleInput">
+      </div>
+
+      <div class="form-group" id="grpBlockText">
+        <label>Текст описания / Инструкция</label>
+        <textarea id="articleBlockTextInput" style="min-height:110px;"></textarea>
+      </div>
+
+      <div class="form-group" id="grpBlockUrl" style="display:none;">
+        <label>Ссылка на медиа / файл (URL)</label>
+        <input type="text" id="articleBlockUrlInput" placeholder="https://... (прямая ссылка, YouTube или диск)">
+      </div>
+
       <div class="modal-actions">
-        <button class="btn btn-outline" onclick="closeSingleBlockModal()">Отмена</button>
-        <button class="btn btn-primary" onclick="saveSingleBlockChanges()">Сохранить</button>
+        <button class="btn btn-outline" onclick="closeArticleBlockModal()">Отмена</button>
+        <button class="btn btn-primary" onclick="saveArticleBlock()">Сохранить блок</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Управление обучением (Курсы, ввод в должность, тесты) -->
+  <div class="modal-overlay" id="trainingModal">
+    <div class="modal-window" style="max-width: 820px;">
+      <div class="modal-title">Адаптация, ввод в должность и обучение</div>
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
+        <p style="font-size:0.85rem; color:var(--text-muted);">Назначайте курсы и тестирование персонально на сотрудников:</p>
+        <button class="btn btn-primary" onclick="openCreateCourseModal()">+ Создать курс обучения</button>
+      </div>
+      <table class="styled-table" style="margin-top:0;">
+        <thead><tr><th>Название курса</th><th>Учебные блоки</th><th>Тестирование</th><th>Доступ сотрудникам</th><th>Действия</th></tr></thead>
+        <tbody id="trainingTableBody"></tbody>
+      </table>
+      <div class="modal-actions"><button class="btn btn-outline" onclick="closeTrainingModal()">Закрыть</button></div>
+    </div>
+  </div>
+
+  <!-- Создание курса обучения -->
+  <div class="modal-overlay" id="createCourseModal">
+    <div class="modal-window">
+      <div class="modal-title">Новый обучающий курс / Ввод в должность</div>
+      <div class="form-group"><label>Название курса</label><input type="text" id="courseTitleInput" placeholder="Ввод в должность ассистента..."></div>
+      <div class="form-group"><label>Описание и цель</label><textarea id="courseDescInput" placeholder="Освоение асептики, фиксации, работы с Ветменеджером..."></textarea></div>
+      <div class="form-group">
+        <label>Связать с темой базы знаний (для изучения материалов)</label>
+        <select id="courseLinkedTopicSelect"></select>
+      </div>
+      <div class="form-group"><label>Проходной балл тестирования (%)</label><input type="number" id="coursePassScore" value="85" min="50" max="100"></div>
+      <div class="modal-actions">
+        <button class="btn btn-outline" onclick="document.getElementById('createCourseModal').classList.remove('active')">Отмена</button>
+        <button class="btn btn-primary" onclick="saveNewCourse()">Создать курс</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Назначение курса конкретному сотруднику -->
+  <div class="modal-overlay" id="assignCourseModal">
+    <div class="modal-window" style="max-width:500px;">
+      <div class="modal-title" id="assignCourseTitle">Управление доступом к обучению</div>
+      <input type="hidden" id="assignCourseId">
+      <div id="assignUsersList" style="margin:12px 0;"></div>
+      <div class="modal-actions">
+        <button class="btn btn-primary" onclick="saveCourseAssignments()">Сохранить доступы</button>
       </div>
     </div>
   </div>
 
   <!-- Сотрудники и права -->
   <div class="modal-overlay" id="usersModal">
-    <div class="modal-window" style="max-width: 860px;">
-      <div class="modal-title">Права доступа сотрудников (Матрица Ветменеджер)</div>
+    <div class="modal-window" style="max-width: 800px;">
+      <div class="modal-title">Сотрудники клиники и доступы</div>
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
-        <span style="font-size:0.85rem; color:var(--text-muted);">Учетные записи сотрудников:</span>
+        <span style="font-size:0.85rem; color:var(--text-muted);">Зарегистрированные пользователи:</span>
         <button class="btn btn-primary" onclick="openCreateUserForm()">+ Зарегистрировать сотрудника</button>
       </div>
       <table class="styled-table" style="margin-top:0;">
@@ -521,10 +487,10 @@
 
   <!-- Создание нового пользователя -->
   <div class="modal-overlay" id="newUserModal">
-    <div class="modal-window" style="max-width: 480px;">
+    <div class="modal-window" style="max-width: 440px;">
       <div class="modal-title">Новый сотрудник</div>
       <div class="form-group"><label>ФИО</label><input type="text" id="newFullName" required></div>
-      <div class="form-group"><label>Email</label><input type="email" id="newEmail" placeholder="employee@nadezhda.vet" required></div>
+      <div class="form-group"><label>Email</label><input type="email" id="newEmail" placeholder="employee@mail.ru" required></div>
       <div class="form-group"><label>Логин</label><input type="text" id="newUsername" required></div>
       <div class="form-group"><label>Пароль</label><input type="password" id="newPassword" required></div>
       <div class="form-group">
@@ -532,7 +498,7 @@
         <select id="newRole">
           <option value="operator">Оператор колл-центра</option>
           <option value="reception">Администратор рецепции</option>
-          <option value="assistant">Ассистент ветеринарного врача</option>
+          <option value="assistant">Ассистент врача</option>
           <option value="doctor">Ветеринарный врач</option>
           <option value="head">Заведующий отделением</option>
           <option value="admin">Управляющий (Полный доступ)</option>
@@ -541,22 +507,6 @@
       <div class="modal-actions">
         <button class="btn btn-outline" onclick="document.getElementById('newUserModal').classList.remove('active')">Отмена</button>
         <button class="btn btn-primary" onclick="saveNewUser()">Зарегистрировать</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Настройки профиля -->
-  <div class="modal-overlay" id="selfProfileModal">
-    <div class="modal-window" style="max-width: 440px;">
-      <div class="modal-title">Настройки аккаунта</div>
-      <div class="form-group"><label>Email для восстановления</label><input type="email" id="selfEmailInput" required></div>
-      <hr style="border:0; border-top:1px solid var(--brand-border); margin:14px 0;">
-      <div class="form-group"><label>Текущий пароль</label><input type="password" id="selfCurrentPass"></div>
-      <div class="form-group"><label>Новый пароль</label><input type="password" id="selfNewPass"></div>
-      <div class="form-group"><label>Повторите новый пароль</label><input type="password" id="selfNewPassConfirm"></div>
-      <div class="modal-actions">
-        <button class="btn btn-outline" onclick="document.getElementById('selfProfileModal').classList.remove('active')">Отмена</button>
-        <button class="btn btn-primary" onclick="saveSelfProfileChanges()">Сохранить</button>
       </div>
     </div>
   </div>
@@ -582,7 +532,7 @@
       firebaseDb = firebase.database();
       isCloudOnline = true;
     } catch(err) {
-      console.warn("Firebase init error:", err);
+      console.warn("Firebase error:", err);
     }
 
     const DEFAULT_LOGO_DATA_URL = `data:image/svg+xml;utf8,<svg viewBox="0 0 460 120" xmlns="http://www.w3.org/2000/svg"><path d="M46 8C48 3 53 1 58 4C63 7 60 14 62 18C65 19 69 19 72 22C77 26 81 33 76 39C72 44 65 44 63 46C60 48 60 52 61 55C62 58 64 61 62 65C60 70 56 74 53 78C50 82 46 87 40 90C35 93 28 95 23 94C18 93 14 91 10 88C5 84 2 79 1 74C-1 67 2 61 6 56C10 52 14 47 17 41C20 35 23 27 28 21C32 16 39 12 46 8Z" fill="%230088D4"/><path d="M74 21C77 15 81 12 85 16C89 20 86 27 88 32C92 34 97 38 98 43C100 48 98 54 98 59C97 64 99 69 102 73C106 79 112 85 116 91C119 96 118 102 113 105C108 108 101 107 96 104C91 101 87 97 84 93C82 89 80 84 79 79C78 74 76 69 75 64Z" fill="%230088D4"/><path d="M12 70C14 85 24 100 42 106C58 111 76 109 90 102C102 96 112 85 115 72C117 62 116 52 112 42C108 32 101 24 93 18C90 16 88 18 87 22C85 27 82 32 78 35C74 38 69 39 64 36C60 33 58 28 58 23C58 18 55 12 51 9C46 6 41 8 38 12C34 18 29 25 25 33C20 42 16 52 13 62Z" fill="%230088D4"/><path d="M45 42H71V59H88V85H71V102H45V85H28V59H45V42Z" fill="%23FFFFFF"/><text x="135" y="42" font-family="'Playfair Display', Georgia, serif" font-style="italic" font-size="19" fill="%230088D4">ветеринарная  клиника</text><text x="135" y="86" font-family="'Inter', sans-serif" font-weight="800" font-size="44" fill="%230088D4" letter-spacing="3.5">НАДЕЖДА</text></svg>`;
@@ -593,133 +543,82 @@
       { id: "u_head", fullName: "Елена Валерьевна", email: "head@nadezhda.vet", username: "head_med", password: "1234", role: "head", roleName: "Заведующая отделением" }
     ];
 
-    /* ОПЕРАЦИОННЫЕ ОТДЕЛЫ КЛИНИКИ */
+    /* ЭТАП 1: ГЛАВНЫЕ НАПРАВЛЕНИЯ КЛИНИКИ */
     const DEFAULT_DEPARTMENTS = [
-      { id: "operators", title: "Колл-центр и операторы", desc: "Скрипты консультаций, запись к узким специалистам, триаж по телефону.", icon: "🎧", color: "linear-gradient(135deg, #0088D4, #00A6FF)" },
-      { id: "heads", title: "Заведующие отделениями", desc: "Контроль историй болезни, аудит смен, консилиумы и стандарты курации.", icon: "🏛️", color: "linear-gradient(135deg, #0B3558, #185285)" },
-      { id: "surgery", title: "Хирургия и оперблок", desc: "Предоперационный чек-лист, наркозный протокол, стерилизация, ведение журнала.", icon: "⚡", color: "linear-gradient(135deg, #0F766E, #14B8A6)" },
-      { id: "admin", title: "Администраторы и служба заботы", desc: "Встреча клиентов, оформление в Ветменеджере, кассовая дисциплина, сервис.", icon: "💻", color: "linear-gradient(135deg, #0088D4, #0284C7)" },
-      { id: "doctors", title: "Терапия и врачи-эксперты", desc: "Протоколы доказательной терапии, интерпретация УЗИ, ЭхоКГ, анализов.", icon: "🩺", color: "linear-gradient(135deg, #0284C7, #38BDF8)" },
-      { id: "assist", title: "Ассистенты врачей", desc: "Забор крови, установка катетеров, фиксация пациентов, дезинфекция помещений.", icon: "🩸", color: "linear-gradient(135deg, #7C3AED, #A78BFA)" },
-      { id: "equip", title: "Оборудование и ТО", desc: "Инструкции к аппаратам ИВЛ, УЗИ, концентраторам кислорода, график ТО.", icon: "🏥", color: "linear-gradient(135deg, #6366F1, #818CF8)" },
-      { id: "academy", title: "Академия и обучение", desc: "Вводный курс стажера, аттестационные материалы, тесты и стандарты клиники.", icon: "📋", color: "linear-gradient(135deg, #9333EA, #C084FC)" }
+      { id: "operators", title: "Колл-центр и операторы", desc: "Скрипты консультаций, запись к узким специалистам, триаж.", icon: "🎧", color: "linear-gradient(135deg, #0088D4, #00A6FF)" },
+      { id: "heads", title: "Заведующие отделениями", desc: "Контроль историй болезни, аудит смен, консилиумы.", icon: "🏛️", color: "linear-gradient(135deg, #0B3558, #185285)" },
+      { id: "surgery", title: "Хирургия и оперблок", desc: "Предоперационный чек-лист, наркозный протокол, стерилизация.", icon: "🔪", color: "linear-gradient(135deg, #0F766E, #14B8A6)" },
+      { id: "admin", title: "Администраторы и служба заботы", desc: "Встреча клиентов, оформление в Ветменеджере, сервис.", icon: "💻", color: "linear-gradient(135deg, #0088D4, #0284C7)" },
+      { id: "therapy", title: "Терапия", desc: "Протоколы доказательной терапии, анализы, диагностика.", icon: "🩺", color: "linear-gradient(135deg, #0284C7, #38BDF8)" },
+      { id: "assistants", title: "Ассистенты", desc: "Забор крови, катетеры, асептика, подготовка процедурных.", icon: "🩸", color: "linear-gradient(135deg, #7C3AED, #A78BFA)" },
+      { id: "mri_ct", title: "Отделение МРТ/КТ", desc: "Подготовка к томографии, укладки, контрастные протоколы.", icon: "🏥", color: "linear-gradient(135deg, #6366F1, #818CF8)" },
+      { id: "regulations", title: "Регламенты работы", desc: "Общеклинические правила, график, дисциплина, пожарная безопасность.", icon: "📋", color: "linear-gradient(135deg, #64748B, #94A3B8)" },
+      { id: "anesthesia", title: "Анестезиология", desc: "Протоколы седации, мониторинг витальных функций, реанимация.", icon: "💉", color: "linear-gradient(135deg, #9333EA, #C084FC)" }
     ];
 
-    /* ПОДБЛОКИ (ТЕМЫ) С РАЗВЕРНУТЫМИ СТАТЬЯМИ ВНУТРИ КАЖДОГО ОТДЕЛА */
+    /* ЭТАП 2: ПОДБЛОКИ (ТЕМЫ) ВНУТРИ КАЖДОГО НАПРАВЛЕНИЯ С МУЛЬТИМЕДИА */
     const DEFAULT_TOPICS = [
-      // 1. Колл-центр
       {
-        id: "call_scripts",
+        id: "top_scripts",
         deptId: "operators",
         title: "Скрипты звонков и консультаций",
-        desc: "Золотое правило оператора, регламент первого звонка и уточнения симптомов.",
+        desc: "Золотое правило оператора, запись и уточнение симптомов питомца.",
         icon: "📞",
         blocks: [
           { type: "banner", title: "Золотое правило оператора", text: "Снятие трубки до третьего гудка. Всегда уточняйте наличие экстренных симптомов у питомца в первые 30 секунд разговора." },
-          { type: "checklist", title: "Чек-лист консультации", items: ["Приветствие с представлением клиники", "Уточнение клички, возраста и породы", "Оценка экстренности состояния", "Напоминание о голодной диете 6-8 часов"] }
+          { type: "checklist", title: "Чек-лист консультации", items: ["Приветствие с представлением клиники", "Уточнение клички и возраста", "Проверка признаков одышки и судорог", "Предупреждение о голодной диете 6-8 ч"] },
+          { type: "file", title: "Таблица стоимости услуг для операторов.pdf", url: "https://disk.yandex.ru/d/5HlCdgS2idp2Gg" }
         ]
       },
       {
-        id: "call_triage",
-        deptId: "operators",
-        title: "Триаж экстренных вызовов по телефону",
-        desc: "Определение красной категории: судороги, одышка с открытым ртом, кровотечения.",
-        icon: "🚨",
-        blocks: [
-          { type: "banner", title: "Алгоритм действий при красной категории", text: "Немедленно предупредить дежурного врача стационара. Сообщить владельцу о необходимости срочной транспортировки без промедления." }
-        ]
-      },
-      // 2. Заведующие
-      {
-        id: "heads_audit",
-        deptId: "heads",
-        title: "Аудит историй болезни",
-        desc: "Критерии проверки электронных карт в Ветменеджере, корректность назначений.",
-        icon: "⚖️",
-        blocks: [
-          { type: "banner", title: "Стандарт аудита", text: "Каждая история болезни должна содержать обоснованный предварительный диагноз, план дифференциальной диагностики и протокол согласия владельца." }
-        ]
-      },
-      // 3. Хирургия
-      {
-        id: "surgery_prep",
+        id: "top_surg_prep",
         deptId: "surgery",
         title: "Предоперационная подготовка пациента",
-        desc: "Чек-лист готовности пациента к операционному вмешательству, анализы и диета.",
-        icon: "🔪",
+        desc: "Чек-лист готовности, диета, мониторинг и подготовка операционного поля.",
+        icon: "⚡",
         blocks: [
-          { type: "banner", title: "Безопасность пациента в наркозе", text: "Животные брахицефалических пород и пациенты старше 6 лет допускаются к плановым вмешательствам строго после ЭхоКГ сердца." },
-          { type: "checklist", title: "Обязательные этапы", items: ["Голодная диета соблюдена (взрослые 6-8ч, щенки 2-3ч)", "Внутривенный катетер установлен и промыт", "Подсчет салфеток и инструментов до разреза"] }
+          { type: "banner", title: "Безопасность пациента в наркозе", text: "Животные брахицефалических пород и старше 6 лет допускаются строго с ЭхоКГ сердца." },
+          { type: "image", title: "Схема правильной фиксации пациента на операционном столе", url: "https://images.unsplash.com/photo-1576201836106-db1758fd1c97?w=1000&auto=format&fit=crop&q=80" },
+          { type: "video", title: "Обучающее видео: Асептическая обработка рук хирурга", url: "https://www.youtube.com/embed/dQw4w9WgXcQ" }
         ]
       },
-      // 4. Администраторы
       {
-        id: "admin_reception",
-        deptId: "admin",
-        title: "Регламент встречи клиентов на рецепции",
-        desc: "Оформление договора, бесконфликтное общение, маршрутизация очереди.",
-        icon: "💻",
+        id: "top_mri_prep",
+        deptId: "mri_ct",
+        title: "Протокол подготовки к МРТ исследованию",
+        desc: "Проверка на металлические импланты, установка датчиков и анестезиологическое сопровождение.",
+        icon: "🧲",
         blocks: [
-          { type: "banner", title: "Стандарт первого контакта", text: "Встреча клиента стоя, зрительный контакт и приветствие в первые 5 секунд после входа в холл клиники." }
-        ]
-      },
-      // 5. Терапия
-      {
-        id: "therap_triage",
-        deptId: "doctors",
-        title: "Протокол ведения острого гастроэнтерита",
-        desc: "Инфузионная терапия, коррекция электролитов, противорвотные препараты.",
-        icon: "🩺",
-        blocks: [
-          { type: "banner", title: "Стандарт первой линии", text: "Обязательное исключение инородного тела методом УЗИ/рентгена до назначения прокинетиков." }
-        ]
-      },
-      // 6. Ассистенты
-      {
-        id: "assist_iv",
-        deptId: "assist",
-        title: "Постановка периферического венозного катетера",
-        desc: "Асептика, фиксация пластырем, уход за катетером и гепариновый замок.",
-        icon: "💉",
-        blocks: [
-          { type: "banner", title: "Правило асептики", text: "Шерсть выбривается с запасом, обработка кожи антисептиком не менее 30 секунд до пункции вены." }
-        ]
-      },
-      // 7. Оборудование
-      {
-        id: "equip_anest",
-        deptId: "equip",
-        title: "Ежедневная проверка наркозно-дыхательного аппарата",
-        desc: "Проверка герметичности контура, абсорбера CO2 и подачи кислорода.",
-        icon: "⚙️",
-        blocks: [
-          { type: "banner", title: "Тест на утечку", text: "Проводится каждое утро перед первой операцией при давлении 30 см вод. ст." }
-        ]
-      },
-      // 8. Академия
-      {
-        id: "acad_intern",
-        deptId: "academy",
-        title: "План адаптации сотрудника на первую неделю",
-        desc: "Чек-лист стажировки, знакомство с коллективом и базой знаний.",
-        icon: "🎓",
-        blocks: [
-          { type: "banner", title: "Цель первой недели", text: "Изучение правил клиники «Надежда», сдача вводного теста на триаж и освоение Ветменеджера." }
+          { type: "banner", title: "Критическая безопасность в зоне МРТ", text: "Категорически запрещен вход с ферромагнитными предметами. Все ошейники и карабины снимаются до зоны сканирования." }
         ]
       }
     ];
 
-    let departments = DEFAULT_DEPARTMENTS;
-    let topicsList = JSON.parse(localStorage.getItem('nadezhda_topics_v16')) || DEFAULT_TOPICS;
-    let usersList = JSON.parse(localStorage.getItem('nadezhda_users_v16')) || DEFAULT_USERS;
+    /* ЭТАП 4: ОБУЧАЮЩИЕ КУРСЫ (АДАПТАЦИЯ И ВВОД В ДОЛЖНОСТЬ) */
+    const DEFAULT_COURSES = [
+      {
+        id: "course_assistant_intro",
+        title: "Ввод в должность ассистента ветеринарного врача",
+        desc: "Адаптационный курс: асептика, забор крови, фиксация и экстренные алгоритмы клиники.",
+        linkedTopicId: "top_surg_prep",
+        passScore: 85,
+        assignedUsers: ["u_korotets"] // кому открыт доступ
+      }
+    ];
+
+    let departments = JSON.parse(localStorage.getItem('nadezhda_depts_v17')) || DEFAULT_DEPARTMENTS;
+    let topicsList = JSON.parse(localStorage.getItem('nadezhda_topics_v17')) || DEFAULT_TOPICS;
+    let coursesList = JSON.parse(localStorage.getItem('nadezhda_courses_v17')) || DEFAULT_COURSES;
+    let usersList = JSON.parse(localStorage.getItem('nadezhda_users_v17')) || DEFAULT_USERS;
+
     let currentUser = JSON.parse(sessionStorage.getItem('nadezhda_active_user')) || null;
-    let currentNavState = { type: 'home', deptId: null, topicId: null };
+    let currentNav = { type: 'home', deptId: null, topicId: null };
 
     /* ОБЛАЧНАЯ СИНХРОНИЗАЦИЯ */
     function syncToCloud(key, data) {
-      localStorage.setItem('nadezhda_' + key + '_v16', JSON.stringify(data));
+      localStorage.setItem('nadezhda_' + key + '_v17', JSON.stringify(data));
       if (firebaseDb && isCloudOnline) {
-        firebaseDb.ref(key).set(data).catch(e => console.error("Firebase error:", e));
+        firebaseDb.ref(key).set(data).catch(e => console.error("Firebase write error:", e));
       }
     }
 
@@ -730,31 +629,16 @@
         return;
       }
 
-      firebaseDb.ref('topics').on('value', snap => {
-        const val = snap.val();
-        if (val && Array.isArray(val) && val.length > 0) {
-          topicsList = val;
-          localStorage.setItem('nadezhda_topics_v16', JSON.stringify(topicsList));
-          renderCurrentView();
-        } else {
-          syncToCloud('topics', topicsList);
-        }
-      });
-
-      firebaseDb.ref('users').on('value', snap => {
-        const val = snap.val();
-        if (val && Array.isArray(val) && val.length > 0) {
-          usersList = val;
-          localStorage.setItem('nadezhda_users_v16', JSON.stringify(usersList));
-        } else {
-          syncToCloud('users', usersList);
-        }
-      });
+      firebaseDb.ref('depts').on('value', s => { if (s.val()) { departments = s.val(); renderCurrentView(); } });
+      firebaseDb.ref('topics').on('value', s => { if (s.val()) { topicsList = s.val(); renderCurrentView(); } });
+      firebaseDb.ref('courses').on('value', s => { if (s.val()) { coursesList = s.val(); } });
+      firebaseDb.ref('users').on('value', s => { if (s.val()) { usersList = s.val(); } });
     }
 
     /* ИНИЦИАЛИЗАЦИЯ */
     function initApp() {
-      applyCurrentLogo();
+      document.getElementById('authLogoImg').src = DEFAULT_LOGO_DATA_URL;
+      document.getElementById('headerLogoImg').src = DEFAULT_LOGO_DATA_URL;
       initCloudListeners();
 
       if (!currentUser) {
@@ -767,16 +651,9 @@
       }
     }
 
-    function applyCurrentLogo() {
-      document.getElementById('authLogoImg').src = DEFAULT_LOGO_DATA_URL;
-      document.getElementById('headerLogoImg').src = DEFAULT_LOGO_DATA_URL;
-    }
-
     function toggleMobileSidebar() {
-      const sb = document.getElementById('sidebar');
-      const ov = document.getElementById('sidebarOverlay');
-      sb.classList.toggle('open');
-      ov.classList.toggle('active');
+      document.getElementById('sidebar').classList.toggle('open');
+      document.getElementById('sidebarOverlay').classList.toggle('active');
     }
 
     function togglePassVisibility(inputId, btnEl) {
@@ -785,7 +662,6 @@
       else { el.type = 'password'; btnEl.innerText = '👁️'; }
     }
 
-    /* ВХОД В СИСТЕМУ */
     async function handleLogin(e) {
       e.preventDefault();
       const submitBtn = document.getElementById('loginSubmitBtn');
@@ -836,8 +712,8 @@
 
       const canManage = currentUser.role === 'admin' || currentUser.role === 'head';
       document.getElementById('usersManageBtn').style.display = canManage ? 'inline-flex' : 'none';
+      document.getElementById('adminTrainingBtn').style.display = canManage ? 'inline-flex' : 'none';
       document.getElementById('newDocBtn').style.display = canManage ? 'inline-flex' : 'none';
-      document.getElementById('adminSidebarFooter').style.display = (currentUser.role === 'admin') ? 'block' : 'none';
     }
 
     /* САЙДБАР */
@@ -846,10 +722,16 @@
       nav.innerHTML = '';
 
       const homeItem = document.createElement('div');
-      homeItem.className = `nav-item ${currentNavState.type === 'home' ? 'active' : ''}`;
+      homeItem.className = `nav-item ${currentNav.type === 'home' ? 'active' : ''}`;
       homeItem.onclick = () => { openDoc('home'); if (window.innerWidth <= 900) toggleMobileSidebar(); };
-      homeItem.innerHTML = `<span>🏛️ Главная (Все отделы)</span>`;
+      homeItem.innerHTML = `<span>🏛️ Все направления</span>`;
       nav.appendChild(homeItem);
+
+      const trainingItem = document.createElement('div');
+      trainingItem.className = `nav-item ${currentNav.type === 'my_training' ? 'active' : ''}`;
+      trainingItem.onclick = () => { openMyTraining(); if (window.innerWidth <= 900) toggleMobileSidebar(); };
+      trainingItem.innerHTML = `<span>🎓 Мое обучение и адаптация</span>`;
+      nav.appendChild(trainingItem);
 
       const section = document.createElement('div');
       section.className = 'nav-category';
@@ -857,7 +739,7 @@
 
       departments.forEach(dept => {
         const item = document.createElement('div');
-        item.className = `nav-item ${currentNavState.deptId === dept.id && currentNavState.type === 'dept' ? 'active' : ''}`;
+        item.className = `nav-item ${currentNav.deptId === dept.id && currentNav.type === 'dept' ? 'active' : ''}`;
         item.onclick = () => { openDept(dept.id); if (window.innerWidth <= 900) toggleMobileSidebar(); };
         item.innerHTML = `<span>${dept.icon} ${dept.title}</span>`;
         section.appendChild(item);
@@ -866,15 +748,15 @@
       nav.appendChild(section);
     }
 
-    /* НАВИГАЦИЯ */
+    /* НАВИГАЦИЯ МЕЖДУ ЭТАПАМИ */
     function openDoc(type) {
-      currentNavState = { type: 'home', deptId: null, topicId: null };
+      currentNav = { type: 'home', deptId: null, topicId: null };
       renderCurrentView();
       renderSidebar();
     }
 
     function openDept(deptId) {
-      currentNavState = { type: 'dept', deptId: deptId, topicId: null };
+      currentNav = { type: 'dept', deptId: deptId, topicId: null };
       renderCurrentView();
       renderSidebar();
     }
@@ -882,27 +764,42 @@
     function openTopic(topicId) {
       const topic = topicsList.find(t => t.id === topicId);
       if (!topic) return;
-      currentNavState = { type: 'topic', deptId: topic.deptId, topicId: topicId };
+      currentNav = { type: 'topic', deptId: topic.deptId, topicId: topicId };
       renderCurrentView();
       renderSidebar();
     }
 
+    function openMyTraining() {
+      currentNav = { type: 'my_training', deptId: null, topicId: null };
+      renderCurrentView();
+      renderSidebar();
+    }
+
+    /* РЕНДЕР ТЕКУЩЕГО ЭКРАНА */
     function renderCurrentView() {
       const area = document.getElementById('documentArea');
       const canEdit = currentUser && (currentUser.role === 'admin' || currentUser.role === 'head');
 
-      // 1. ГЛАВНАЯ СТРАНИЦА (ОПЕРАЦИОННЫЕ НАПРАВЛЕНИЯ)
-      if (currentNavState.type === 'home') {
+      // 1. ЭТАП 1: ГЛАВНЫЕ НАПРАВЛЕНИЯ КЛИНИКИ
+      if (currentNav.type === 'home') {
         const cardsHtml = departments.map(d => {
-          const count = topicsList.filter(t => t.deptId === d.id).length;
+          const subCount = topicsList.filter(t => t.deptId === d.id).length;
+          const editTools = canEdit ? `
+            <div class="dash-card-actions">
+              <button class="card-tool-btn" onclick="event.stopPropagation(); openEditDeptModal('${d.id}')">✏️</button>
+              <button class="card-tool-btn" style="color:var(--accent-red);" onclick="event.stopPropagation(); deleteDept('${d.id}')">🗑️</button>
+            </div>
+          ` : '';
+
           return `
             <div class="dash-card" onclick="openDept('${d.id}')">
+              ${editTools}
               <div class="dash-card-img" style="background:${d.color};">${d.icon}</div>
               <div class="dash-card-content">
                 <div class="dash-card-title">${d.title}</div>
                 <div class="dash-card-desc">${d.desc}</div>
                 <div class="dash-card-footer">
-                  <span>Регламентов: ${count}</span>
+                  <span>Темы и подблоки: ${subCount}</span>
                   <span>Перейти в модуль →</span>
                 </div>
               </div>
@@ -917,29 +814,24 @@
               <h1 class="doc-title">Операционные направления клиники</h1>
               <div class="doc-meta"><span class="tag tag-blue">Актуально на 2026 г.</span></div>
             </div>
-          </div>
-          <div class="yandex-integration-card" style="margin-bottom: 22px;">
-            <div>
-              <strong style="color:var(--yandex-red); font-size:1.05rem;">📁 Корпоративное хранилище документов на Яндекс Диске</strong>
-              <div style="font-size:0.83rem; color:var(--text-muted); margin-top:3px;">Официальные бланки, договоры и нормативная документация</div>
-            </div>
-            <a href="https://disk.yandex.ru/d/5HlCdgS2idp2Gg" target="_blank" class="btn btn-yandex">Перейти к файлам</a>
+            ${canEdit ? `<button class="btn btn-primary" onclick="openCreateDeptModal()">+ Добавить направление</button>` : ''}
           </div>
           <div class="dashboard-grid">${cardsHtml}</div>
         `;
         return;
       }
 
-      // 2. СТРАНИЦА ОТДЕЛА (ПОДБЛОКИ / ТЕМЫ ОТДЕЛА)
-      if (currentNavState.type === 'dept') {
-        const dept = departments.find(d => d.id === currentNavState.deptId);
-        const subTopics = topicsList.filter(t => t.deptId === dept.id);
+      // 2. ЭТАП 2: ПОДБЛОКИ И ТЕМЫ ВНУТРИ ВЫБРАННОГО НАПРАВЛЕНИЯ
+      if (currentNav.type === 'dept') {
+        const dept = departments.find(d => d.id === currentNav.deptId);
+        if (!dept) return openDoc('home');
 
+        const subTopics = topicsList.filter(t => t.deptId === dept.id);
         const topicsGridHtml = subTopics.map(t => {
           const editTools = canEdit ? `
             <div class="dash-card-actions">
-              <button class="block-tool-btn" onclick="event.stopPropagation(); openEditTopicModal('${t.id}')">✏️</button>
-              <button class="block-tool-btn" style="color:var(--accent-red);" onclick="event.stopPropagation(); deleteTopic('${t.id}')">🗑️</button>
+              <button class="card-tool-btn" onclick="event.stopPropagation(); openEditTopicModal('${t.id}')">✏️</button>
+              <button class="card-tool-btn" style="color:var(--accent-red);" onclick="event.stopPropagation(); deleteTopic('${t.id}')">🗑️</button>
             </div>
           ` : '';
 
@@ -949,10 +841,10 @@
               <div class="dash-card-img" style="background:${dept.color}; font-size:2.4rem;">${t.icon || '📄'}</div>
               <div class="dash-card-content">
                 <div class="dash-card-title">${t.title}</div>
-                <div class="dash-card-desc">${t.desc || 'Развернуть тему и изучить алгоритм действий...'}</div>
+                <div class="dash-card-desc">${t.desc || 'Подробный регламент, медиа-материалы и инструкции...'}</div>
                 <div class="dash-card-footer">
                   <span>Стандарт клиники</span>
-                  <span>Открыть регламент →</span>
+                  <span>Открыть тему →</span>
                 </div>
               </div>
             </div>
@@ -963,50 +855,81 @@
           <div class="doc-header">
             <div>
               <div class="doc-nav-row">
-                <button class="btn-back" onclick="openDoc('home')">← Все отделы</button>
+                <button class="btn-back" onclick="openDoc('home')">← Все направления</button>
                 <div class="breadcrumbs"><a onclick="openDoc('home')">База знаний</a> / ${dept.title}</div>
               </div>
               <h1 class="doc-title">${dept.title}</h1>
-              <div class="doc-meta"><span class="tag tag-blue">Разделы и подблоки направления</span></div>
+              <div class="doc-meta"><span class="tag tag-blue">Раздел операционного направления</span></div>
             </div>
-            ${canEdit ? `<button class="btn btn-primary" onclick="openCreateTopicModal('${dept.id}')">+ Добавить подблок</button>` : ''}
+            ${canEdit ? `<button class="btn btn-primary" onclick="openCreateTopicModal('${dept.id}')">+ Добавить подблок (тему)</button>` : ''}
           </div>
           <div class="dashboard-grid">
-            ${topicsGridHtml || '<div style="grid-column: 1/-1; padding: 24px; background:#fff; border-radius:10px; border:1px solid var(--brand-border); text-align:center; color:var(--text-muted);">В этом отделе пока нет тем. Нажмите «+ Добавить подблок», чтобы создать первую тему.</div>'}
+            ${topicsGridHtml || '<div style="grid-column: 1/-1; padding: 24px; background:#fff; border-radius:10px; border:1px solid var(--brand-border); text-align:center; color:var(--text-muted);">В этом отделе пока нет тем. Нажмите «+ Добавить подблок (тему)», чтобы создать первый материал.</div>'}
           </div>
         `;
         return;
       }
 
-      // 3. СТРАНИЦА РАЗВЕРНУТОГО ОТВЕТА (КОНКРЕТНАЯ ТЕМА)
-      if (currentNavState.type === 'topic') {
-        const topic = topicsList.find(t => t.id === currentNavState.topicId);
-        const dept = departments.find(d => d.id === topic.deptId);
+      // 3. ЭТАП 3: РАЗВЕРНУТЫЙ ОТВЕТ С ВИДЕО, КАРТИНКАМИ И ФАЙЛАМИ
+      if (currentNav.type === 'topic') {
+        const topic = topicsList.find(t => t.id === currentNav.topicId);
+        if (!topic) return openDoc('home');
+        const dept = departments.find(d => d.id === topic.deptId) || { title: 'Отдел', id: 'home', color: 'var(--brand-blue)' };
 
         let blocksHtml = (topic.blocks || []).map((b, idx) => {
           const editBlockTools = canEdit ? `
             <div class="page-block-tools">
-              <button class="block-tool-btn" onclick="openEditSingleBlockModal(${idx})">✏️ Изменить</button>
-              <button class="block-tool-btn" style="color:var(--accent-red);" onclick="deleteSingleBlock(${idx})">🗑️ Удалить</button>
+              <button class="card-tool-btn" onclick="openEditArticleBlockModal(${idx})">✏️ Изменить</button>
+              <button class="card-tool-btn" style="color:var(--accent-red);" onclick="deleteArticleBlock(${idx})">🗑️ Удалить</button>
             </div>
           ` : '';
 
-          let bodyHtml = '';
+          let contentHtml = '';
           if (b.type === 'checklist') {
             const listItems = (b.items || []).map(i => `<label class="check-item"><input type="checkbox"> <span>${i}</span></label>`).join('');
-            bodyHtml = `<div><h3 style="color:var(--brand-deep); margin-bottom:10px;">${b.title}</h3><div class="checklist">${listItems}</div></div>`;
+            contentHtml = `<div><h3 style="color:var(--brand-deep); margin-bottom:10px;">${b.title}</h3><div class="checklist">${listItems}</div></div>`;
+          } else if (b.type === 'image') {
+            contentHtml = `
+              <div class="media-card">
+                ${b.title ? `<div class="media-card-title">${b.title}</div>` : ''}
+                <img src="${b.url}" alt="${b.title || 'Изображение'}">
+                ${b.text ? `<div style="padding:10px 16px; font-size:0.88rem; color:var(--text-muted);">${b.text}</div>` : ''}
+              </div>
+            `;
+          } else if (b.type === 'video') {
+            let embedUrl = b.url || '';
+            if (embedUrl.includes('watch?v=')) embedUrl = embedUrl.replace('watch?v=', 'embed/');
+            contentHtml = `
+              <div class="media-card">
+                ${b.title ? `<div class="media-card-title">🎥 ${b.title}</div>` : ''}
+                <div class="media-video-wrap">
+                  <iframe src="${embedUrl}" allowfullscreen></iframe>
+                </div>
+                ${b.text ? `<div style="padding:10px 16px; font-size:0.88rem; color:var(--text-muted);">${b.text}</div>` : ''}
+              </div>
+            `;
+          } else if (b.type === 'file') {
+            contentHtml = `
+              <div class="file-attachment-box">
+                <div>
+                  <strong style="color:var(--brand-deep); font-size:0.95rem;">📄 ${b.title || 'Документ для ознакомления'}</strong>
+                  ${b.text ? `<div style="font-size:0.8rem; color:var(--text-muted); margin-top:2px;">${b.text}</div>` : ''}
+                </div>
+                <a href="${b.url || '#'}" target="_blank" class="btn btn-outline">Скачать файл 📥</a>
+              </div>
+            `;
           } else {
-            bodyHtml = `<div class="info-banner"><strong>${b.title}</strong><br><div style="margin-top:6px;">${b.text}</div></div>`;
+            contentHtml = `<div class="info-banner"><strong>${b.title}</strong><br><div style="margin-top:6px;">${b.text}</div></div>`;
           }
 
-          return `<div class="page-block-wrapper">${editBlockTools}${bodyHtml}</div>`;
+          return `<div class="page-block-wrapper">${editBlockTools}${contentHtml}</div>`;
         }).join('');
 
         area.innerHTML = `
           <div class="doc-header">
             <div>
               <div class="doc-nav-row">
-                <button class="btn-back" onclick="openDept('${dept.id}')">← К темам отдела</button>
+                <button class="btn-back" onclick="openDept('${dept.id}')">← К списку тем</button>
                 <div class="breadcrumbs"><a onclick="openDoc('home')">База знаний</a> / <a onclick="openDept('${dept.id}')">${dept.title}</a></div>
               </div>
               <h1 class="doc-title">${topic.title}</h1>
@@ -1017,14 +940,12 @@
             </div>
             ${canEdit ? `
               <div style="display:flex; gap:8px;">
-                <button class="btn btn-primary" onclick="addNewBlockDirectly()">+ Добавить пункт</button>
+                <button class="btn btn-primary" onclick="openCreateArticleBlockModal()">+ Добавить материал</button>
                 <button class="btn btn-outline" style="color:var(--accent-red); border-color:var(--accent-red);" onclick="deleteTopic('${topic.id}')">🗑️ Удалить тему</button>
               </div>
             ` : ''}
           </div>
-          <div class="doc-body">
-            ${blocksHtml}
-          </div>
+          <div class="doc-body">${blocksHtml}</div>
         `;
 
         area.querySelectorAll('.check-item input').forEach(input => {
@@ -1033,186 +954,358 @@
             else e.target.parentElement.classList.remove('done');
           });
         });
+        return;
+      }
+
+      // 4. ЭТАП 4: МОДУЛЬ «МОЕ ОБУЧЕНИЕ И АДАПТАЦИЯ» ДЛЯ СОТРУДНИКА
+      if (currentNav.type === 'my_training') {
+        const myCourses = coursesList.filter(c => (c.assignedUsers || []).includes(currentUser.id));
+        let coursesHtml = myCourses.map(c => {
+          const topic = topicsList.find(t => t.id === c.linkedTopicId);
+          return `
+            <div class="dash-card" style="margin-bottom:16px;">
+              <div class="dash-card-content">
+                <div style="display:flex; justify-content:space-between; align-items:center;">
+                  <h3 style="color:var(--brand-deep);">${c.title}</h3>
+                  <span class="tag tag-purple">Назначено вам</span>
+                </div>
+                <p style="font-size:0.85rem; color:var(--text-muted); margin:8px 0;">${c.desc}</p>
+                <div style="display:flex; gap:10px; margin-top:10px;">
+                  ${topic ? `<button class="btn btn-primary" onclick="openTopic('${topic.id}')">1. Изучить материалы курса 📖</button>` : ''}
+                  <button class="btn btn-outline" onclick="startCourseExam('${c.id}')">2. Пройти итоговый тест (${c.passScore}%) 📝</button>
+                </div>
+              </div>
+            </div>
+          `;
+        }).join('');
+
+        area.innerHTML = `
+          <div class="doc-header">
+            <div>
+              <div class="breadcrumbs">Корпоративный университет клиники «Надежда»</div>
+              <h1 class="doc-title">Мое обучение и ввод в должность</h1>
+              <div class="doc-meta"><span class="tag tag-blue">Сотрудник: ${currentUser.fullName}</span></div>
+            </div>
+          </div>
+          <div>
+            ${coursesHtml || '<div style="padding:24px; background:#fff; border-radius:10px; border:1px solid var(--brand-border); text-align:center; color:var(--text-muted);">На данный момент вам не назначено активных курсов обучения. Доступ открывает управляющий.</div>'}
+          </div>
+        `;
       }
     }
 
-    /* УПРАВЛЕНИЕ ТЕМАМИ (ПОДБЛОКАМИ) */
+    /* УПРАВЛЕНИЕ КАРТОЧКАМИ НАПРАВЛЕНИЙ (ЭТАП 1) */
+    function openCreateDeptModal() {
+      document.getElementById('modalTargetType').value = 'dept';
+      document.getElementById('modalItemId').value = '';
+      document.getElementById('moduleModalTitle').innerText = 'Новое операционное направление клиники';
+      document.getElementById('modalDeptSelectGroup').style.display = 'none';
+      document.getElementById('modalTitleInput').value = '';
+      document.getElementById('modalDescInput').value = '';
+      document.getElementById('modalIconInput').value = '⚡';
+      document.getElementById('moduleModal').classList.add('active');
+    }
+
+    function openEditDeptModal(deptId) {
+      const d = departments.find(x => x.id === deptId);
+      if (!d) return;
+      document.getElementById('modalTargetType').value = 'dept';
+      document.getElementById('modalItemId').value = d.id;
+      document.getElementById('moduleModalTitle').innerText = 'Редактировать направление';
+      document.getElementById('modalDeptSelectGroup').style.display = 'none';
+      document.getElementById('modalTitleInput').value = d.title;
+      document.getElementById('modalDescInput').value = d.desc;
+      document.getElementById('modalIconInput').value = d.icon;
+      document.getElementById('moduleModal').classList.add('active');
+    }
+
+    function deleteDept(deptId) {
+      if (confirm('Удалить направление со всеми вложенными темами?')) {
+        departments = departments.filter(d => d.id !== deptId);
+        topicsList = topicsList.filter(t => t.deptId !== deptId);
+        syncToCloud('depts', departments);
+        syncToCloud('topics', topicsList);
+        renderCurrentView();
+      }
+    }
+
+    /* УПРАВЛЕНИЕ ПОДБЛОКАМИ И ТЕМАМИ (ЭТАП 2) */
     function openCreateTopicModal(presetDeptId) {
-      document.getElementById('topicIdInput').value = '';
-      document.getElementById('topicModalTitle').innerText = 'Создать новый подблок (тему)';
-      document.getElementById('topicTitleInput').value = '';
-      document.getElementById('topicDescInput').value = '';
-      document.getElementById('topicIconInput').value = '📄';
-      if (presetDeptId) document.getElementById('topicCategorySelect').value = presetDeptId;
-      document.getElementById('topicModal').classList.add('active');
+      document.getElementById('modalTargetType').value = 'topic';
+      document.getElementById('modalItemId').value = '';
+      document.getElementById('moduleModalTitle').innerText = 'Новый подблок / Тема регламента';
+      document.getElementById('modalDeptSelectGroup').style.display = 'block';
+
+      const sel = document.getElementById('modalDeptSelect');
+      sel.innerHTML = departments.map(d => `<option value="${d.id}" ${d.id === presetDeptId ? 'selected' : ''}>${d.title}</option>`).join('');
+
+      document.getElementById('modalTitleInput').value = '';
+      document.getElementById('modalDescInput').value = '';
+      document.getElementById('modalIconInput').value = '📄';
+      document.getElementById('moduleModal').classList.add('active');
     }
 
     function openEditTopicModal(topicId) {
       const t = topicsList.find(x => x.id === topicId);
       if (!t) return;
-      document.getElementById('topicIdInput').value = t.id;
-      document.getElementById('topicModalTitle').innerText = 'Редактировать тему';
-      document.getElementById('topicTitleInput').value = t.title;
-      document.getElementById('topicDescInput').value = t.desc || '';
-      document.getElementById('topicIconInput').value = t.icon || '📄';
-      document.getElementById('topicCategorySelect').value = t.deptId;
-      document.getElementById('topicModal').classList.add('active');
-    }
+      document.getElementById('modalTargetType').value = 'topic';
+      document.getElementById('modalItemId').value = t.id;
+      document.getElementById('moduleModalTitle').innerText = 'Редактировать тему';
+      document.getElementById('modalDeptSelectGroup').style.display = 'block';
 
-    function closeTopicModal() {
-      document.getElementById('topicModal').classList.remove('active');
-    }
+      const sel = document.getElementById('modalDeptSelect');
+      sel.innerHTML = departments.map(d => `<option value="${d.id}" ${d.id === t.deptId ? 'selected' : ''}>${d.title}</option>`).join('');
 
-    function saveTopic() {
-      const id = document.getElementById('topicIdInput').value;
-      const title = document.getElementById('topicTitleInput').value.trim();
-      const desc = document.getElementById('topicDescInput').value.trim();
-      const icon = document.getElementById('topicIconInput').value.trim() || '📄';
-      const deptId = document.getElementById('topicCategorySelect').value;
-
-      if (!title) return alert('Введите название темы!');
-
-      if (id) {
-        const idx = topicsList.findIndex(x => x.id === id);
-        if (idx !== -1) {
-          topicsList[idx].title = title;
-          topicsList[idx].desc = desc;
-          topicsList[idx].icon = icon;
-          topicsList[idx].deptId = deptId;
-        }
-      } else {
-        const newTopicId = 'topic_' + Date.now();
-        topicsList.push({
-          id: newTopicId,
-          deptId: deptId,
-          title: title,
-          desc: desc,
-          icon: icon,
-          blocks: [
-            { type: 'banner', title: 'Основное положение регламента', text: 'Опишите подробный алгоритм и стандарты выполнения...' }
-          ]
-        });
-      }
-
-      syncToCloud('topics', topicsList);
-      closeTopicModal();
-      openDept(deptId);
+      document.getElementById('modalTitleInput').value = t.title;
+      document.getElementById('modalDescInput').value = t.desc || '';
+      document.getElementById('modalIconInput').value = t.icon || '📄';
+      document.getElementById('moduleModal').classList.add('active');
     }
 
     function deleteTopic(topicId) {
-      if (confirm('Удалить эту тему со всеми материалами?')) {
+      if (confirm('Удалить эту тему?')) {
         const t = topicsList.find(x => x.id === topicId);
-        const deptId = t ? t.deptId : 'operators';
+        const deptId = t ? t.deptId : 'home';
         topicsList = topicsList.filter(x => x.id !== topicId);
         syncToCloud('topics', topicsList);
         openDept(deptId);
       }
     }
 
-    /* УПРАВЛЕНИЕ БЛОКАМИ ВНУТРИ ТЕМЫ */
-    function addNewBlockDirectly() {
-      const topic = topicsList.find(t => t.id === currentNavState.topicId);
-      if (!topic) return;
-      topic.blocks = topic.blocks || [];
-      topic.blocks.push({ type: 'banner', title: 'Новый пункт регламента', text: 'Опишите детальный алгоритм действий...' });
-      syncToCloud('topics', topicsList);
-      renderCurrentView();
+    function closeModuleModal() {
+      document.getElementById('moduleModal').classList.remove('active');
     }
 
-    function openEditSingleBlockModal(idx) {
-      const topic = topicsList.find(t => t.id === currentNavState.topicId);
+    function saveModuleItem() {
+      const type = document.getElementById('modalTargetType').value;
+      const id = document.getElementById('modalItemId').value;
+      const title = document.getElementById('modalTitleInput').value.trim();
+      const desc = document.getElementById('modalDescInput').value.trim();
+      const icon = document.getElementById('modalIconInput').value.trim() || '📌';
+      const color = document.getElementById('modalColorSelect').value;
+
+      if (!title) return alert('Введите название!');
+
+      if (type === 'dept') {
+        if (id) {
+          const idx = departments.findIndex(d => d.id === id);
+          if (idx !== -1) departments[idx] = { ...departments[idx], title, desc, icon, color };
+        } else {
+          departments.push({ id: 'dept_' + Date.now(), title, desc, icon, color });
+        }
+        syncToCloud('depts', departments);
+        closeModuleModal();
+        openDoc('home');
+      } else {
+        const deptId = document.getElementById('modalDeptSelect').value;
+        if (id) {
+          const idx = topicsList.findIndex(t => t.id === id);
+          if (idx !== -1) topicsList[idx] = { ...topicsList[idx], deptId, title, desc, icon };
+        } else {
+          topicsList.push({
+            id: 'topic_' + Date.now(),
+            deptId: deptId,
+            title: title,
+            desc: desc,
+            icon: icon,
+            blocks: [{ type: 'banner', title: 'Основной регламент', text: 'Заполните содержание инструкции...' }]
+          });
+        }
+        syncToCloud('topics', topicsList);
+        closeModuleModal();
+        openDept(deptId);
+      }
+    }
+
+    /* УПРАВЛЕНИЕ МУЛЬТИМЕДИА И СТАТЬЯМИ (ЭТАП 3) */
+    function toggleArticleBlockFields() {
+      const type = document.getElementById('articleBlockTypeSelect').value;
+      const grpText = document.getElementById('grpBlockText');
+      const grpUrl = document.getElementById('grpBlockUrl');
+
+      if (type === 'image' || type === 'video' || type === 'file') {
+        grpUrl.style.display = 'block';
+      } else {
+        grpUrl.style.display = 'none';
+      }
+    }
+
+    function openCreateArticleBlockModal() {
+      document.getElementById('articleBlockIndex').value = '';
+      document.getElementById('articleBlockModalTitle').innerText = 'Добавить новый материал / пункт';
+      document.getElementById('articleBlockTitleInput').value = '';
+      document.getElementById('articleBlockTextInput').value = '';
+      document.getElementById('articleBlockUrlInput').value = '';
+      document.getElementById('articleBlockTypeSelect').value = 'banner';
+      toggleArticleBlockFields();
+      document.getElementById('articleBlockModal').classList.add('active');
+    }
+
+    function openEditArticleBlockModal(idx) {
+      const topic = topicsList.find(t => t.id === currentNav.topicId);
       if (!topic || !topic.blocks[idx]) return;
       const b = topic.blocks[idx];
 
-      document.getElementById('singleBlockIndex').value = idx;
-      document.getElementById('singleBlockTitleInput').value = b.title || '';
-      document.getElementById('singleBlockTextInput').value = b.text || (b.items ? b.items.join('\n') : '');
-      document.getElementById('singleBlockModal').classList.add('active');
+      document.getElementById('articleBlockIndex').value = idx;
+      document.getElementById('articleBlockModalTitle').innerText = 'Редактировать пункт';
+      document.getElementById('articleBlockTypeSelect').value = b.type || 'banner';
+      document.getElementById('articleBlockTitleInput').value = b.title || '';
+      document.getElementById('articleBlockTextInput').value = b.text || (b.items ? b.items.join('\n') : '');
+      document.getElementById('articleBlockUrlInput').value = b.url || '';
+      toggleArticleBlockFields();
+      document.getElementById('articleBlockModal').classList.add('active');
     }
 
-    function closeSingleBlockModal() {
-      document.getElementById('singleBlockModal').classList.remove('active');
+    function closeArticleBlockModal() {
+      document.getElementById('articleBlockModal').classList.remove('active');
     }
 
-    function saveSingleBlockChanges() {
-      const topic = topicsList.find(t => t.id === currentNavState.topicId);
-      const idx = parseInt(document.getElementById('singleBlockIndex').value);
-      if (!topic || isNaN(idx)) return;
+    function saveArticleBlock() {
+      const topic = topicsList.find(t => t.id === currentNav.topicId);
+      if (!topic) return;
 
-      const title = document.getElementById('singleBlockTitleInput').value.trim();
-      const text = document.getElementById('singleBlockTextInput').value;
+      const idxStr = document.getElementById('articleBlockIndex').value;
+      const type = document.getElementById('articleBlockTypeSelect').value;
+      const title = document.getElementById('articleBlockTitleInput').value.trim();
+      const text = document.getElementById('articleBlockTextInput').value;
+      const url = document.getElementById('articleBlockUrlInput').value.trim();
 
-      topic.blocks[idx].title = title;
-      if (topic.blocks[idx].type === 'checklist') {
-        topic.blocks[idx].items = text.split('\n').filter(x => x.trim());
+      topic.blocks = topic.blocks || [];
+
+      const newBlock = { type, title, text, url };
+      if (type === 'checklist') {
+        newBlock.items = text.split('\n').filter(x => x.trim());
+      }
+
+      if (idxStr !== '') {
+        topic.blocks[parseInt(idxStr)] = newBlock;
       } else {
-        topic.blocks[idx].text = text;
+        topic.blocks.push(newBlock);
       }
 
       syncToCloud('topics', topicsList);
-      closeSingleBlockModal();
+      closeArticleBlockModal();
       renderCurrentView();
     }
 
-    function deleteSingleBlock(idx) {
+    function deleteArticleBlock(idx) {
+      const topic = topicsList.find(t => t.id === currentNav.topicId);
+      if (!topic) return;
       if (confirm('Удалить этот пункт?')) {
-        const topic = topicsList.find(t => t.id === currentNavState.topicId);
-        if (!topic) return;
         topic.blocks.splice(idx, 1);
         syncToCloud('topics', topicsList);
         renderCurrentView();
       }
     }
 
-    /* ИИ ПОИСК */
-    function handleSearchKeyDown(e) { if (e.key === 'Enter') runAISearch(); }
-    function runAISearch() {
-      const q = document.getElementById('searchInput').value.trim().toLowerCase();
-      if (!q) return;
+    /* УПРАВЛЕНИЕ ОБУЧЕНИЕМ И ДОСТУПАМИ (ЭТАП 4) */
+    function openManageTrainingModal() {
+      renderTrainingTable();
+      document.getElementById('trainingModal').classList.add('active');
+    }
+    function closeTrainingModal() { document.getElementById('trainingModal').classList.remove('active'); }
 
-      const results = topicsList.filter(t => {
-        let text = (t.title + ' ' + (t.desc || '')).toLowerCase();
-        (t.blocks || []).forEach(b => { text += ' ' + (b.title || '') + ' ' + (b.text || '') + ' ' + (b.items ? b.items.join(' ') : ''); });
-        return text.includes(q);
+    function renderTrainingTable() {
+      const tbody = document.getElementById('trainingTableBody');
+      tbody.innerHTML = '';
+      coursesList.forEach(c => {
+        const topic = topicsList.find(t => t.id === c.linkedTopicId);
+        tbody.innerHTML += `
+          <tr>
+            <td><strong>${c.title}</strong></td>
+            <td><small>${topic ? topic.title : 'Не привязан'}</small></td>
+            <td>${c.passScore}%</td>
+            <td><button class="btn btn-outline" style="padding:3px 7px;" onclick="openAssignCourseModal('${c.id}')">👥 Доступ (${(c.assignedUsers||[]).length})</button></td>
+            <td><button class="btn btn-outline" style="color:var(--accent-red); padding:3px 7px;" onclick="deleteCourse('${c.id}')">Удалить</button></td>
+          </tr>
+        `;
+      });
+    }
+
+    function openCreateCourseModal() {
+      document.getElementById('courseTitleInput').value = '';
+      document.getElementById('courseDescInput').value = '';
+      document.getElementById('courseLinkedTopicSelect').innerHTML = topicsList.map(t => `<option value="${t.id}">${t.title}</option>`).join('');
+      document.getElementById('createCourseModal').classList.add('active');
+    }
+
+    function saveNewCourse() {
+      const title = document.getElementById('courseTitleInput').value.trim();
+      const desc = document.getElementById('courseDescInput').value.trim();
+      const linkedTopicId = document.getElementById('courseLinkedTopicSelect').value;
+      const passScore = parseInt(document.getElementById('coursePassScore').value) || 85;
+
+      if (!title) return alert('Введите название курса!');
+
+      coursesList.push({
+        id: 'course_' + Date.now(),
+        title, desc, linkedTopicId, passScore,
+        assignedUsers: []
       });
 
-      const area = document.getElementById('documentArea');
-      let resHtml = results.map(t => {
-        const dept = departments.find(d => d.id === t.deptId);
+      syncToCloud('courses', coursesList);
+      document.getElementById('createCourseModal').classList.remove('active');
+      renderTrainingTable();
+      alert('Курс обучения успешно создан!');
+    }
+
+    function openAssignCourseModal(courseId) {
+      const c = coursesList.find(x => x.id === courseId);
+      if (!c) return;
+      document.getElementById('assignCourseId').value = c.id;
+      document.getElementById('assignCourseTitle').innerText = `Доступ: ${c.title}`;
+
+      const listDiv = document.getElementById('assignUsersList');
+      listDiv.innerHTML = usersList.map(u => {
+        const checked = (c.assignedUsers || []).includes(u.id);
         return `
-          <div class="dash-card" onclick="openTopic('${t.id}')" style="margin-bottom:12px;">
-            <div class="dash-card-content">
-              <div class="dash-card-title">${t.icon || '📄'} ${t.title}</div>
-              <div class="dash-card-desc">${t.desc || ''}</div>
-              <div class="dash-card-footer"><span>Отдел: ${dept ? dept.title : ''}</span><span>Открыть →</span></div>
-            </div>
-          </div>
+          <label style="display:flex; align-items:center; gap:10px; padding:8px 0; border-bottom:1px solid #EEF5FA; cursor:pointer;">
+            <input type="checkbox" value="${u.id}" ${checked ? 'checked' : ''} class="assign-user-chk" style="width:17px; height:17px; accent-color:var(--brand-blue);">
+            <span><strong>${u.fullName}</strong> (${u.roleName})</span>
+          </label>
         `;
       }).join('');
 
-      area.innerHTML = `
-        <div class="doc-header">
-          <div>
-            <div class="doc-nav-row"><button class="btn-back" onclick="openDoc('home')">← Назад</button></div>
-            <h1 class="doc-title">Результаты поиска: «${q}»</h1>
-          </div>
-        </div>
-        <div>${resHtml || '<p style="color:var(--text-muted); background:#fff; padding:20px; border-radius:8px;">По данному запросу ничего не найдено.</p>'}</div>
-      `;
+      document.getElementById('assignCourseModal').classList.add('active');
     }
 
-    /* УПРАВЛЕНИЕ ПОЛЬЗОВАТЕЛЯМИ */
+    function saveCourseAssignments() {
+      const courseId = document.getElementById('assignCourseId').value;
+      const c = coursesList.find(x => x.id === courseId);
+      if (!c) return;
+
+      const checkedUserIds = [];
+      document.querySelectorAll('.assign-user-chk:checked').forEach(chk => checkedUserIds.push(chk.value));
+
+      c.assignedUsers = checkedUserIds;
+      syncToCloud('courses', coursesList);
+      document.getElementById('assignCourseModal').classList.remove('active');
+      renderTrainingTable();
+      alert('Доступы к обучению успешно обновлены!');
+    }
+
+    function deleteCourse(courseId) {
+      if (confirm('Удалить данный курс обучения?')) {
+        coursesList = coursesList.filter(c => c.id !== courseId);
+        syncToCloud('courses', coursesList);
+        renderTrainingTable();
+      }
+    }
+
+    function startCourseExam(courseId) {
+      const c = coursesList.find(x => x.id === courseId);
+      alert(`Итоговое тестирование по курсу «${c.title}».\nПроходной балл: ${c.passScore}%.\nДля успешной сдачи повторите материал в регламентах.`);
+    }
+
+    /* ПОЛЬЗОВАТЕЛИ */
     function openUsersModal() {
       const tbody = document.getElementById('usersTableBody');
       tbody.innerHTML = '';
       usersList.forEach(u => {
         tbody.innerHTML += `
           <tr>
-            <td><strong>${u.fullName}</strong></td>
-            <td><code>${u.username}</code></td>
-            <td><small>${u.email || '—'}</small></td>
-            <td>${u.roleName}</td>
-            <td>${u.username !== 'admin' ? `<button class="btn btn-outline" style="color:var(--accent-red); padding:3px 6px;" onclick="deleteUser('${u.id}')">Удалить</button>` : 'Администратор'}</td>
+            <td><strong>${u.fullName}</strong></td><td><code>${u.username}</code></td><td>${u.email||'—'}</td><td>${u.roleName}</td>
+            <td>${u.username !== 'admin' ? `<button class="btn btn-outline" style="color:var(--accent-red); padding:2px 6px;" onclick="deleteUser('${u.id}')">Удалить</button>` : 'Администратор'}</td>
           </tr>
         `;
       });
@@ -1243,48 +1336,6 @@
         syncToCloud('users', usersList);
         openUsersModal();
       }
-    }
-
-    function openSelfProfileModal() {
-      document.getElementById('selfEmailInput').value = currentUser.email || '';
-      document.getElementById('selfCurrentPass').value = '';
-      document.getElementById('selfNewPass').value = '';
-      document.getElementById('selfNewPassConfirm').value = '';
-      document.getElementById('selfProfileModal').classList.add('active');
-    }
-
-    function saveSelfProfileChanges() {
-      const newEmail = document.getElementById('selfEmailInput').value.trim();
-      const curPass = document.getElementById('selfCurrentPass').value.trim();
-      const newPass = document.getElementById('selfNewPass').value.trim();
-      const newPassConf = document.getElementById('selfNewPassConfirm').value.trim();
-
-      if (!newEmail) return alert('Email не может быть пустым!');
-      if (!curPass || curPass !== currentUser.password) return alert('Неверно введен текущий пароль!');
-
-      if (newPass) {
-        if (newPass.length < 4) return alert('Новый пароль должен содержать от 4 символов!');
-        if (newPass !== newPassConf) return alert('Новые пароли не совпадают!');
-        currentUser.password = newPass;
-      }
-      currentUser.email = newEmail;
-
-      const idx = usersList.findIndex(u => u.id === currentUser.id);
-      if (idx !== -1) {
-        usersList[idx].email = newEmail;
-        if (newPass) usersList[idx].password = newPass;
-      }
-
-      sessionStorage.setItem('nadezhda_active_user', JSON.stringify(currentUser));
-      syncToCloud('users', usersList);
-      document.getElementById('selfProfileModal').classList.remove('active');
-      alert('Данные сохранены!');
-    }
-
-    function exportData() {
-      const blob = new Blob([JSON.stringify({ topics: topicsList, users: usersList }, null, 2)], { type: 'application/json' });
-      const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
-      a.download = `nadezhda_backup_${new Date().toISOString().slice(0,10)}.json`; a.click();
     }
 
     initApp();
