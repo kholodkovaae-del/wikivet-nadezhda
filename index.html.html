@@ -7,6 +7,11 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:ital@1&display=swap" rel="stylesheet">
+  
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+
   <style>
     :root {
       --brand-blue: #0088D4;
@@ -123,56 +128,28 @@
     .header-logo { display: flex; align-items: center; gap: 12px; cursor: pointer; }
     .header-logo-img { height: 52px; max-width: 240px; object-fit: contain; display: block; }
 
-    .header-search-container {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      position: relative;
-    }
+    .header-search-container { display: flex; align-items: center; gap: 6px; position: relative; }
     .header-search { width: 300px; position: relative; }
     .header-search input {
-      width: 100%;
-      padding: 9px 14px 9px 38px;
-      border: 1.5px solid var(--brand-border);
-      border-radius: 8px;
-      font-size: 0.85rem;
-      background: #FAFCFE;
-      color: var(--text-main);
-      outline: none;
-      transition: all 0.2s;
+      width: 100%; padding: 9px 14px 9px 38px;
+      border: 1.5px solid var(--brand-border); border-radius: 8px;
+      font-size: 0.85rem; background: #FAFCFE; color: var(--text-main);
+      outline: none; transition: all 0.2s;
     }
     .header-search input:focus { border-color: var(--brand-blue); background: #FFFFFF; box-shadow: 0 0 0 3px rgba(0, 136, 212, 0.15); }
     .header-search::before { content: "✨"; position: absolute; left: 12px; top: 50%; transform: translateY(-50%); font-size: 0.95rem; }
 
     .btn-ai-search {
       background: linear-gradient(135deg, var(--brand-blue), var(--ai-purple));
-      color: white;
-      border: none;
-      padding: 9px 13px;
-      border-radius: 8px;
-      font-size: 0.8rem;
-      font-weight: 700;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      transition: all 0.2s;
+      color: white; border: none; padding: 9px 13px; border-radius: 8px;
+      font-size: 0.8rem; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 6px; transition: all 0.2s;
     }
     .btn-ai-search:hover { box-shadow: 0 4px 12px rgba(124, 58, 237, 0.3); transform: translateY(-1px); }
 
     .header-actions { display: flex; align-items: center; gap: 8px; }
     .btn {
-      padding: 7px 12px;
-      border-radius: 7px;
-      font-size: 0.8rem;
-      font-weight: 600;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      border: none;
-      transition: all 0.15s;
-      white-space: nowrap;
+      padding: 7px 12px; border-radius: 7px; font-size: 0.8rem; font-weight: 600;
+      cursor: pointer; display: inline-flex; align-items: center; gap: 6px; border: none; transition: all 0.15s; white-space: nowrap;
     }
     .btn-primary { background: var(--brand-blue); color: #fff; }
     .btn-primary:hover { background: var(--brand-blue-hover); }
@@ -182,121 +159,59 @@
     .btn-yandex:hover { background: #FFF4F2; }
 
     .btn-back {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      background: #FFFFFF;
-      border: 1px solid var(--brand-border);
-      color: var(--brand-deep);
-      padding: 5px 12px;
-      border-radius: 6px;
-      font-size: 0.8rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.15s ease;
-      box-shadow: 0 1px 3px rgba(11, 53, 88, 0.04);
+      display: inline-flex; align-items: center; gap: 6px; background: #FFFFFF; border: 1px solid var(--brand-border);
+      color: var(--brand-deep); padding: 5px 12px; border-radius: 6px; font-size: 0.8rem; font-weight: 600; cursor: pointer;
+      transition: all 0.15s ease; box-shadow: 0 1px 3px rgba(11, 53, 88, 0.04);
     }
     .btn-back:hover { background: var(--brand-light); color: var(--brand-blue); border-color: var(--brand-blue); transform: translateX(-2px); }
 
+    .cloud-indicator {
+      display: flex; align-items: center; gap: 5px; font-size: 0.75rem; color: var(--accent-green);
+      background: var(--accent-green-bg); padding: 4px 8px; border-radius: 6px; font-weight: 600;
+    }
+
     .user-profile-badge {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding-left: 10px;
-      border-left: 1px solid var(--brand-border);
-      position: relative;
+      display: flex; align-items: center; gap: 10px; padding-left: 10px; border-left: 1px solid var(--brand-border); position: relative;
     }
     .avatar-wrapper { position: relative; cursor: pointer; }
     .user-avatar {
-      width: 36px; height: 36px;
-      border-radius: 50%;
-      background: var(--brand-deep);
-      color: white;
-      font-weight: 700;
-      font-size: 0.85rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      width: 36px; height: 36px; border-radius: 50%; background: var(--brand-deep); color: white;
+      font-weight: 700; font-size: 0.85rem; display: flex; align-items: center; justify-content: center;
     }
     .tests-badge-counter {
-      position: absolute;
-      top: -5px; right: -6px;
-      background: var(--accent-red);
-      color: white;
-      font-size: 0.7rem;
-      font-weight: 800;
-      min-width: 18px; height: 18px;
-      border-radius: 9px;
-      display: flex; align-items: center; justify-content: center;
-      padding: 0 4px;
-      box-shadow: 0 0 0 2px #fff;
+      position: absolute; top: -5px; right: -6px; background: var(--accent-red); color: white;
+      font-size: 0.7rem; font-weight: 800; min-width: 18px; height: 18px; border-radius: 9px;
+      display: flex; align-items: center; justify-content: center; padding: 0 4px; box-shadow: 0 0 0 2px #fff;
     }
     .user-info { font-size: 0.8rem; text-align: left; }
     .user-name-row { display: flex; align-items: center; gap: 6px; }
     .user-name { font-weight: 700; color: var(--brand-deep); }
     .user-tests-tag {
-      background: var(--accent-red-bg);
-      color: var(--accent-red);
-      padding: 1px 6px;
-      border-radius: 10px;
-      font-size: 0.7rem;
-      font-weight: 700;
-      cursor: pointer;
+      background: var(--accent-red-bg); color: var(--accent-red); padding: 1px 6px; border-radius: 10px;
+      font-size: 0.7rem; font-weight: 700; cursor: pointer;
     }
     .user-role { font-size: 0.72rem; color: var(--text-muted); }
 
     /* Сайдбар */
     .sidebar {
-      width: 300px;
-      background: #FFFFFF;
-      border-right: 1px solid var(--brand-border);
-      margin-top: 72px;
-      height: calc(100vh - 72px);
-      overflow-y: auto;
-      padding: 18px 0;
-      flex-shrink: 0;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
+      width: 300px; background: #FFFFFF; border-right: 1px solid var(--brand-border); margin-top: 72px;
+      height: calc(100vh - 72px); overflow-y: auto; padding: 18px 0; flex-shrink: 0;
+      display: flex; flex-direction: column; justify-content: space-between;
     }
     .nav-category { margin-bottom: 16px; }
-    .nav-cat-title {
-      padding: 6px 20px;
-      font-size: 0.72rem;
-      font-weight: 700;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      letter-spacing: 0.6px;
-    }
+    .nav-cat-title { padding: 6px 20px; font-size: 0.72rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.6px; }
     .nav-item {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 9px 20px;
-      font-size: 0.85rem;
-      color: var(--brand-deep);
-      cursor: pointer;
-      border-left: 4px solid transparent;
-      transition: all 0.15s;
+      display: flex; align-items: center; justify-content: space-between; padding: 9px 20px; font-size: 0.85rem;
+      color: var(--brand-deep); cursor: pointer; border-left: 4px solid transparent; transition: all 0.15s;
     }
     .nav-item:hover { background: var(--brand-light); color: var(--brand-blue); }
     .nav-item.active { background: var(--brand-light); color: var(--brand-blue); font-weight: 600; border-left-color: var(--brand-blue); }
 
-    .sidebar-footer {
-      padding: 14px 18px;
-      border-top: 1px solid var(--brand-border);
-      background: #FAFCFE;
-    }
+    .sidebar-footer { padding: 14px 18px; border-top: 1px solid var(--brand-border); background: #FAFCFE; }
     .sidebar-footer button { width: 100%; margin-bottom: 6px; font-size: 0.75rem; }
 
     /* Рабочая зона */
-    .main-content {
-      flex: 1;
-      margin-top: 72px;
-      height: calc(100vh - 72px);
-      overflow-y: auto;
-      padding: 28px 40px;
-    }
+    .main-content { flex: 1; margin-top: 72px; height: calc(100vh - 72px); overflow-y: auto; padding: 28px 40px; }
     .content-wrap { max-width: 1040px; margin: 0 auto; }
 
     .doc-nav-row { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
@@ -305,12 +220,8 @@
     .breadcrumbs a:hover { text-decoration: underline; }
 
     .doc-header {
-      border-bottom: 2px solid var(--brand-border);
-      padding-bottom: 16px;
-      margin-bottom: 22px;
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
+      border-bottom: 2px solid var(--brand-border); padding-bottom: 16px; margin-bottom: 22px;
+      display: flex; justify-content: space-between; align-items: flex-start;
     }
     .doc-title { font-size: 1.8rem; font-weight: 700; color: var(--brand-deep); }
     .doc-meta { display: flex; gap: 10px; margin-top: 8px; font-size: 0.8rem; }
@@ -321,107 +232,45 @@
     .tag-ai { background: var(--ai-purple-light); color: var(--ai-purple); }
 
     /* Карточки направлений */
-    .dashboard-header-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin: 24px 0 14px;
-    }
-    .dashboard-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 20px;
-      margin-bottom: 24px;
-    }
+    .dashboard-header-row { display: flex; justify-content: space-between; align-items: center; margin: 24px 0 14px; }
+    .dashboard-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-bottom: 24px; }
     .dash-card {
-      background: #FFFFFF;
-      border-radius: 12px;
-      border: 1px solid var(--brand-border);
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      box-shadow: 0 2px 8px rgba(11, 53, 88, 0.05);
-      position: relative;
-      transition: all 0.2s ease;
+      background: #FFFFFF; border-radius: 12px; border: 1px solid var(--brand-border); overflow: hidden;
+      display: flex; flex-direction: column; box-shadow: 0 2px 8px rgba(11, 53, 88, 0.05); position: relative; transition: all 0.2s ease;
     }
-    .dash-card:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 8px 18px rgba(11, 53, 88, 0.1);
-      border-color: var(--brand-blue);
-    }
-    .dash-card-img {
-      height: 110px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 2.6rem;
-      color: white;
-      cursor: pointer;
-    }
+    .dash-card:hover { transform: translateY(-3px); box-shadow: 0 8px 18px rgba(11, 53, 88, 0.1); border-color: var(--brand-blue); }
+    .dash-card-img { height: 110px; display: flex; align-items: center; justify-content: center; font-size: 2.6rem; color: white; cursor: pointer; }
     .dash-card-content { padding: 16px; flex: 1; display: flex; flex-direction: column; cursor: pointer; }
     .dash-card-title { font-size: 1.05rem; font-weight: 700; color: var(--brand-deep); margin-bottom: 6px; }
     .dash-card-desc { font-size: 0.82rem; color: var(--text-muted); line-height: 1.4; margin-bottom: 12px; flex: 1; }
     .dash-card-footer { font-size: 0.78rem; font-weight: 600; color: var(--brand-blue); display: flex; justify-content: space-between; align-items: center; }
     
     .dash-card-actions {
-      position: absolute;
-      top: 8px; right: 8px;
-      display: flex; gap: 4px;
-      background: rgba(255, 255, 255, 0.9);
-      padding: 3px 6px;
-      border-radius: 6px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-      z-index: 5;
+      position: absolute; top: 8px; right: 8px; display: flex; gap: 4px;
+      background: rgba(255, 255, 255, 0.9); padding: 3px 6px; border-radius: 6px; box-shadow: 0 2px 6px rgba(0,0,0,0.1); z-index: 5;
     }
 
     /* Блоки страницы */
-    .page-block-wrapper {
-      position: relative;
-      margin-bottom: 22px;
-      border-radius: 8px;
-      transition: all 0.15s;
-    }
-    .page-block-wrapper:hover {
-      outline: 1.5px dashed var(--brand-blue);
-      outline-offset: 4px;
-    }
+    .page-block-wrapper { position: relative; margin-bottom: 22px; border-radius: 8px; transition: all 0.15s; }
+    .page-block-wrapper:hover { outline: 1.5px dashed var(--brand-blue); outline-offset: 4px; }
     .page-block-tools {
-      position: absolute;
-      top: -12px; right: 12px;
-      display: none; gap: 4px;
-      background: #FFFFFF;
-      border: 1px solid var(--brand-border);
-      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-      border-radius: 6px;
-      padding: 3px 6px;
-      z-index: 10;
+      position: absolute; top: -12px; right: 12px; display: none; gap: 4px; background: #FFFFFF;
+      border: 1px solid var(--brand-border); box-shadow: 0 2px 8px rgba(0,0,0,0.08); border-radius: 6px; padding: 3px 6px; z-index: 10;
     }
     .page-block-wrapper:hover .page-block-tools { display: flex; }
     .block-tool-btn {
-      background: none; border: none;
-      font-size: 0.75rem; font-weight: 600;
-      color: var(--brand-deep); cursor: pointer;
-      padding: 2px 6px; border-radius: 4px;
-      display: flex; align-items: center; gap: 3px;
+      background: none; border: none; font-size: 0.75rem; font-weight: 600; color: var(--brand-deep);
+      cursor: pointer; padding: 2px 6px; border-radius: 4px; display: flex; align-items: center; gap: 3px;
     }
     .block-tool-btn:hover { background: var(--brand-light); color: var(--brand-blue); }
 
     .info-banner {
-      background: #FFFFFF;
-      border-left: 4px solid var(--brand-blue);
-      padding: 16px 20px;
-      border-radius: 0 8px 8px 0;
-      box-shadow: 0 1px 3px rgba(11, 53, 88, 0.04);
-      border-top: 1px solid #E2E8F0;
-      border-right: 1px solid #E2E8F0;
-      border-bottom: 1px solid #E2E8F0;
+      background: #FFFFFF; border-left: 4px solid var(--brand-blue); padding: 16px 20px; border-radius: 0 8px 8px 0;
+      box-shadow: 0 1px 3px rgba(11, 53, 88, 0.04); border-top: 1px solid #E2E8F0; border-right: 1px solid #E2E8F0; border-bottom: 1px solid #E2E8F0;
     }
     .styled-table {
-      width: 100%; border-collapse: collapse;
-      background: #FFFFFF; border-radius: 8px;
-      overflow: hidden; margin: 12px 0;
-      box-shadow: 0 1px 3px rgba(11, 53, 88, 0.04);
-      border: 1px solid var(--brand-border); font-size: 0.88rem;
+      width: 100%; border-collapse: collapse; background: #FFFFFF; border-radius: 8px;
+      overflow: hidden; margin: 12px 0; box-shadow: 0 1px 3px rgba(11, 53, 88, 0.04); border: 1px solid var(--brand-border); font-size: 0.88rem;
     }
     .styled-table th { background: var(--brand-light); color: var(--brand-deep); padding: 10px 14px; text-align: left; font-weight: 600; border-bottom: 1px solid var(--brand-border); }
     .styled-table td { padding: 10px 14px; border-bottom: 1px solid #E9F1F7; vertical-align: top; }
@@ -435,88 +284,53 @@
     .check-item.done span { text-decoration: line-through; color: var(--text-muted); }
 
     .timer-container {
-      background: #FFFBEB; border: 1.5px solid #FDE68A;
-      color: #92400E; padding: 10px 18px; border-radius: 8px;
-      display: flex; align-items: center; gap: 12px;
-      font-size: 0.95rem; font-weight: 700; margin-bottom: 20px;
+      background: #FFFBEB; border: 1.5px solid #FDE68A; color: #92400E; padding: 10px 18px; border-radius: 8px;
+      display: flex; align-items: center; gap: 12px; font-size: 0.95rem; font-weight: 700; margin-bottom: 20px;
     }
-    .timer-badge {
-      background: #F59E0B; color: white;
-      padding: 4px 10px; border-radius: 6px;
-      font-family: monospace; font-size: 1.1rem; letter-spacing: 1px;
-    }
+    .timer-badge { background: #F59E0B; color: white; padding: 4px 10px; border-radius: 6px; font-family: monospace; font-size: 1.1rem; letter-spacing: 1px; }
 
     .test-card {
-      background: #FFFFFF; border: 1px solid var(--brand-border);
-      border-radius: 10px; padding: 18px; margin-bottom: 14px;
-      display: flex; justify-content: space-between; align-items: center;
-      box-shadow: 0 2px 6px rgba(11, 53, 88, 0.04);
+      background: #FFFFFF; border: 1px solid var(--brand-border); border-radius: 10px; padding: 18px; margin-bottom: 14px;
+      display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 6px rgba(11, 53, 88, 0.04);
     }
-    .test-question-box {
-      background: #FFFFFF; border: 1px solid var(--brand-border);
-      border-radius: 8px; padding: 16px; margin-bottom: 16px;
-    }
+    .test-question-box { background: #FFFFFF; border: 1px solid var(--brand-border); border-radius: 8px; padding: 16px; margin-bottom: 16px; }
     .test-option-label {
-      display: flex; align-items: center; gap: 10px;
-      padding: 10px 14px; background: #F8FAFD; border: 1px solid #E2E8F0;
-      border-radius: 6px; margin-top: 8px; cursor: pointer;
-      font-size: 0.9rem; transition: all 0.15s;
+      display: flex; align-items: center; gap: 10px; padding: 10px 14px; background: #F8FAFD; border: 1px solid #E2E8F0;
+      border-radius: 6px; margin-top: 8px; cursor: pointer; font-size: 0.9rem; transition: all 0.15s;
     }
     .test-option-label:hover { background: var(--brand-light); border-color: var(--brand-blue); }
 
     /* Таблица прав доступа Ветменеджер */
-    .vetmanager-tabs {
-      display: flex; gap: 8px;
-      border-bottom: 2px solid var(--brand-border); margin-bottom: 16px;
-    }
+    .vetmanager-tabs { display: flex; gap: 8px; border-bottom: 2px solid var(--brand-border); margin-bottom: 16px; }
     .vm-tab {
-      padding: 8px 16px; font-size: 0.85rem; font-weight: 700;
-      color: var(--text-muted); cursor: pointer; border-radius: 6px 6px 0 0;
+      padding: 8px 16px; font-size: 0.85rem; font-weight: 700; color: var(--text-muted); cursor: pointer; border-radius: 6px 6px 0 0;
       background: #F1F5F9; border: 1px solid var(--brand-border); border-bottom: none;
     }
-    .vm-tab.active {
-      background: #FFFFFF; color: var(--brand-blue);
-      border-top: 3px solid var(--brand-blue);
-    }
-    .perm-grid-table {
-      width: 100%; border-collapse: collapse; font-size: 0.82rem;
-      background: #FFFFFF; border: 1px solid #CBD5E1;
-    }
-    .perm-grid-table th {
-      background: #E2E8F0; padding: 8px 10px;
-      color: var(--brand-deep); text-align: center; border: 1px solid #CBD5E1;
-    }
+    .vm-tab.active { background: #FFFFFF; color: var(--brand-blue); border-top: 3px solid var(--brand-blue); }
+    .perm-grid-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; background: #FFFFFF; border: 1px solid #CBD5E1; }
+    .perm-grid-table th { background: #E2E8F0; padding: 8px 10px; color: var(--brand-deep); text-align: center; border: 1px solid #CBD5E1; }
     .perm-grid-table th:first-child { text-align: left; }
-    .perm-grid-table td {
-      padding: 6px 8px; border: 1px solid #E2E8F0; text-align: center;
-    }
+    .perm-grid-table td { padding: 6px 8px; border: 1px solid #E2E8F0; text-align: center; }
     .perm-grid-table td:first-child { text-align: left; font-weight: 600; }
-    .cell-perm {
-      background: #FEE2E2; cursor: pointer; transition: all 0.1s;
-    }
+    .cell-perm { background: #FEE2E2; cursor: pointer; transition: all 0.1s; }
     .cell-perm.checked { background: #D1FAE5; }
     .cell-perm input { cursor: pointer; }
 
     /* Модальные окна */
     .modal-overlay {
-      display: none; position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(11, 37, 62, 0.55); z-index: 1000;
-      align-items: center; justify-content: center; backdrop-filter: blur(2px);
+      display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(11, 37, 62, 0.55); z-index: 1000; align-items: center; justify-content: center; backdrop-filter: blur(2px);
     }
     .modal-overlay.active { display: flex; }
     .modal-window {
-      background: #FFFFFF; width: 880px; max-width: 95vw;
-      border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.18);
-      border-top: 4px solid var(--brand-blue); padding: 24px;
-      max-height: 90vh; overflow-y: auto;
+      background: #FFFFFF; width: 880px; max-width: 95vw; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.18);
+      border-top: 4px solid var(--brand-blue); padding: 24px; max-height: 90vh; overflow-y: auto;
     }
     .modal-title { font-size: 1.25rem; font-weight: 700; color: var(--brand-deep); margin-bottom: 16px; }
     .form-group { margin-bottom: 14px; }
     .form-group label { display: block; font-size: 0.78rem; font-weight: 600; color: var(--brand-deep); margin-bottom: 5px; text-transform: uppercase; }
     .form-group input, .form-group select, .form-group textarea {
-      width: 100%; padding: 9px 12px;
-      border: 1.5px solid var(--brand-border); border-radius: 6px;
+      width: 100%; padding: 9px 12px; border: 1.5px solid var(--brand-border); border-radius: 6px;
       font-size: 0.88rem; font-family: inherit; outline: none;
     }
     .form-group textarea { min-height: 80px; resize: vertical; }
@@ -526,20 +340,11 @@
     .btn-icon { background: none; border: none; cursor: pointer; font-size: 0.95rem; padding: 2px 5px; border-radius: 4px; }
     .btn-icon:hover { background: #E2E8F0; }
 
-    /* Окно восстановления пароля */
     .recovery-step { display: none; text-align: left; }
     .recovery-step.active { display: block; }
     .code-display-box {
-      background: var(--brand-light);
-      border: 1.5px dashed var(--brand-blue);
-      border-radius: 8px;
-      padding: 12px;
-      text-align: center;
-      margin: 12px 0;
-      font-size: 1.25rem;
-      font-weight: 800;
-      letter-spacing: 4px;
-      color: var(--brand-deep);
+      background: var(--brand-light); border: 1.5px dashed var(--brand-blue); border-radius: 8px;
+      padding: 12px; text-align: center; margin: 12px 0; font-size: 1.25rem; font-weight: 800; letter-spacing: 4px; color: var(--brand-deep);
     }
   </style>
 </head>
@@ -571,7 +376,7 @@
       </form>
 
       <div class="auth-hint">
-        🔒 Вход по логину или email. Восстановление пароля происходит через подтверждение по почте.
+        🔒 Вход по логину или email. Данные автоматически синхронизируются на всех устройствах через облако Firebase.
       </div>
     </div>
   </div>
@@ -583,7 +388,7 @@
       
       <div class="recovery-step active" id="recStep1">
         <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:14px;">
-          Введите вашу рабочую электронную почту или логин. Мы отправим вам письмо с проверочным кодом для смены пароля.
+          Введите вашу рабочую электронную почту или логин. Мы отправим вам проверочный код для смены пароля.
         </p>
         <div class="form-group">
           <label>Email или логин сотрудника</label>
@@ -646,6 +451,11 @@
     </div>
 
     <div class="header-actions">
+      <!-- Индикатор синхронизации с базой -->
+      <div class="cloud-indicator" id="cloudStatusBadge" title="Облачная база активна: данные общие для всех ПК и телефонов">
+        ☁️ Облако онлайн
+      </div>
+
       <button class="btn btn-outline" id="uploadLogoBtn" style="display:none;" onclick="document.getElementById('logoFileInput').click()" title="Загрузить свой оригинальный файл логотипа">
         🖼️ Загрузить логотип
       </button>
@@ -659,7 +469,7 @@
       <button class="btn btn-outline" id="usersManageBtn" style="display:none;" onclick="openUsersModal()">👥 Сотрудники и права</button>
       <button class="btn btn-primary" id="newDocBtn" style="display:none;" onclick="openCreateModal()">+ Новая страница</button>
       
-      <!-- Профиль текущего сотрудника с кнопкой «Ключ» для смены Email и пароля -->
+      <!-- Профиль текущего сотрудника -->
       <div class="user-profile-badge">
         <div class="avatar-wrapper" onclick="openDoc('my_tests')" title="Открыть назначенные тестирования">
           <div class="user-avatar" id="headerAvatar">?</div>
@@ -717,7 +527,7 @@
     </div>
   </div>
 
-  <!-- МОДАЛЬНОЕ ОКНО: РЕДАКТИРОВАНИЕ/ДОБАВЛЕНИЕ КАРТОЧКИ НАПРАВЛЕНИЯ -->
+  <!-- МОДАЛЬНОЕ ОКНО: КАРТОЧКА НАПРАВЛЕНИЯ -->
   <div class="modal-overlay" id="dashCardModal">
     <div class="modal-window" style="width: 540px;">
       <div class="modal-title" id="dashCardModalTitle">Карточка операционного направления</div>
@@ -771,7 +581,6 @@
         <div class="vm-tab" id="tabUsersBtn" onclick="switchVmTab('users')">Доступ по пользователям</div>
       </div>
 
-      <!-- Вкладка 1: По ролям -->
       <div id="vmRolesTabContent">
         <p style="font-size:0.8rem; color:var(--text-muted); margin-bottom:12px;">
           Нажмите на ячейку для переключения разрешения (зелёный — разрешено, красный — запрещено).
@@ -789,7 +598,6 @@
         <table class="perm-grid-table" id="vmRolePermsTable"></table>
       </div>
 
-      <!-- Вкладка 2: По пользователям -->
       <div id="vmUsersTabContent" style="display:none;">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
           <span style="font-size:0.85rem; color:var(--text-muted);">Список учетных записей клиники:</span>
@@ -841,7 +649,7 @@
     <div class="modal-window" style="width: 500px;">
       <div class="modal-title">Новый сотрудник</div>
       <div class="form-group"><label>ФИО</label><input type="text" id="newFullName" required></div>
-      <div class="form-group"><label>Email сотрудника (для восстановления)</label><input type="email" id="newEmail" placeholder="doctor@nadezhda.vet" required></div>
+      <div class="form-group"><label>Email сотрудника</label><input type="email" id="newEmail" placeholder="doctor@nadezhda.vet" required></div>
       <div class="form-group"><label>Логин</label><input type="text" id="newUsername" required></div>
       <div class="form-group"><label>Пароль</label><input type="password" id="newPassword" required></div>
       <div class="form-group">
@@ -862,7 +670,7 @@
     </div>
   </div>
 
-  <!-- МОДАЛЬНОЕ ОКНО: НАСТРОЙКИ СВОЕГО АККАУНТА (СМЕНА EMAIL И ПАРОЛЯ) -->
+  <!-- МОДАЛЬНОЕ ОКНО: НАСТРОЙКИ СВОЕГО АККАУНТА -->
   <div class="modal-overlay" id="selfProfileModal">
     <div class="modal-window" style="width: 460px;">
       <div class="modal-title">Настройки аккаунта</div>
@@ -992,7 +800,7 @@
     </div>
   </div>
 
-  <!-- СОЗДАНИЕ НОВОЙ СТРАНИЦЫ -->
+  <!-- СОЗДАНИЕ СТРАНИЦЫ -->
   <div class="modal-overlay" id="pageEditorModal">
     <div class="modal-window">
       <div class="modal-title" id="pageEditorTitle">Создание страницы</div>
@@ -1021,6 +829,31 @@
   </div>
 
   <script>
+    /* ========================================================
+       ВАШИ РЕАЛЬНЫЕ КЛЮЧИ ИЗ СКРИНШОТА FIREBASE
+    ======================================================== */
+    const firebaseConfig = {
+      apiKey: "AIzaSyD_jmZbvNN73hL4fOiSbSpzH-v43wLSkGw",
+      authDomain: "wikivet-nadezhda.firebaseapp.com",
+      databaseURL: "https://wikivet-nadezhda-default-rtdb.europe-west1.firebasedatabase.app",
+      projectId: "wikivet-nadezhda",
+      storageBucket: "wikivet-nadezhda.firebasestorage.app",
+      messagingSenderId: "832981921004",
+      appId: "1:832981921004:web:411a7d5302018a47f9c9c9",
+      measurementId: "G-MBJTPYW46H"
+    };
+
+    let firebaseDb = null;
+    let isCloudOnline = false;
+
+    try {
+      firebase.initializeApp(firebaseConfig);
+      firebaseDb = firebase.database();
+      isCloudOnline = true;
+    } catch(err) {
+      console.warn("Ошибка инициализации Firebase:", err);
+    }
+
     const DEFAULT_LOGO_DATA_URL = `data:image/svg+xml;utf8,<svg viewBox="0 0 460 120" xmlns="http://www.w3.org/2000/svg"><path d="M46 8C48 3 53 1 58 4C63 7 60 14 62 18C65 19 69 19 72 22C77 26 81 33 76 39C72 44 65 44 63 46C60 48 60 52 61 55C62 58 64 61 62 65C60 70 56 74 53 78C50 82 46 87 40 90C35 93 28 95 23 94C18 93 14 91 10 88C5 84 2 79 1 74C-1 67 2 61 6 56C10 52 14 47 17 41C20 35 23 27 28 21C32 16 39 12 46 8Z" fill="%230088D4"/><path d="M74 21C77 15 81 12 85 16C89 20 86 27 88 32C92 34 97 38 98 43C100 48 98 54 98 59C97 64 99 69 102 73C106 79 112 85 116 91C119 96 118 102 113 105C108 108 101 107 96 104C91 101 87 97 84 93C82 89 80 84 79 79C78 74 76 69 75 64Z" fill="%230088D4"/><path d="M12 70C14 85 24 100 42 106C58 111 76 109 90 102C102 96 112 85 115 72C117 62 116 52 112 42C108 32 101 24 93 18C90 16 88 18 87 22C85 27 82 32 78 35C74 38 69 39 64 36C60 33 58 28 58 23C58 18 55 12 51 9C46 6 41 8 38 12C34 18 29 25 25 33C20 42 16 52 13 62Z" fill="%230088D4"/><path d="M45 42H71V59H88V85H71V102H45V85H28V59H45V42Z" fill="%23FFFFFF"/><text x="135" y="42" font-family="'Playfair Display', Georgia, serif" font-style="italic" font-size="19" fill="%230088D4">ветеринарная  клиника</text><text x="135" y="86" font-family="'Inter', sans-serif" font-weight="800" font-size="44" fill="%230088D4" letter-spacing="3.5">НАДЕЖДА</text></svg>`;
 
     const DEFAULT_USERS = [
@@ -1109,25 +942,17 @@
       { id: "mod_management", cat: "heads", name: "Управление клиникой и права" }
     ];
 
-    // Инициализация базы данных
-    let usersList = JSON.parse(localStorage.getItem('nadezhda_users_v12')) || DEFAULT_USERS;
-    let pagesList = JSON.parse(localStorage.getItem('nadezhda_pages_v12')) || DEFAULT_PAGES;
-    let dashCards = JSON.parse(localStorage.getItem('nadezhda_cards_v12')) || DEFAULT_DASH_CARDS;
-    let testsList = JSON.parse(localStorage.getItem('nadezhda_tests_v12')) || DEFAULT_TESTS;
-    let testResults = JSON.parse(localStorage.getItem('nadezhda_test_results_v12')) || [];
+    let usersList = JSON.parse(localStorage.getItem('nadezhda_users_v14')) || DEFAULT_USERS;
+    let pagesList = JSON.parse(localStorage.getItem('nadezhda_pages_v14')) || DEFAULT_PAGES;
+    let dashCards = JSON.parse(localStorage.getItem('nadezhda_cards_v14')) || DEFAULT_DASH_CARDS;
+    let testsList = JSON.parse(localStorage.getItem('nadezhda_tests_v14')) || DEFAULT_TESTS;
+    let testResults = JSON.parse(localStorage.getItem('nadezhda_test_results_v14')) || [];
     let customLogo = localStorage.getItem('nadezhda_uploaded_logo') || DEFAULT_LOGO_DATA_URL;
     let yandexDiskUrl = localStorage.getItem('nadezhda_ydisk_url') || DEFAULT_YANDEX_DISK_URL;
-    let rolePermissions = JSON.parse(localStorage.getItem('nadezhda_role_perms_v12')) || {};
+    let rolePermissions = JSON.parse(localStorage.getItem('nadezhda_role_perms_v14')) || {};
 
-    // Обеспечиваем наличие эталонного администратора в списке пользователей
     if (!usersList.some(u => u.username === 'admin')) {
       usersList.unshift(DEFAULT_USERS[0]);
-    }
-
-    const homeP = pagesList.find(p => p.id === 'home');
-    if (homeP && homeP.blocks) {
-      const yBlock = homeP.blocks.find(b => b.type === 'yandex');
-      if (yBlock) yBlock.url = DEFAULT_YANDEX_DISK_URL;
     }
 
     let currentUser = JSON.parse(sessionStorage.getItem('nadezhda_active_user')) || null;
@@ -1139,12 +964,7 @@
     let activeTestSecondsLeft = 0;
     let activeTestTotalSeconds = 0;
 
-    let activeRecovery = {
-      userId: null,
-      email: null,
-      code: null,
-      expiresAt: null
-    };
+    let activeRecovery = { userId: null, email: null, code: null, expiresAt: null };
 
     const CATEGORIES = {
       general: "Общие сведения",
@@ -1158,9 +978,63 @@
       academy: "Академия (Обучение)"
     };
 
+    function syncToCloud(key, data) {
+      localStorage.setItem('nadezhda_' + key + '_v14', JSON.stringify(data));
+      if (firebaseDb && isCloudOnline) {
+        firebaseDb.ref(key).set(data).catch(e => console.error("Ошибка сохранения в Firebase:", e));
+      }
+    }
+
+    function initCloudListeners() {
+      if (!firebaseDb || !isCloudOnline) {
+        const badge = document.getElementById('cloudStatusBadge');
+        if (badge) {
+          badge.innerText = "💾 Локальный режим";
+          badge.style.background = "var(--accent-amber-bg)";
+          badge.style.color = "var(--accent-amber)";
+        }
+        return;
+      }
+
+      firebaseDb.ref('users').on('value', snapshot => {
+        const val = snapshot.val();
+        if (val && Array.isArray(val)) {
+          usersList = val;
+          localStorage.setItem('nadezhda_users_v14', JSON.stringify(usersList));
+          if (currentUser) {
+            const updated = usersList.find(u => u.id === currentUser.id);
+            if (updated) {
+              currentUser = updated;
+              sessionStorage.setItem('nadezhda_active_user', JSON.stringify(currentUser));
+              applyUserSession();
+            }
+          }
+        } else {
+          syncToCloud('users', usersList);
+        }
+      });
+
+      firebaseDb.ref('pages').on('value', snapshot => {
+        const val = snapshot.val();
+        if (val && Array.isArray(val)) {
+          pagesList = val;
+          localStorage.setItem('nadezhda_pages_v14', JSON.stringify(pagesList));
+          renderSidebar();
+          if (currentPageId !== 'my_tests') renderPage(currentPageId);
+        } else {
+          syncToCloud('pages', pagesList);
+        }
+      });
+
+      firebaseDb.ref('tests').on('value', s => { if (s.val()) { testsList = s.val(); applyUserSession(); } else syncToCloud('tests', testsList); });
+      firebaseDb.ref('results').on('value', s => { if (s.val()) { testResults = s.val(); applyUserSession(); } else syncToCloud('results', testResults); });
+      firebaseDb.ref('cards').on('value', s => { if (s.val()) { dashCards = s.val(); } else syncToCloud('cards', dashCards); });
+    }
+
     function initApp() {
       applyCurrentLogo();
       document.getElementById('headerYandexBtn').href = yandexDiskUrl;
+      initCloudListeners();
 
       if (!currentUser) {
         document.getElementById('authScreen').style.display = 'flex';
@@ -1184,8 +1058,9 @@
       reader.onload = function(evt) {
         customLogo = evt.target.result;
         localStorage.setItem('nadezhda_uploaded_logo', customLogo);
+        if (firebaseDb && isCloudOnline) firebaseDb.ref('logo').set(customLogo);
         applyCurrentLogo();
-        alert('Логотип успешно обновлен!');
+        alert('Логотип обновлен!');
       };
       reader.readAsDataURL(file);
     }
@@ -1201,1064 +1076,7 @@
       }
     }
 
-    /* НАДЕЖНЫЙ ВХОД С ПОДДЕРЖКОЙ ЛОГИНА ИЛИ EMAIL */
     function handleLogin(e) {
       e.preventDefault();
       const loginVal = document.getElementById('loginUsername').value.trim().toLowerCase();
-      const passVal = document.getElementById('loginPassword').value.trim();
-
-      const user = usersList.find(x => {
-        const matchLogin = x.username && x.username.trim().toLowerCase() === loginVal;
-        const matchEmail = x.email && x.email.trim().toLowerCase() === loginVal;
-        return (matchLogin || matchEmail) && x.password === passVal;
-      });
-
-      if (user) {
-        currentUser = user;
-        sessionStorage.setItem('nadezhda_active_user', JSON.stringify(currentUser));
-        document.getElementById('authScreen').style.display = 'none';
-        applyUserSession();
-        renderSidebar();
-        renderPage('home');
-      } else {
-        alert('Неверный логин (или email) либо пароль. Попробуйте еще раз или используйте подсказку.');
-      }
-    }
-
-    function logout() {
-      sessionStorage.removeItem('nadezhda_active_user');
-      location.reload();
-    }
-
-    function openPasswordRecoveryModal() {
-      document.getElementById('recStep1').classList.add('active');
-      document.getElementById('recStep2').classList.remove('active');
-      document.getElementById('recStep3').classList.remove('active');
-      document.getElementById('recEmailInput').value = '';
-      document.getElementById('recoveryModal').classList.add('active');
-    }
-
-    function closePasswordRecoveryModal() {
-      document.getElementById('recoveryModal').classList.remove('active');
-    }
-
-    function backToRecStep(step) {
-      document.getElementById('recStep1').classList.toggle('active', step === 1);
-      document.getElementById('recStep2').classList.toggle('active', step === 2);
-      document.getElementById('recStep3').classList.toggle('active', step === 3);
-    }
-
-    function sendRecoveryCode() {
-      const input = document.getElementById('recEmailInput').value.trim().toLowerCase();
-      if (!input) return alert('Введите ваш email или логин!');
-
-      const user = usersList.find(u => 
-        (u.email && u.email.trim().toLowerCase() === input) || (u.username && u.username.trim().toLowerCase() === input)
-      );
-
-      if (!user) {
-        return alert('Сотрудник с такой почтой или логином не найден в системе. Обратитесь к управляющему.');
-      }
-
-      const emailToSend = user.email || (user.username + '@nadezhda.vet');
-      const code = Math.floor(100000 + Math.random() * 900000).toString();
-
-      activeRecovery = {
-        userId: user.id,
-        email: emailToSend,
-        code: code,
-        expiresAt: Date.now() + 15 * 60 * 1000
-      };
-
-      document.getElementById('recTargetEmailSpan').innerText = emailToSend;
-      document.getElementById('recCodeDisplay').innerText = code;
-      document.getElementById('recCodeInput').value = '';
-
-      backToRecStep(2);
-
-      const subject = encodeURIComponent("Код восстановления пароля — База знаний «Надежда»");
-      const body = encodeURIComponent(`Здравствуйте, ${user.fullName}!\n\nВаш проверочный код для восстановления пароля: ${code}\nКод действителен в течение 15 минут.`);
-      window.open(`mailto:${emailToSend}?subject=${subject}&body=${body}`, '_blank');
-    }
-
-    function verifyRecoveryCode() {
-      const codeEntered = document.getElementById('recCodeInput').value.trim();
-
-      if (!activeRecovery.code || Date.now() > activeRecovery.expiresAt) {
-        return alert('Срок действия кода истек. Запросите код заново.');
-      }
-
-      if (codeEntered !== activeRecovery.code) {
-        return alert('Неверный проверочный код! Проверьте данные.');
-      }
-
-      backToRecStep(3);
-    }
-
-    function finalizePasswordReset() {
-      const p1 = document.getElementById('recNewPass').value.trim();
-      const p2 = document.getElementById('recNewPassConfirm').value.trim();
-
-      if (!p1 || p1.length < 4) return alert('Пароль должен содержать минимум 4 символа!');
-      if (p1 !== p2) return alert('Пароли не совпадают!');
-
-      const user = usersList.find(u => u.id === activeRecovery.userId);
-      if (!user) return alert('Ошибка поиска пользователя');
-
-      user.password = p1;
-      localStorage.setItem('nadezhda_users_v12', JSON.stringify(usersList));
-
-      alert('Пароль успешно изменен! Теперь вы можете войти в систему с новым паролем.');
-      closePasswordRecoveryModal();
-    }
-
-    /* ОТКРЫТИЕ НАСТРОЕК ПРОФИЛЯ: СМЕНА EMAIL И ПАРОЛЯ */
-    function openSelfProfileModal() {
-      document.getElementById('selfProfileFullName').innerText = currentUser.fullName;
-      document.getElementById('selfProfileRole').innerText = currentUser.roleName;
-      document.getElementById('selfEmailInput').value = currentUser.email || '';
-      document.getElementById('selfCurrentPass').value = '';
-      document.getElementById('selfNewPass').value = '';
-      document.getElementById('selfNewPassConfirm').value = '';
-      document.getElementById('selfProfileModal').classList.add('active');
-    }
-
-    function saveSelfProfileChanges() {
-      const newEmail = document.getElementById('selfEmailInput').value.trim();
-      const curPass = document.getElementById('selfCurrentPass').value.trim();
-      const newPass = document.getElementById('selfNewPass').value.trim();
-      const newPassConf = document.getElementById('selfNewPassConfirm').value.trim();
-
-      if (!newEmail) return alert('Поле Email не может быть пустым!');
-
-      if (!curPass || curPass !== currentUser.password) {
-        return alert('Для сохранения изменений введите ваш текущий пароль верно!');
-      }
-
-      if (newPass) {
-        if (newPass.length < 4) return alert('Новый пароль должен содержать минимум 4 символа!');
-        if (newPass !== newPassConf) return alert('Новые пароли не совпадают!');
-        currentUser.password = newPass;
-      }
-
-      currentUser.email = newEmail;
-
-      const uIdx = usersList.findIndex(x => x.id === currentUser.id);
-      if (uIdx !== -1) {
-        usersList[uIdx].email = newEmail;
-        if (newPass) usersList[uIdx].password = newPass;
-      }
-
-      sessionStorage.setItem('nadezhda_active_user', JSON.stringify(currentUser));
-      localStorage.setItem('nadezhda_users_v12', JSON.stringify(usersList));
-
-      document.getElementById('selfProfileModal').classList.remove('active');
-      alert('Данные вашего профиля (Email и пароль) успешно сохранены!');
-    }
-
-    function getPendingTestsCount() {
-      if (!currentUser) return 0;
-      const myAssigned = testsList.filter(t => {
-        if (t.targetType === 'user' && t.targetVal === currentUser.id) return true;
-        if (t.targetType === 'role' && t.targetVal === currentUser.role) return true;
-        return false;
-      });
-
-      let pending = 0;
-      myAssigned.forEach(t => {
-        const passedResult = testResults.find(r => r.testId === t.id && r.userId === currentUser.id && r.passed);
-        if (!passedResult) pending++;
-      });
-      return pending;
-    }
-
-    function applyUserSession() {
-      document.getElementById('headerName').innerText = currentUser.fullName;
-      document.getElementById('headerRole').innerText = currentUser.roleName;
-      document.getElementById('headerAvatar').innerText = currentUser.fullName.charAt(0);
-
-      const pendingCount = getPendingTestsCount();
-      const badge = document.getElementById('headerTestsBadge');
-      const tag = document.getElementById('headerTestsTag');
-      if (pendingCount > 0) {
-        badge.innerText = pendingCount;
-        badge.style.display = 'flex';
-        tag.innerText = `${pendingCount} тестов к сдаче`;
-        tag.style.display = 'inline-block';
-      } else {
-        badge.style.display = 'none';
-        tag.style.display = 'none';
-      }
-
-      const canManage = currentUser.role === 'admin' || currentUser.role === 'head';
-      document.getElementById('uploadLogoBtn').style.display = (currentUser.role === 'admin') ? 'inline-flex' : 'none';
-      document.getElementById('manageTestsBtn').style.display = canManage ? 'inline-flex' : 'none';
-      document.getElementById('usersManageBtn').style.display = canManage ? 'inline-flex' : 'none';
-      document.getElementById('newDocBtn').style.display = canManage ? 'inline-flex' : 'none';
-      document.getElementById('adminSidebarFooter').style.display = (currentUser.role === 'admin') ? 'block' : 'none';
-    }
-
-    function checkPageEditPermission(category) {
-      if (!currentUser) return false;
-      if (currentUser.role === 'admin') return true;
-
-      const mod = VM_MODULES.find(m => m.cat === category);
-      if (!mod) return (currentUser.role === 'head');
-
-      const userRolePerms = rolePermissions[currentUser.role];
-      if (userRolePerms && userRolePerms[mod.id]) {
-        return !!userRolePerms[mod.id].edit;
-      }
-      return (currentUser.role === 'head');
-    }
-
-    function renderSidebar() {
-      const nav = document.getElementById('navContainer');
-      nav.innerHTML = '';
-
-      const pendingCount = getPendingTestsCount();
-      const testItem = document.createElement('div');
-      testItem.className = `nav-item ${currentPageId === 'my_tests' ? 'active' : ''}`;
-      testItem.onclick = () => openDoc('my_tests');
-      testItem.innerHTML = `
-        <span>🎓 Мои тестирования</span>
-        ${pendingCount > 0 ? `<span class="tag tag-ai" style="font-weight:800; background:var(--accent-red-bg); color:var(--accent-red);">${pendingCount}</span>` : ''}
-      `;
-      nav.appendChild(testItem);
-
-      for (const [catKey, catName] of Object.entries(CATEGORIES)) {
-        if (currentUser.role === 'operator' && ['surgery', 'heads', 'equip'].includes(catKey)) continue;
-
-        const docs = pagesList.filter(p => p.category === catKey || (catKey === 'general' && p.id === 'home'));
-        if (docs.length === 0) continue;
-
-        const section = document.createElement('div');
-        section.className = 'nav-category';
-        section.innerHTML = `<div class="nav-cat-title">${catName}</div>`;
-
-        docs.forEach(p => {
-          const item = document.createElement('div');
-          item.className = `nav-item ${p.id === currentPageId ? 'active' : ''}`;
-          item.onclick = () => openDoc(p.id);
-          item.innerHTML = `<span>${p.title}</span>`;
-          section.appendChild(item);
-        });
-
-        nav.appendChild(section);
-      }
-    }
-
-    function openDoc(pageId, isBackAction = false) {
-      if (!isBackAction && currentPageId && currentPageId !== pageId) {
-        navHistory.push(currentPageId);
-      }
-      currentPageId = pageId;
-      renderSidebar();
-      renderPage(pageId);
-    }
-
-    function goBackPage() {
-      if (navHistory.length > 0) {
-        const previousId = navHistory.pop();
-        openDoc(previousId, true);
-      } else {
-        openDoc('home', true);
-      }
-    }
-
-    function renderPage(pageId) {
-      const area = document.getElementById('documentArea');
-      clearInterval(activeTestTimerInterval);
-
-      if (pageId === 'my_tests') {
-        renderMyTestsScreen(area);
-        return;
-      }
-
-      const page = pagesList.find(p => p.id === pageId) || pagesList[0];
-      const canEditPage = checkPageEditPermission(page.category);
-
-      const adminControls = canEditPage ? `
-        <div style="display:flex; gap:8px;">
-          <button class="btn btn-primary" onclick="addNewBlockDirectly('${page.id}')">+ Добавить блок</button>
-          ${page.id !== 'home' ? `<button class="btn btn-outline" style="color:var(--accent-red); border-color:var(--accent-red);" onclick="deletePage('${page.id}')">🗑️ Удалить страницу</button>` : ''}
-        </div>
-      ` : '';
-
-      const showBackButton = page.id !== 'home' || navHistory.length > 0;
-      const backButtonHtml = showBackButton ? `<button class="btn-back" onclick="goBackPage()">← Назад</button>` : '';
-
-      let blocksHtml = '';
-      (page.blocks || []).forEach((b, idx) => {
-        const blockTools = canEditPage ? `
-          <div class="page-block-tools">
-            <button class="block-tool-btn" onclick="openEditSingleBlockModal('${page.id}', ${idx})">✏️ Изменить</button>
-            <button class="block-tool-btn" style="color:var(--accent-red);" onclick="deleteSingleBlock('${page.id}', ${idx})">🗑️ Удалить</button>
-          </div>
-        ` : '';
-
-        let content = '';
-        if (b.type === 'banner') {
-          content = `<div class="info-banner"><strong>${b.title || 'Внимание:'}</strong><br>${b.text || ''}</div>`;
-        } else if (b.type === 'text') {
-          content = `<div>${b.title ? `<h3 style="color:var(--brand-deep); margin-bottom:8px;">${b.title}</h3>` : ''}<div style="font-size:0.92rem; line-height:1.6;">${b.text || ''}</div></div>`;
-        } else if (b.type === 'checklist') {
-          const itemsHtml = (b.items || []).map(item => `<label class="check-item"><input type="checkbox"> <span>${item}</span></label>`).join('');
-          content = `<div>${b.title ? `<h3 style="color:var(--brand-deep); margin-bottom:8px;">${b.title}</h3>` : ''}<div class="checklist">${itemsHtml}</div></div>`;
-        } else if (b.type === 'table') {
-          content = `<div>${b.title ? `<h3 style="color:var(--brand-deep); margin-bottom:8px;">${b.title}</h3>` : ''}<div style="overflow-x:auto;">${b.content || ''}</div></div>`;
-        } else if (b.type === 'yandex') {
-          const diskLink = b.url || DEFAULT_YANDEX_DISK_URL;
-          content = `<div class="yandex-integration-card"><div><div style="color:var(--yandex-red); font-weight:700;">📁 ${b.title || 'Корпоративное хранилище документов на Яндекс Диске'}</div><div style="font-size:0.82rem; color:var(--text-muted); margin-top:4px;">Официальные документы и бланки</div></div><a href="${diskLink}" target="_blank" class="btn btn-yandex">Перейти к файлам</a></div>`;
-        }
-
-        blocksHtml += `
-          <div class="page-block-wrapper">
-            ${blockTools}
-            ${content}
-          </div>
-        `;
-      });
-
-      let cardsSectionHtml = '';
-      if (page.id === 'home') {
-        cardsSectionHtml = renderDashCardsSection(canEditPage);
-      }
-
-      area.innerHTML = `
-        <div class="doc-header">
-          <div>
-            <div class="doc-nav-row">
-              ${backButtonHtml}
-              <div class="breadcrumbs">
-                <a onclick="openDoc('home')">База знаний</a> / ${CATEGORIES[page.category] || 'Раздел'}
-              </div>
-            </div>
-            <h1 class="doc-title">${page.title}</h1>
-            <div class="doc-meta">
-              <span class="tag tag-blue">${page.badge || 'Регламент'}</span>
-              <span class="tag tag-green">Актуально</span>
-            </div>
-          </div>
-          ${adminControls}
-        </div>
-        <div class="doc-body">
-          ${blocksHtml}
-          ${cardsSectionHtml}
-        </div>
-      `;
-
-      area.querySelectorAll('.check-item input').forEach(input => {
-        input.addEventListener('change', (e) => {
-          if (e.target.checked) e.target.parentElement.classList.add('done');
-          else e.target.parentElement.classList.remove('done');
-        });
-      });
-    }
-
-    function renderDashCardsSection(canEdit) {
-      const addCardBtn = canEdit ? `<button class="btn btn-primary" onclick="openCreateDashCardModal()">+ Добавить направление</button>` : '';
-
-      const cardsGridHtml = dashCards.map(c => {
-        const cardActions = canEdit ? `
-          <div class="dash-card-actions">
-            <button class="btn-icon" onclick="event.stopPropagation(); openEditDashCardModal('${c.id}')" title="Редактировать">✏️</button>
-            <button class="btn-icon" style="color:var(--accent-red);" onclick="event.stopPropagation(); deleteDashCard('${c.id}')" title="Удалить">🗑️</button>
-          </div>
-        ` : '';
-
-        return `
-          <div class="dash-card" onclick="openDoc('${c.pageId}')">
-            ${cardActions}
-            <div class="dash-card-img" style="background:${c.color || 'var(--brand-blue)'};">${c.icon || '📌'}</div>
-            <div class="dash-card-content">
-              <div class="dash-card-title">${c.title}</div>
-              <div class="dash-card-desc">${c.desc}</div>
-              <div class="dash-card-footer"><span>Перейти в модуль</span> <span>→</span></div>
-            </div>
-          </div>
-        `;
-      }).join('');
-
-      return `
-        <div class="dashboard-header-row">
-          <h2 style="font-size:1.25rem; font-weight:800; color:var(--brand-deep);">Операционные направления клиники</h2>
-          ${addCardBtn}
-        </div>
-        <div class="dashboard-grid">${cardsGridHtml}</div>
-      `;
-    }
-
-    function openCreateDashCardModal() {
-      document.getElementById('dashCardId').value = '';
-      document.getElementById('dashCardModalTitle').innerText = 'Новое операционное направление';
-      document.getElementById('dashCardTitleInput').value = '';
-      document.getElementById('dashCardDescInput').value = '';
-      document.getElementById('dashCardIconInput').value = '🩺';
-
-      const sel = document.getElementById('dashCardPageSelect');
-      sel.innerHTML = pagesList.map(p => `<option value="${p.id}">${p.title}</option>`).join('');
-
-      document.getElementById('dashCardModal').classList.add('active');
-    }
-
-    function openEditDashCardModal(cardId) {
-      const c = dashCards.find(x => x.id === cardId);
-      if (!c) return;
-      document.getElementById('dashCardId').value = c.id;
-      document.getElementById('dashCardModalTitle').innerText = 'Редактировать направление';
-      document.getElementById('dashCardTitleInput').value = c.title;
-      document.getElementById('dashCardDescInput').value = c.desc;
-      document.getElementById('dashCardIconInput').value = c.icon || '📌';
-
-      const sel = document.getElementById('dashCardPageSelect');
-      sel.innerHTML = pagesList.map(p => `<option value="${p.id}" ${p.id === c.pageId ? 'selected' : ''}>${p.title}</option>`).join('');
-
-      document.getElementById('dashCardColorSelect').value = c.color || 'linear-gradient(135deg, #0088D4, #00A6FF)';
-      document.getElementById('dashCardModal').classList.add('active');
-    }
-
-    function saveDashCard() {
-      const id = document.getElementById('dashCardId').value;
-      const title = document.getElementById('dashCardTitleInput').value.trim();
-      const desc = document.getElementById('dashCardDescInput').value.trim();
-      const icon = document.getElementById('dashCardIconInput').value.trim() || '📌';
-      const pageId = document.getElementById('dashCardPageSelect').value;
-      const color = document.getElementById('dashCardColorSelect').value;
-
-      if (!title) return alert('Введите название!');
-
-      if (id) {
-        const idx = dashCards.findIndex(x => x.id === id);
-        if (idx !== -1) dashCards[idx] = { id, title, desc, icon, pageId, color };
-      } else {
-        dashCards.push({ id: 'card_' + Date.now(), title, desc, icon, pageId, color });
-      }
-
-      localStorage.setItem('nadezhda_cards_v12', JSON.stringify(dashCards));
-      document.getElementById('dashCardModal').classList.remove('active');
-      renderPage('home');
-    }
-
-    function deleteDashCard(id) {
-      if (confirm('Удалить эту карточку направления?')) {
-        dashCards = dashCards.filter(x => x.id !== id);
-        localStorage.setItem('nadezhda_cards_v12', JSON.stringify(dashCards));
-        renderPage('home');
-      }
-    }
-
-    function addNewBlockDirectly(pageId) {
-      const page = pagesList.find(p => p.id === pageId);
-      if (!page) return;
-      page.blocks = page.blocks || [];
-      page.blocks.push({ type: 'banner', title: 'Новый пункт регламента', text: 'Опишите алгоритм действий...' });
-      localStorage.setItem('nadezhda_pages_v12', JSON.stringify(pagesList));
-      renderPage(pageId);
-    }
-
-    function openEditSingleBlockModal(pageId, blockIdx) {
-      const page = pagesList.find(p => p.id === pageId);
-      if (!page || !page.blocks[blockIdx]) return;
-      const b = page.blocks[blockIdx];
-
-      document.getElementById('singleBlockIndex').value = blockIdx;
-      document.getElementById('singleBlockType').value = b.type;
-      document.getElementById('singleBlockTitleInput').value = b.title || '';
-
-      const textInput = document.getElementById('singleBlockTextInput');
-      if (b.type === 'checklist') {
-        textInput.value = (b.items || []).join('\n');
-      } else {
-        textInput.value = b.text || b.content || '';
-      }
-
-      document.getElementById('singleBlockModal').classList.add('active');
-    }
-
-    function closeSingleBlockModal() {
-      document.getElementById('singleBlockModal').classList.remove('active');
-    }
-
-    function saveSingleBlockChanges() {
-      const page = pagesList.find(p => p.id === currentPageId);
-      const idx = parseInt(document.getElementById('singleBlockIndex').value);
-      if (!page || isNaN(idx)) return;
-
-      const title = document.getElementById('singleBlockTitleInput').value.trim();
-      const rawText = document.getElementById('singleBlockTextInput').value;
-      const b = page.blocks[idx];
-
-      b.title = title;
-      if (b.type === 'checklist') {
-        b.items = rawText.split('\n').filter(x => x.trim());
-      } else if (b.type === 'table') {
-        b.content = rawText;
-      } else {
-        b.text = rawText;
-      }
-
-      localStorage.setItem('nadezhda_pages_v12', JSON.stringify(pagesList));
-      closeSingleBlockModal();
-      renderPage(currentPageId);
-    }
-
-    function deleteSingleBlock(pageId, idx) {
-      if (confirm('Удалить этот блок?')) {
-        const page = pagesList.find(p => p.id === pageId);
-        if (!page) return;
-        page.blocks.splice(idx, 1);
-        localStorage.setItem('nadezhda_pages_v12', JSON.stringify(pagesList));
-        renderPage(pageId);
-      }
-    }
-
-    /* ТЕСТИРОВАНИЕ С ТАЙМЕРОМ */
-    function renderMyTestsScreen(container) {
-      const myAssigned = testsList.filter(t => {
-        if (t.targetType === 'user' && t.targetVal === currentUser.id) return true;
-        if (t.targetType === 'role' && t.targetVal === currentUser.role) return true;
-        return false;
-      });
-
-      let testsHtml = '';
-      if (myAssigned.length === 0) {
-        testsHtml = `<div style="padding:30px; text-align:center; background:#fff; border-radius:10px; border:1px solid var(--brand-border);"><p style="color:var(--text-muted);">Назначенных тестов нет.</p></div>`;
-      } else {
-        testsHtml = myAssigned.map(t => {
-          const myResult = testResults.filter(r => r.testId === t.id && r.userId === currentUser.id).pop();
-          return `
-            <div class="test-card">
-              <div>
-                <h3 style="color:var(--brand-deep); margin-bottom:4px;">${t.title}</h3>
-                <div style="font-size:0.8rem; color:var(--text-muted); line-height:1.5;">
-                  ⏱️ Время на тест: <strong>${t.timeLimit || 10} мин</strong> | 📅 Срок сдачи: <strong>${t.deadline || 'Не ограничен'}</strong><br>
-                  Вопросов: <strong>${t.questions.length}</strong> | Проходной балл: <strong>${t.passingScore}%</strong>
-                  ${myResult ? ` | Итог: <strong style="color:${myResult.passed ? 'var(--accent-green)' : 'var(--accent-red)'}">${myResult.score}\% (${myResult.passed ? 'Сдано' : 'Не сдано'})</strong>` : ''}
-                </div>
-              </div>
-              <button class="btn btn-primary" onclick="startTestWithTimer('${t.id}')">
-                ${myResult ? 'Пересдать тест' : 'Начать тестирование'}
-              </button>
-            </div>
-          `;
-        }).join('');
-      }
-
-      container.innerHTML = `
-        <div class="doc-header">
-          <div>
-            <div class="doc-nav-row"><button class="btn-back" onclick="goBackPage()">← Назад</button></div>
-            <h1 class="doc-title">Мои тестирования и аттестации</h1>
-            <div class="doc-meta"><span class="tag tag-blue">Сотрудник: ${currentUser.fullName}</span></div>
-          </div>
-        </div>
-        <div class="doc-body">${testsHtml}</div>
-      `;
-    }
-
-    function startTestWithTimer(testId) {
-      const test = testsList.find(t => t.id === testId);
-      if (!test) return;
-
-      const area = document.getElementById('documentArea');
-      const limitMinutes = test.timeLimit || 10;
-      activeTestTotalSeconds = limitMinutes * 60;
-      activeTestSecondsLeft = activeTestTotalSeconds;
-
-      let questionsHtml = test.questions.map((q, qIdx) => `
-        <div class="test-question-box">
-          <div style="font-weight:700; color:var(--brand-deep); margin-bottom:12px;">Вопрос #${qIdx + 1}: ${q.text}</div>
-          <div>
-            ${q.options.map((opt, optIdx) => `
-              <label class="test-option-label">
-                <input type="radio" name="q_${qIdx}" value="${optIdx}">
-                <span>${opt}</span>
-              </label>
-            `).join('')}
-          </div>
-        </div>
-      `).join('');
-
-      area.innerHTML = `
-        <div class="doc-header">
-          <div>
-            <button class="btn-back" onclick="openDoc('my_tests')">← Отмена и выход</button>
-            <h1 class="doc-title" style="margin-top:10px;">${test.title}</h1>
-            <div class="doc-meta">
-              <span class="tag tag-blue">Проходной балл: ${test.passingScore}%</span>
-              <span class="tag tag-ai">Дедлайн: ${test.deadline || 'Без дедлайна'}</span>
-            </div>
-          </div>
-        </div>
-        
-        <div class="timer-container">
-          <span>⏳ Оставшееся время:</span>
-          <div class="timer-badge" id="testLiveTimer">--:--</div>
-          <span style="font-size:0.8rem; font-weight:normal;">(По истечении времени тест завершится автоматически)</span>
-        </div>
-
-        <form id="activeTestForm" onsubmit="submitTest(event, '${test.id}')">
-          ${questionsHtml}
-          <div style="margin-top:20px; display:flex; justify-content:flex-end;">
-            <button type="submit" class="btn btn-primary" style="padding:12px 24px; font-size:0.95rem;">Завершить и отправить результат</button>
-          </div>
-        </form>
-      `;
-
-      updateTimerDisplay();
-      activeTestTimerInterval = setInterval(() => {
-        activeTestSecondsLeft--;
-        updateTimerDisplay();
-
-        if (activeTestSecondsLeft <= 0) {
-          clearInterval(activeTestTimerInterval);
-          alert('⏰ Время на сдачу теста истекло! Результат отправлен.');
-          finishAndSaveTestResult(test.id, true);
-        }
-      }, 1000);
-    }
-
-    function updateTimerDisplay() {
-      const el = document.getElementById('testLiveTimer');
-      if (!el) return;
-      const m = Math.floor(activeTestSecondsLeft / 60);
-      const s = activeTestSecondsLeft % 60;
-      el.innerText = `${m < 10 ? '0' : ''}${m}:${s < 10 ? '0' : ''}${s}`;
-    }
-
-    function submitTest(e, testId) {
-      if (e) e.preventDefault();
-      clearInterval(activeTestTimerInterval);
-      finishAndSaveTestResult(testId, false);
-    }
-
-    function finishAndSaveTestResult(testId, wasTimedOut) {
-      const test = testsList.find(t => t.id === testId);
-      if (!test) return;
-
-      let correctCount = 0;
-      test.questions.forEach((q, idx) => {
-        const selected = document.querySelector(`input[name="q_${idx}"]:checked`);
-        if (selected && parseInt(selected.value) === q.correct) correctCount++;
-      });
-
-      const score = Math.round((correctCount / test.questions.length) * 100);
-      const passed = score >= test.passingScore;
-      const timeSpentSec = activeTestTotalSeconds - activeTestSecondsLeft;
-      const timeSpentMin = Math.ceil(timeSpentSec / 60);
-
-      testResults.push({
-        id: 'res_' + Date.now(),
-        date: new Date().toLocaleString('ru-RU'),
-        testId: test.id,
-        testTitle: test.title,
-        userId: currentUser.id,
-        userName: currentUser.fullName,
-        userRole: currentUser.roleName,
-        score: score,
-        passed: passed,
-        timeSpent: `${timeSpentMin} мин ${wasTimedOut ? '(Время вышло)' : ''}`
-      });
-
-      localStorage.setItem('nadezhda_test_results_v12', JSON.stringify(testResults));
-      applyUserSession();
-      alert(`Итог:\nБалл: ${score}%\nСтатус: ${passed ? 'Зачёт (Сдано) ✅' : 'Не зачёт ❌'}`);
-      openDoc('my_tests');
-    }
-
-    function openManageTestsModal() {
-      renderTestsTable();
-      document.getElementById('manageTestsModal').classList.add('active');
-    }
-
-    function renderTestsTable() {
-      const tbody = document.getElementById('testsTableBody');
-      tbody.innerHTML = '';
-      testsList.forEach(t => {
-        tbody.innerHTML += `
-          <tr>
-            <td><strong>${t.title}</strong></td>
-            <td><span class="tag tag-blue">${t.targetName}</span></td>
-            <td>${t.timeLimit || 10} мин</td>
-            <td>${t.deadline || 'Без дедлайна'}</td>
-            <td><button class="btn btn-outline" style="color:var(--accent-red); padding:3px 6px;" onclick="deleteTest('${t.id}')">Удалить</button></td>
-          </tr>
-        `;
-      });
-    }
-
-    function openCreateTestModal() {
-      builderQuestions = [];
-      document.getElementById('newTestTitle').value = '';
-      document.getElementById('newTestTimeLimit').value = 10;
-      document.getElementById('newTestPassingScore').value = 80;
-      document.getElementById('newTestDeadline').value = '';
-
-      const userSelect = document.getElementById('newTestTargetUser');
-      userSelect.innerHTML = usersList.map(u => `<option value="${u.id}">${u.fullName} (${u.roleName})</option>`).join('');
-
-      renderBuilderQuestions();
-      toggleTestTargetSelect();
-      document.getElementById('createTestModal').classList.add('active');
-    }
-
-    function toggleTestTargetSelect() {
-      const val = document.getElementById('newTestTargetType').value;
-      document.getElementById('targetUserGroup').style.display = (val === 'user') ? 'block' : 'none';
-      document.getElementById('targetRoleGroup').style.display = (val === 'role') ? 'block' : 'none';
-    }
-
-    function addQuestionToTestBuilder() {
-      builderQuestions.push({ text: '', options: ['', '', ''], correct: 0 });
-      renderBuilderQuestions();
-    }
-
-    function renderBuilderQuestions() {
-      const c = document.getElementById('testQuestionsBuilderList');
-      c.innerHTML = '';
-      if (builderQuestions.length === 0) {
-        c.innerHTML = '<div style="padding:14px; text-align:center; color:var(--text-muted); border:1.5px dashed var(--brand-border); border-radius:6px;">Добавьте вопрос с вариантами.</div>';
-        return;
-      }
-      builderQuestions.forEach((q, idx) => {
-        const item = document.createElement('div');
-        item.className = 'block-editor-item';
-        item.innerHTML = `
-          <div class="block-editor-header">
-            <span>Вопрос #${idx + 1}</span>
-            <button class="btn-icon" style="color:var(--accent-red);" onclick="builderQuestions.splice(${idx}, 1); renderBuilderQuestions();">🗑️</button>
-          </div>
-          <input type="text" placeholder="Вопрос..." value="${q.text}" oninput="builderQuestions[${idx}].text = this.value">
-          <label style="font-size:0.75rem; font-weight:700; margin-top:4px;">Варианты ответа (отметьте верный):</label>
-          ${q.options.map((opt, optIdx) => `
-            <div style="display:flex; align-items:center; gap:8px;">
-              <input type="radio" name="correct_q_${idx}" ${q.correct === optIdx ? 'checked' : ''} onchange="builderQuestions[${idx}].correct =${optIdx}">
-              <input type="text" placeholder="Вариант #${optIdx + 1}" value="${opt}" oninput="builderQuestions[${idx}].options[${optIdx}] = this.value">
-            </div>
-          `).join('')}
-        `;
-        c.appendChild(item);
-      });
-    }
-
-    function saveNewTest() {
-      const title = document.getElementById('newTestTitle').value.trim();
-      const targetType = document.getElementById('newTestTargetType').value;
-      const timeLimit = parseInt(document.getElementById('newTestTimeLimit').value) || 10;
-      const deadline = document.getElementById('newTestDeadline').value || 'Не ограничен';
-      const passingScore = parseInt(document.getElementById('newTestPassingScore').value) || 80;
-
-      if (!title || builderQuestions.length === 0) return alert('Заполните название и вопросы!');
-
-      let targetVal = '', targetName = '';
-      if (targetType === 'user') {
-        const sel = document.getElementById('newTestTargetUser');
-        targetVal = sel.value;
-        targetName = sel.options[sel.selectedIndex].text;
-      } else {
-        const sel = document.getElementById('newTestTargetRole');
-        targetVal = sel.value;
-        targetName = sel.options[sel.selectedIndex].text;
-      }
-
-      testsList.push({
-        id: 'test_' + Date.now(),
-        title, targetType, targetVal, targetName,
-        timeLimit, deadline, passingScore,
-        questions: builderQuestions
-      });
-
-      localStorage.setItem('nadezhda_tests_v12', JSON.stringify(testsList));
-      document.getElementById('createTestModal').classList.remove('active');
-      renderTestsTable();
-      renderSidebar();
-      applyUserSession();
-      alert('Тестирование назначено!');
-    }
-
-    function deleteTest(testId) {
-      if (confirm('Удалить данный тест?')) {
-        testsList = testsList.filter(t => t.id !== testId);
-        localStorage.setItem('nadezhda_tests_v12', JSON.stringify(testsList));
-        renderTestsTable();
-        renderSidebar();
-        applyUserSession();
-      }
-    }
-
-    function openResultsLogModal() {
-      const tbody = document.getElementById('resultsTableBody');
-      tbody.innerHTML = '';
-      if (testResults.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; color:var(--text-muted);">Результатов сдачи пока нет</td></tr>';
-      } else {
-        testResults.slice().reverse().forEach(r => {
-          tbody.innerHTML += `
-            <tr>
-              <td>${r.date}</td>
-              <td><strong>${r.userName}</strong><br><small style="color:var(--text-muted);">${r.userRole}</small></td>
-              <td>${r.testTitle}</td>
-              <td><strong>${r.score}%</strong></td>
-              <td>${r.timeSpent || '—'}</td>
-              <td><span class="tag ${r.passed ? 'tag-green' : 'tag'}" style="${!r.passed ? 'background:var(--accent-red-bg); color:var(--accent-red);' : ''}">${r.passed ? 'Сдано' : 'Не сдано'}</span></td>
-            </tr>
-          `;
-        });
-      }
-      document.getElementById('resultsLogModal').classList.add('active');
-    }
-
-    /* МАТРИЦА ПРАВ ДОСТУПА */
-    function openUsersModal() {
-      renderRolePermissionsMatrix();
-      renderUsersTable();
-      document.getElementById('usersModal').classList.add('active');
-    }
-    function closeUsersModal() { document.getElementById('usersModal').classList.remove('active'); }
-
-    function switchVmTab(tab) {
-      document.getElementById('tabRolesBtn').classList.toggle('active', tab === 'roles');
-      document.getElementById('tabUsersBtn').classList.toggle('active', tab === 'users');
-      document.getElementById('vmRolesTabContent').style.display = (tab === 'roles') ? 'block' : 'none';
-      document.getElementById('vmUsersTabContent').style.display = (tab === 'users') ? 'block' : 'none';
-    }
-
-    function renderRolePermissionsMatrix() {
-      const role = document.getElementById('vmSelectRole').value;
-      const table = document.getElementById('vmRolePermsTable');
-
-      rolePermissions[role] = rolePermissions[role] || {};
-
-      let html = `
-        <thead>
-          <tr>
-            <th style="width:34%;">Модуль базы знаний</th>
-            <th>Просмотр</th>
-            <th>Редактирование страницы</th>
-            <th>Удаление страницы</th>
-            <th>Администрирование</th>
-          </tr>
-        </thead>
-        <tbody>
-      `;
-
-      VM_MODULES.forEach(mod => {
-        const p = rolePermissions[role][mod.id] || { view: true, edit: false, del: false, admin: false };
-        html += `
-          <tr>
-            <td>${mod.name}</td>
-            <td class="cell-perm ${p.view ? 'checked' : ''}" onclick="togglePerm('${role}', '${mod.id}', 'view')">
-              <input type="checkbox" ${p.view ? 'checked' : ''} onclick="event.stopPropagation(); togglePerm('${role}', '${mod.id}', 'view')">
-            </td>
-            <td class="cell-perm ${p.edit ? 'checked' : ''}" onclick="togglePerm('${role}', '${mod.id}', 'edit')">
-              <input type="checkbox" ${p.edit ? 'checked' : ''} onclick="event.stopPropagation(); togglePerm('${role}', '${mod.id}', 'edit')">
-            </td>
-            <td class="cell-perm ${p.del ? 'checked' : ''}" onclick="togglePerm('${role}', '${mod.id}', 'del')">
-              <input type="checkbox" ${p.del ? 'checked' : ''} onclick="event.stopPropagation(); togglePerm('${role}', '${mod.id}', 'del')">
-            </td>
-            <td class="cell-perm ${p.admin ? 'checked' : ''}" onclick="togglePerm('${role}', '${mod.id}', 'admin')">
-              <input type="checkbox" ${p.admin ? 'checked' : ''} onclick="event.stopPropagation(); togglePerm('${role}', '${mod.id}', 'admin')">
-            </td>
-          </tr>
-        `;
-      });
-
-      html += '</tbody>';
-      table.innerHTML = html;
-    }
-
-    function togglePerm(role, modId, permType) {
-      rolePermissions[role] = rolePermissions[role] || {};
-      rolePermissions[role][modId] = rolePermissions[role][modId] || { view: true, edit: false, del: false, admin: false };
-      rolePermissions[role][modId][permType] = !rolePermissions[role][modId][permType];
-
-      localStorage.setItem('nadezhda_role_perms_v12', JSON.stringify(rolePermissions));
-      renderRolePermissionsMatrix();
-    }
-
-    function renderUsersTable() {
-      const tbody = document.getElementById('usersTableBody');
-      tbody.innerHTML = '';
-      usersList.forEach(u => {
-        tbody.innerHTML += `
-          <tr>
-            <td><strong>${u.fullName}</strong></td>
-            <td><code>${u.username}</code></td>
-            <td><small>${u.email || '—'}</small></td>
-            <td>${u.roleName}</td>
-            <td>
-              <button class="btn btn-outline" style="padding:2px 6px; font-size:0.75rem;" onclick="openEditUserModal('${u.id}')">✏️ Изменить</button>
-              ${u.username !== 'admin' ? `<button class="btn btn-outline" style="color:var(--accent-red); padding:2px 6px; font-size:0.75rem; margin-left:4px;" onclick="deleteUser('${u.id}')">Удалить</button>` : ''}
-            </td>
-          </tr>
-        `;
-      });
-    }
-
-    function openEditUserModal(userId) {
-      const u = usersList.find(x => x.id === userId);
-      if (!u) return;
-
-      document.getElementById('editUserId').value = u.id;
-      document.getElementById('editUserFullName').value = u.fullName;
-      document.getElementById('editUserEmail').value = u.email || '';
-      document.getElementById('editUserUsername').value = u.username;
-      document.getElementById('editUserPassword').value = u.password;
-      document.getElementById('editUserRole').value = u.role;
-
-      document.getElementById('editUserModal').classList.add('active');
-    }
-
-    function saveUserEditByAdmin() {
-      const id = document.getElementById('editUserId').value;
-      const fullName = document.getElementById('editUserFullName').value.trim();
-      const email = document.getElementById('editUserEmail').value.trim();
-      const username = document.getElementById('editUserUsername').value.trim();
-      const password = document.getElementById('editUserPassword').value.trim();
-      const role = document.getElementById('editUserRole').value;
-      const roleName = document.getElementById('editUserRole').options[document.getElementById('editUserRole').selectedIndex].text;
-
-      if (!fullName || !email || !username || !password) return alert('Заполните все поля!');
-
-      const idx = usersList.findIndex(x => x.id === id);
-      if (idx !== -1) {
-        usersList[idx] = { ...usersList[idx], fullName, email, username, password, role, roleName };
-        if (currentUser && currentUser.id === id) {
-          currentUser = usersList[idx];
-          sessionStorage.setItem('nadezhda_active_user', JSON.stringify(currentUser));
-          applyUserSession();
-        }
-      }
-
-      localStorage.setItem('nadezhda_users_v12', JSON.stringify(usersList));
-      document.getElementById('editUserModal').classList.remove('active');
-      renderUsersTable();
-      alert('Данные сотрудника успешно обновлены!');
-    }
-
-    function openCreateUserForm() { document.getElementById('newUserModal').classList.add('active'); }
-    function saveNewUser() {
-      const fullName = document.getElementById('newFullName').value.trim();
-      const email = document.getElementById('newEmail').value.trim();
-      const username = document.getElementById('newUsername').value.trim();
-      const password = document.getElementById('newPassword').value.trim();
-      const role = document.getElementById('newRole').value;
-      const roleName = document.getElementById('newRole').options[document.getElementById('newRole').selectedIndex].text;
-
-      if (!fullName || !username || !password || !email) return alert('Заполните все поля, включая email!');
-      usersList.push({ id: 'u_' + Date.now(), fullName, email, username, password, role, roleName });
-      localStorage.setItem('nadezhda_users_v12', JSON.stringify(usersList));
-      document.getElementById('newUserModal').classList.remove('active');
-      renderUsersTable();
-    }
-
-    function deleteUser(id) {
-      if (confirm('Удалить сотрудника?')) {
-        usersList = usersList.filter(u => u.id !== id);
-        localStorage.setItem('nadezhda_users_v12', JSON.stringify(usersList));
-        renderUsersTable();
-      }
-    }
-
-    function openCreateModal() {
-      document.getElementById('editPageName').value = '';
-      document.getElementById('pageEditorModal').classList.add('active');
-    }
-
-    function saveNewPageRecord() {
-      const title = document.getElementById('editPageName').value.trim();
-      const category = document.getElementById('editPageCategory').value;
-      if (!title) return alert('Введите название!');
-
-      const newId = 'page_' + Date.now();
-      pagesList.push({ id: newId, title, category, badge: 'Регламент', blocks: [
-        { type: 'banner', title: 'Основное положение', text: 'Заполните содержание регламента...' }
-      ]});
-
-      localStorage.setItem('nadezhda_pages_v12', JSON.stringify(pagesList));
-      document.getElementById('pageEditorModal').classList.remove('active');
-      renderSidebar();
-      openDoc(newId);
-    }
-
-    function deletePage(pageId) {
-      if (confirm('Удалить эту страницу?')) {
-        pagesList = pagesList.filter(p => p.id !== pageId);
-        localStorage.setItem('nadezhda_pages_v12', JSON.stringify(pagesList));
-        renderSidebar();
-        openDoc('home');
-      }
-    }
-
-    function handleSearchKeyDown(e) { if (e.key === 'Enter') runAISearch(); }
-    function runAISearch() {
-      const q = document.getElementById('searchInput').value.trim().toLowerCase();
-      if (!q) return;
-
-      const scored = pagesList.map(p => {
-        let text = (p.title + ' ' + (p.category || '')).toLowerCase();
-        (p.blocks || []).forEach(b => { text += ' ' + (b.title || '') + ' ' + (b.text || '') + ' ' + (b.items ? b.items.join(' ') : ''); });
-        let s = 0;
-        if (text.includes(q)) s += 10;
-        if (q.includes('судорог') && text.includes('триаж')) s += 8;
-        if (q.includes('наркоз') && text.includes('подготовк')) s += 8;
-        if (q.includes('диет') && text.includes('голод')) s += 8;
-        return { page: p, score: s };
-      }).filter(x => x.score > 0);
-
-      const area = document.getElementById('documentArea');
-      let resHtml = scored.map(r => `
-        <div class="test-card" onclick="openDoc('${r.page.id}')" style="cursor:pointer;">
-          <div><h3 style="color:var(--brand-deep);">${r.page.title}</h3><small style="color:var(--text-muted);">${CATEGORIES[r.page.category]}</small></div>
-          <button class="btn btn-outline">Открыть</button>
-        </div>
-      `).join('');
-
-      area.innerHTML = `
-        <div class="doc-header">
-          <div><button class="btn-back" onclick="goBackPage()">← Назад</button><h1 class="doc-title" style="margin-top:10px;">ИИ поиск: «${q}»</h1></div>
-        </div>
-        <div class="doc-body">${resHtml || '<p style="color:var(--text-muted);">Ничего не найдено.</p>'}</div>
-      `;
-    }
-
-    function exportData() {
-      const blob = new Blob([JSON.stringify({ pages: pagesList, users: usersList, cards: dashCards, tests: testsList, results: testResults, perms: rolePermissions }, null, 2)], { type: 'application/json' });
-      const a = document.createElement('a');
-      a.href = URL.createObjectURL(blob);
-      a.download = `nadezhda_full_system_${new Date().toISOString().slice(0,10)}.json`;
-      a.click();
-    }
-
-    function importData(e) {
-      const file = e.target.files[0];
-      if (!file) return;
-      const reader = new FileReader();
-      reader.onload = function(evt) {
-        try {
-          const d = JSON.parse(evt.target.result);
-          if (d.pages) {
-            pagesList = d.pages;
-            usersList = d.users || usersList;
-            dashCards = d.cards || dashCards;
-            testsList = d.tests || testsList;
-            testResults = d.results || testResults;
-            rolePermissions = d.perms || rolePermissions;
-            localStorage.setItem('nadezhda_pages_v12', JSON.stringify(pagesList));
-            localStorage.setItem('nadezhda_users_v12', JSON.stringify(usersList));
-            localStorage.setItem('nadezhda_cards_v12', JSON.stringify(dashCards));
-            localStorage.setItem('nadezhda_tests_v12', JSON.stringify(testsList));
-            localStorage.setItem('nadezhda_test_results_v12', JSON.stringify(testResults));
-            localStorage.setItem('nadezhda_role_perms_v12', JSON.stringify(rolePermissions));
-            location.reload();
-          }
-        } catch(err) { alert('Ошибка импорта'); }
-      };
-      reader.readAsText(file);
-    }
-
-    initApp();
-  </script>
-</body>
-</html>
+      const passVal = document.getElementById('
