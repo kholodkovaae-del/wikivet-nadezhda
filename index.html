@@ -44,7 +44,7 @@
       overflow: hidden;
     }
 
-    /* Авторизация */
+    /* Экран входа */
     .auth-overlay {
       position: fixed; top: 0; left: 0; right: 0; bottom: 0;
       background: rgba(11, 37, 62, 0.88); backdrop-filter: blur(6px);
@@ -104,7 +104,7 @@
       display: inline-flex; align-items: center; gap: 6px; background: #FFFFFF; border: 1.5px solid var(--brand-border);
       color: var(--brand-deep); padding: 6px 14px; border-radius: 6px; font-size: 0.85rem; font-weight: 700; cursor: pointer;
     }
-    .btn-back:hover { background: var(--brand-light); color: var(--brand-blue); border-color: var(--brand-blue); }
+    .btn-back:hover { background: var(--brand-light); color: var(--brand-blue); }
 
     .cloud-indicator {
       display: flex; align-items: center; gap: 5px; font-size: 0.72rem; color: var(--accent-green);
@@ -181,9 +181,9 @@
     .dash-card-desc { font-size: 0.82rem; color: var(--text-muted); line-height: 1.4; margin-bottom: 12px; flex: 1; }
     .dash-card-footer { font-size: 0.82rem; font-weight: 700; color: var(--brand-blue); display: flex; justify-content: space-between; align-items: center; }
     
-    /* Тулбар управления на карточке */
+    /* Тулбар на карточке */
     .dash-card-actions {
-      position: absolute; top: 8px; right: 8px; display: flex; gap: 4px;
+      position: absolute; top: 8px; right: 8px; display: flex; gap: 3px;
       background: rgba(255, 255, 255, 0.95); padding: 4px 6px; border-radius: 6px;
       box-shadow: 0 2px 6px rgba(0,0,0,0.15); z-index: 10;
     }
@@ -192,6 +192,26 @@
       color: var(--brand-deep); transition: background 0.15s; font-weight: 700;
     }
     .card-tool-btn:hover { background: #E2E8F0; }
+
+    /* Ссылки внутри текста */
+    .wiki-internal-link {
+      color: var(--brand-blue);
+      background: var(--brand-light);
+      padding: 2px 7px;
+      border-radius: 5px;
+      text-decoration: none;
+      font-weight: 600;
+      border-bottom: 1.5px solid var(--brand-blue);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      transition: all 0.15s;
+    }
+    .wiki-internal-link:hover {
+      background: var(--brand-blue);
+      color: #fff;
+    }
 
     /* Блоки статьи */
     .page-block-wrapper { position: relative; margin-bottom: 22px; border-radius: 8px; }
@@ -273,7 +293,7 @@
 </head>
 <body>
 
-  <!-- Авторизация -->
+  <!-- Экран входа -->
   <div class="auth-overlay" id="authScreen">
     <div class="auth-box">
       <img id="authLogoImg" class="auth-logo-img" src="" alt="Логотип Надежда">
@@ -307,6 +327,7 @@
     <div class="header-actions">
       <div class="cloud-indicator" id="cloudStatusBadge">☁️ Облако онлайн</div>
 
+      <button class="btn btn-primary" id="btnCreateNewPageHeader" style="display:none;" onclick="openCreatePageRecordModal()">📄 Создать страницу</button>
       <button class="btn btn-outline" id="usersManageBtn" style="display:none;" onclick="openUsersModal()">👥 Сотрудники и права</button>
 
       <a id="headerYandexBtn" href="https://disk.yandex.ru/d/5HlCdgS2idp2Gg" target="_blank" class="btn btn-yandex" title="Открыть диск клиники">
@@ -337,33 +358,28 @@
   </main>
 
   <!-- МОДАЛЬНЫЕ ОКНА КОНСТРУКТОРА -->
-  <!-- Создание/редактирование карточки направления или подблока темы -->
+  <!-- 1. Создание/редактирование карточки модуля с привязкой к ЛЮБОЙ странице -->
   <div class="modal-overlay" id="moduleModal">
     <div class="modal-window">
-      <div class="modal-title" id="moduleModalTitle">Карточка блока</div>
-      <input type="hidden" id="modalTargetType">
-      <input type="hidden" id="modalItemId">
-
-      <div class="form-group" id="modalDeptSelectGroup" style="display:none;">
-        <label>В какой отдел поместить</label>
-        <select id="modalDeptSelect"></select>
-      </div>
+      <div class="modal-title" id="moduleModalTitle">Карточка направления / блока</div>
+      <input type="hidden" id="modalCardId">
 
       <div class="form-group">
-        <label>Название</label>
-        <input type="text" id="modalTitleInput" placeholder="Название направления или темы...">
+        <label>Название блока</label>
+        <input type="text" id="modalTitleInput" placeholder="Хирургия и оперблок">
       </div>
       <div class="form-group">
         <label>Краткое описание на карточке</label>
-        <textarea id="modalDescInput" placeholder="Опишите назначение или алгоритм..."></textarea>
+        <textarea id="modalDescInput" placeholder="Предоперационный чек-лист, наркозный протокол..."></textarea>
       </div>
+      
       <div style="display:grid; grid-template-columns: 1fr 1fr; gap:12px;">
         <div class="form-group">
           <label>Иконка / Эмодзи</label>
-          <input type="text" id="modalIconInput" placeholder="⚡, 🩺, 📄">
+          <input type="text" id="modalIconInput" placeholder="🔪, 🏛️, 🎧">
         </div>
         <div class="form-group">
-          <label>Цвет градиента</label>
+          <label>Цвет градиента шапки</label>
           <select id="modalColorSelect">
             <option value="linear-gradient(135deg, #0088D4, #00A6FF)">Голубой (Надежда)</option>
             <option value="linear-gradient(135deg, #0B3558, #185285)">Глубокий синий</option>
@@ -373,33 +389,61 @@
           </select>
         </div>
       </div>
+
+      <div class="form-group" style="background:var(--brand-light); padding:12px; border-radius:8px; border:1px solid var(--brand-border);">
+        <label style="color:var(--brand-deep); font-weight:800;">Куда ведёт клик (Привязанная страница):</label>
+        <select id="modalPageSelect" style="background:#fff;"></select>
+        <small style="color:var(--text-muted); font-size:0.75rem; display:block; margin-top:4px;">
+          Выберите, какую именно страницу открывать при клике на эту карточку.
+        </small>
+      </div>
+
       <div class="modal-actions">
         <button class="btn btn-outline" onclick="closeModuleModal()">Отмена</button>
-        <button class="btn btn-primary" onclick="saveModuleItem()">Сохранить карточку</button>
+        <button class="btn btn-primary" onclick="saveCardItem()">Сохранить карточку</button>
       </div>
     </div>
   </div>
 
-  <!-- Редактирование заголовка страницы подблока -->
-  <div class="modal-overlay" id="editPageHeaderModal">
+  <!-- 2. Создание новой отдельной страницы с привязкой к блоку -->
+  <div class="modal-overlay" id="pageRecordModal">
     <div class="modal-window">
-      <div class="modal-title">Настройки страницы подблока</div>
+      <div class="modal-title">Создание новой страницы регламента</div>
       <div class="form-group">
         <label>Название страницы</label>
-        <input type="text" id="editPageHeaderTitle">
+        <input type="text" id="newPageRecordTitle" placeholder="Протокол дезинфекции операционной...">
       </div>
       <div class="form-group">
-        <label>Краткое описание / Аннотация</label>
-        <textarea id="editPageHeaderDesc"></textarea>
+        <label>Категория в боковом меню</label>
+        <select id="newPageRecordCategory">
+          <option value="general">Общие стандарты клиники</option>
+          <option value="operators">Колл-центр и операторы</option>
+          <option value="heads">Заведующие отделениями</option>
+          <option value="surgery">Хирургия и оперблок</option>
+          <option value="admin">Администраторы и служба заботы</option>
+          <option value="therapy">Терапия</option>
+          <option value="assistants">Ассистенты</option>
+          <option value="mri_ct">Отделение МРТ/КТ</option>
+          <option value="regulations">Регламенты работы</option>
+          <option value="anesthesia">Анестезиология</option>
+          <option value="laboratory">Лаборатория</option>
+        </select>
+      </div>
+      <div class="form-group" style="background:var(--brand-light); padding:12px; border-radius:8px; border:1px solid var(--brand-border);">
+        <label style="color:var(--brand-deep); font-weight:800;">Связать с карточкой на главной странице:</label>
+        <select id="newPageAttachCardSelect" style="background:#fff;"></select>
+        <small style="color:var(--text-muted); font-size:0.75rem; display:block; margin-top:4px;">
+          Если выбрать карточку, то клик по ней сразу будет открывать эту новую страницу!
+        </small>
       </div>
       <div class="modal-actions">
-        <button class="btn btn-outline" onclick="document.getElementById('editPageHeaderModal').classList.remove('active')">Отмена</button>
-        <button class="btn btn-primary" onclick="savePageHeader()">Сохранить</button>
+        <button class="btn btn-outline" onclick="document.getElementById('pageRecordModal').classList.remove('active')">Отмена</button>
+        <button class="btn btn-primary" onclick="saveNewPageRecord()">Создать и открыть</button>
       </div>
     </div>
   </div>
 
-  <!-- Добавление пункта с текстом, фото, видео или файлом на страницу статьи -->
+  <!-- 3. Добавление пункта с текстом, ссылкой, фото, видео или файлом -->
   <div class="modal-overlay" id="articleBlockModal">
     <div class="modal-window">
       <div class="modal-title" id="articleBlockModalTitle">Пункт регламента / Материал</div>
@@ -422,8 +466,14 @@
       </div>
 
       <div class="form-group" id="grpBlockText">
-        <label>Текст описания / Инструкция</label>
-        <textarea id="articleBlockTextInput" style="min-height:110px;"></textarea>
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:5px;">
+          <label style="margin:0;">Текст описания / Инструкция</label>
+          <button type="button" class="btn btn-outline" style="padding:2px 8px; font-size:0.75rem;" onclick="openLinkHelperModal()">🔗 Добавить ссылку на страницу</button>
+        </div>
+        <textarea id="articleBlockTextInput" style="min-height:120px;"></textarea>
+        <small style="color:var(--text-muted); font-size:0.74rem;">
+          Подсказка: чтобы сделать слово ссылкой на другую страницу базы, используйте формат: <code>[Текст ссылки -> id_страницы]</code>
+        </small>
       </div>
 
       <div class="form-group" id="grpBlockUrl" style="display:none;">
@@ -434,6 +484,25 @@
       <div class="modal-actions">
         <button class="btn btn-outline" onclick="closeArticleBlockModal()">Отмена</button>
         <button class="btn btn-primary" onclick="saveArticleBlock()">Сохранить блок</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Вспомогательное окно для быстрой вставки ссылки на страницу -->
+  <div class="modal-overlay" id="linkHelperModal" style="z-index: 2800;">
+    <div class="modal-window" style="max-width:480px;">
+      <div class="modal-title">Вставить ссылку на страницу базы</div>
+      <div class="form-group">
+        <label>Текст, который будет кликабельным:</label>
+        <input type="text" id="helperLinkText" placeholder="Например: алгоритм подготовки оперблока">
+      </div>
+      <div class="form-group">
+        <label>На какую страницу переводить:</label>
+        <select id="helperLinkTargetPage"></select>
+      </div>
+      <div class="modal-actions">
+        <button class="btn btn-outline" onclick="document.getElementById('linkHelperModal').classList.remove('active')">Отмена</button>
+        <button class="btn btn-primary" onclick="insertLinkCodeIntoTextarea()">Вставить в текст</button>
       </div>
     </div>
   </div>
@@ -512,137 +581,152 @@
       { id: "u_head", fullName: "Елена Валерьевна", email: "head@nadezhda.vet", username: "head_med", password: "1234", role: "head", roleName: "Заведующая отделением" }
     ];
 
-    /* ВСЕ НАПРАВЛЕНИЯ КЛИНИКИ */
-    const DEFAULT_DEPARTMENTS = [
-      { id: "operators", title: "Колл-центр и операторы", desc: "Скрипты консультаций, запись к узким специалистам, триаж.", icon: "🎧", color: "linear-gradient(135deg, #0088D4, #00A6FF)" },
-      { id: "heads", title: "Заведующие отделениями", desc: "Контроль историй болезни, аудит смен, консилиумы.", icon: "🏛️", color: "linear-gradient(135deg, #0B3558, #185285)" },
-      { id: "surgery", title: "Хирургия и оперблок", desc: "Предоперационный чек-лист, наркозный протокол, стерилизация.", icon: "🔪", color: "linear-gradient(135deg, #0F766E, #14B8A6)" },
-      { id: "admin", title: "Администраторы и служба заботы", desc: "Встреча клиентов, оформление в Ветменеджере, сервис.", icon: "💻", color: "linear-gradient(135deg, #0088D4, #0284C7)" },
-      { id: "therapy", title: "Терапия", desc: "Протоколы доказательной терапии, анализы, диагностика.", icon: "🩺", color: "linear-gradient(135deg, #0284C7, #38BDF8)" },
-      { id: "assistants", title: "Ассистенты", desc: "Забор крови, катетеры, асептика, подготовка процедурных.", icon: "🩸", color: "linear-gradient(135deg, #7C3AED, #A78BFA)" },
-      { id: "mri_ct", title: "Отделение МРТ/КТ", desc: "Подготовка к томографии, укладки, контрастные протоколы.", icon: "🏥", color: "linear-gradient(135deg, #6366F1, #818CF8)" },
-      { id: "regulations", title: "Регламенты работы", desc: "Общеклинические правила, график, дисциплина, безопасность.", icon: "📋", color: "linear-gradient(135deg, #64748B, #94A3B8)" },
-      { id: "anesthesia", title: "Анестезиология", desc: "Протоколы седации, мониторинг витальных функций, реанимация.", icon: "💉", color: "linear-gradient(135deg, #9333EA, #C084FC)" },
-      { id: "laboratory", title: "Лаборатория", desc: "Правила взятия биоматериала, хранение, экспресс-тесты.", icon: "🔬", color: "linear-gradient(135deg, #059669, #34D399)" }
-    ];
-
-    /* ПОДБЛОКИ И ТЕМЫ ДЛЯ КАЖДОГО ОТДЕЛА */
-    const DEFAULT_TOPICS = [
+    /* СТРАНИЦЫ БАЗЫ ЗНАНИЙ (КАЖДАЯ СТРАНИЦА ИМЕЕТ СВОЙ УНИКАЛЬНЫЙ ID) */
+    const DEFAULT_PAGES = [
       {
-        id: "top_scripts",
-        deptId: "operators",
+        id: "home",
+        title: "Главная страница базы знаний",
+        category: "general",
+        badge: "Актуально на 2026 г.",
+        blocks: [
+          { type: "banner", title: "Единая корпоративная база знаний клиники «Надежда»", text: "Портал стандартов, стандартных операционных процедур (СОП), чек-листов и обучающих программ." },
+          { type: "yandex", title: "Корпоративное хранилище документов на Яндекс Диске", url: "https://disk.yandex.ru/d/5HlCdgS2idp2Gg" }
+        ]
+      },
+      {
+        id: "page_operators",
         title: "Скрипты звонков и консультаций",
-        desc: "Золотое правило оператора, запись и уточнение симптомов питомца.",
-        icon: "📞",
+        category: "operators",
+        badge: "Колл-центр",
         blocks: [
-          { type: "banner", title: "Золотое правило оператора", text: "Снятие трубки до третьего гудка. Всегда уточняйте наличие экстренных симптомов у питомца в первые 30 секунд разговора." },
-          { type: "checklist", title: "Чек-лист консультации", items: ["Приветствие с представлением клиники", "Уточнение клички и возраста", "Проверка признаков одышки и судорог", "Предупреждение о голодной диете 6-8 ч"] }
+          { type: "banner", title: "Золотое правило оператора", text: "Снятие трубки до третьего гудка. Всегда уточняйте наличие экстренных симптомов у питомца в первые 30 секунд разговора. При подозрении на хирургию переходите в [Предоперационную подготовку -> page_surgery]." },
+          { type: "checklist", title: "Контрольный чек-лист звонка", items: ["Приветствие с представлением клиники", "Уточнить кличку, возраст и породу", "Проверить одышку, судороги и рвоту", "Предупредить о голодной диете 6-8 часов"] }
         ]
       },
       {
-        id: "top_heads_audit",
-        deptId: "heads",
-        title: "Контроль и аудит историй болезни",
-        desc: "Критерии проверки электронных карт в Ветменеджере, корректность диагнозов и схем лечения.",
-        icon: "⚖️",
+        id: "page_heads",
+        title: "Регламент заведующих отделениями",
+        category: "heads",
+        badge: "Руководство",
         blocks: [
-          { type: "banner", title: "Стандарт аудита карт", text: "Каждая история болезни проверяется на наличие обоснования предварительного диагноза, плана обследования и согласия владельца." }
+          { type: "banner", title: "Стандарты курации смен", text: "Ежедневный аудит электронных карт в Ветменеджере, разбор спорных клинических случаев, консилиумы." }
         ]
       },
       {
-        id: "top_surg_prep",
-        deptId: "surgery",
-        title: "Предоперационная подготовка пациента",
-        desc: "Чек-лист готовности, диета, мониторинг и подготовка операционного поля.",
-        icon: "⚡",
+        id: "page_surgery",
+        title: "Хирургическое отделение и оперблок",
+        category: "surgery",
+        badge: "Оперблок",
         blocks: [
-          { type: "banner", title: "Безопасность пациента в наркозе", text: "Животные брахицефалических пород и старше 6 лет допускаются строго с ЭхоКГ сердца." },
-          { type: "image", title: "Схема правильной фиксации пациента на операционном столе", url: "https://images.unsplash.com/photo-1576201836106-db1758fd1c97?w=1000&auto=format&fit=crop&q=80" }
+          { type: "banner", title: "Предоперационная подготовка", text: "Животные брахицефалических пород и пациенты старше 6 лет допускаются строго после ЭхоКГ сердца. Смотрите также [правила асептики ассистентов -> page_assistants]." },
+          { type: "image", title: "Схема фиксации пациента на операционном столе", url: "https://images.unsplash.com/photo-1576201836106-db1758fd1c97?w=1000&auto=format&fit=crop&q=80" }
         ]
       },
       {
-        id: "top_admin_rules",
-        deptId: "admin",
-        title: "Стандарты сервиса и рецепции",
-        desc: "Встреча клиентов, бесконфликтное общение, оформление договоров и касса.",
-        icon: "💻",
+        id: "page_admin",
+        title: "Администраторы и служба заботы",
+        category: "admin",
+        badge: "Рецепция",
         blocks: [
-          { type: "banner", title: "Стандарт первого контакта", text: "Встреча клиента стоя, приветствие и зрительный контакт в первые 5 секунд." }
+          { type: "banner", title: "Стандарты встречи клиентов", text: "Встреча клиента стоя, приветствие и зрительный контакт в первые 5 секунд после входа в холл клиники." }
         ]
       },
       {
-        id: "top_therap_rules",
-        deptId: "therapy",
-        title: "Протоколы доказательной терапии",
-        desc: "Алгоритмы ведения экстренных терапевтических патологий.",
-        icon: "🩺",
+        id: "page_therapy",
+        title: "Терапевтическое отделение",
+        category: "therapy",
+        badge: "Терапия",
         blocks: [
-          { type: "banner", title: "Диагностический минимум", text: "Обязательное первичное обследование: ОАК, БХ, УЗИ обзорное." }
+          { type: "banner", title: "Доказательные алгоритмы", text: "Обязательный диагностический минимум: общий и биохимический анализ крови, УЗИ обзорное." }
         ]
       },
       {
-        id: "top_assist_iv",
-        deptId: "assistants",
-        title: "Постановка венозных катетеров и забор проб",
-        desc: "Правила асептики, фиксация и гепариновый замок.",
-        icon: "🩸",
+        id: "page_assistants",
+        title: "Ассистенты ветеринарного врача",
+        category: "assistants",
+        badge: "Процедурный кабинет",
         blocks: [
-          { type: "banner", title: "Асептика при катетеризации", text: "Выбривание поля с запасом, экспозиция антисептика 30 секунд." }
+          { type: "banner", title: "Постановка венозных катетеров", text: "Шерсть выбривается с запасом, обработка антисептиком 30 секунд. Гепариновый замок обновляется каждые 8 часов." }
         ]
       },
       {
-        id: "top_mri_prep",
-        deptId: "mri_ct",
-        title: "Протокол подготовки к МРТ исследованию",
-        desc: "Проверка на металл, укладки и анестезиологическое сопровождение.",
-        icon: "🧲",
+        id: "page_mri_ct",
+        title: "Отделение МРТ и КТ диагностики",
+        category: "mri_ct",
+        badge: "Томография",
         blocks: [
-          { type: "banner", title: "Безопасность в зоне томографа", text: "Категорически запрещен вход с ферромагнитными предметами. Ошейники снимаются заранее." }
+          { type: "banner", title: "Безопасность томографа", text: "Категорически запрещён вход с ферромагнитными предметами. Все ошейники и карабины снимаются до зоны сканирования." }
         ]
       },
       {
-        id: "top_reg_general",
-        deptId: "regulations",
-        title: "Внутренний трудовой распорядок",
-        desc: "График смен, форма одежды, правила санитарной обработки помещений.",
-        icon: "📋",
+        id: "page_regulations",
+        title: "Общеклинические регламенты работы",
+        category: "regulations",
+        badge: "Внутренний распорядок",
         blocks: [
-          { type: "banner", title: "Дисциплина смены", text: "Смена начинается за 15 минут до открытия для приема пациентов и проверки боксов." }
+          { type: "banner", title: "Трудовой распорядок", text: "Смена начинается за 15 минут до открытия для приёма стационара, осмотра боксов и проверки оборудования." }
         ]
       },
       {
-        id: "top_anest_triage",
-        deptId: "anesthesia",
-        title: "Мониторинг пациента в наркозе",
-        desc: "Капнография, пульсоксиметрия, ЭКГ, контроль артериального давления.",
-        icon: "💉",
+        id: "page_anesthesia",
+        title: "Анестезиология и реанимация",
+        category: "anesthesia",
+        badge: "ОРИТ",
         blocks: [
-          { type: "banner", title: "Золотой стандарт мониторинга", text: "Фиксация витальных показателей в наркозной карте каждые 5 минут." }
+          { type: "banner", title: "Мониторинг витальных функций", text: "Капнография, пульсоксиметрия, ЭКГ и артериальное давление фиксируются в наркозной карте каждые 5 минут." }
         ]
       },
       {
-        id: "top_lab_rules",
-        deptId: "laboratory",
-        title: "Правила взятия и маркировки проб",
-        desc: "Пробирки с ЭДТА, цитратом, биохимические сыворотки и сроки отправки.",
-        icon: "🔬",
+        id: "page_laboratory",
+        title: "Клиническая лаборатория",
+        category: "laboratory",
+        badge: "Анализы",
         blocks: [
-          { type: "banner", title: "Преаналитический этап", text: "Маркировка пробирки производится строго в присутствии владельца сразу после забора крови." }
+          { type: "banner", title: "Преаналитический этап", text: "Маркировка пробирок (ЭДТА, цитрат, биохимия) производится строго в присутствии владельца сразу после забора крови." }
         ]
       }
     ];
 
-    // Ключ версии v25 автоматически перезаписывает старый кэш
-    let departments = JSON.parse(localStorage.getItem('nadezhda_depts_v25')) || DEFAULT_DEPARTMENTS;
-    let topicsList = JSON.parse(localStorage.getItem('nadezhda_topics_v25')) || DEFAULT_TOPICS;
-    let usersList = JSON.parse(localStorage.getItem('nadezhda_users_v25')) || DEFAULT_USERS;
+    /* КАРТОЧКИ НА ГЛАВНОЙ СТРАНИЦЕ (С ПРЯМОЙ ПРИВЯЗКОЙ К СТРАНИЦАМ) */
+    const DEFAULT_DASH_CARDS = [
+      { id: "c_operators", title: "Колл-центр и операторы", desc: "Скрипты консультаций, запись к узким специалистам, триаж.", icon: "🎧", pageId: "page_operators", color: "linear-gradient(135deg, #0088D4, #00A6FF)" },
+      { id: "c_heads", title: "Заведующие отделениями", desc: "Контроль историй болезни, аудит смен, консилиумы.", icon: "🏛️", pageId: "page_heads", color: "linear-gradient(135deg, #0B3558, #185285)" },
+      { id: "c_surgery", title: "Хирургия и оперблок", desc: "Предоперационный чек-лист, наркозный протокол, стерилизация.", icon: "🔪", pageId: "page_surgery", color: "linear-gradient(135deg, #0F766E, #14B8A6)" },
+      { id: "c_admin", title: "Администраторы и служба заботы", desc: "Встреча клиентов, оформление в Ветменеджере, сервис.", icon: "💻", pageId: "page_admin", color: "linear-gradient(135deg, #0088D4, #0284C7)" },
+      { id: "c_therapy", title: "Терапия", desc: "Протоколы доказательной терапии, анализы, диагностика.", icon: "🩺", pageId: "page_therapy", color: "linear-gradient(135deg, #0284C7, #38BDF8)" },
+      { id: "c_assistants", title: "Ассистенты", desc: "Забор крови, катетеры, асептика, подготовка процедурных.", icon: "🩸", pageId: "page_assistants", color: "linear-gradient(135deg, #7C3AED, #A78BFA)" },
+      { id: "c_mri_ct", title: "Отделение МРТ/КТ", desc: "Подготовка к томографии, укладки, контрастные протоколы.", icon: "🏥", pageId: "page_mri_ct", color: "linear-gradient(135deg, #6366F1, #818CF8)" },
+      { id: "c_regulations", title: "Регламенты работы", desc: "Общеклинические правила, график, дисциплина, безопасность.", icon: "📋", pageId: "page_regulations", color: "linear-gradient(135deg, #64748B, #94A3B8)" },
+      { id: "c_anesthesia", title: "Анестезиология", desc: "Протоколы седации, мониторинг витальных функций, реанимация.", icon: "💉", pageId: "page_anesthesia", color: "linear-gradient(135deg, #9333EA, #C084FC)" },
+      { id: "c_laboratory", title: "Лаборатория", desc: "Правила взятия биоматериала, хранение, экспресс-тесты.", icon: "🔬", pageId: "page_laboratory", color: "linear-gradient(135deg, #059669, #34D399)" }
+    ];
+
+    const CATEGORIES = {
+      general: "Общие стандарты клиники",
+      operators: "Колл-центр и операторы",
+      heads: "Заведующие отделениями",
+      surgery: "Хирургия и оперблок",
+      admin: "Администраторы и рецепция",
+      therapy: "Терапевтическое отделение",
+      assistants: "Ассистенты врачей",
+      mri_ct: "Отделение МРТ/КТ",
+      regulations: "Регламенты работы",
+      anesthesia: "Анестезиология",
+      laboratory: "Лаборатория"
+    };
+
+    // Ключ версии v30 гарантирует мгновенное применение новых связей и сброс зависшего кэша
+    let pagesList = JSON.parse(localStorage.getItem('nadezhda_pages_v30')) || DEFAULT_PAGES;
+    let dashCards = JSON.parse(localStorage.getItem('nadezhda_cards_v30')) || DEFAULT_DASH_CARDS;
+    let usersList = JSON.parse(localStorage.getItem('nadezhda_users_v30')) || DEFAULT_USERS;
 
     let currentUser = JSON.parse(sessionStorage.getItem('nadezhda_active_user')) || null;
-    let currentNav = { type: 'home', deptId: null, topicId: null };
+    let currentPageId = "home";
+    let navHistory = [];
 
     /* ОБЛАЧНАЯ СИНХРОНИЗАЦИЯ */
     function syncToCloud(key, data) {
-      localStorage.setItem('nadezhda_' + key + '_v25', JSON.stringify(data));
+      localStorage.setItem('nadezhda_' + key + '_v30', JSON.stringify(data));
       if (firebaseDb && isCloudOnline) {
         firebaseDb.ref(key).set(data).catch(e => console.error("Firebase write error:", e));
       }
@@ -655,9 +739,9 @@
         return;
       }
 
-      firebaseDb.ref('depts').on('value', s => { if (s.val()) { departments = s.val(); renderCurrentView(); } });
-      firebaseDb.ref('topics').on('value', s => { if (s.val()) { topicsList = s.val(); renderCurrentView(); } });
-      firebaseDb.ref('users').on('value', s => { if (s.val()) { usersList = s.val(); } });
+      firebaseDb.ref('pages_v30').on('value', s => { if (s.val()) { pagesList = s.val(); renderPage(currentPageId); renderSidebar(); } });
+      firebaseDb.ref('cards_v30').on('value', s => { if (s.val()) { dashCards = s.val(); if (currentPageId === 'home') renderPage('home'); } });
+      firebaseDb.ref('users_v30').on('value', s => { if (s.val()) { usersList = s.val(); } });
     }
 
     function initApp() {
@@ -698,7 +782,7 @@
       let targetList = usersList;
       if (firebaseDb && isCloudOnline) {
         try {
-          const snap = await firebaseDb.ref('users').once('value');
+          const snap = await firebaseDb.ref('users_v30').once('value');
           if (snap.val()) targetList = snap.val();
         } catch(err) {}
       }
@@ -736,202 +820,166 @@
 
       const canManage = currentUser.role === 'admin' || currentUser.role === 'head';
       document.getElementById('usersManageBtn').style.display = canManage ? 'inline-flex' : 'none';
+      document.getElementById('btnCreateNewPageHeader').style.display = canManage ? 'inline-flex' : 'none';
     }
 
+    /* САЙДБАР */
     function renderSidebar() {
       const nav = document.getElementById('navContainer');
       nav.innerHTML = '';
 
       const homeItem = document.createElement('div');
-      homeItem.className = `nav-item ${currentNav.type === 'home' ? 'active' : ''}`;
+      homeItem.className = `nav-item ${currentPageId === 'home' ? 'active' : ''}`;
       homeItem.onclick = () => { openDoc('home'); if (window.innerWidth <= 900) toggleMobileSidebar(); };
-      homeItem.innerHTML = `<span>🏛️ Все направления</span>`;
+      homeItem.innerHTML = `<span>🏛️ Главная (Все направления)</span>`;
       nav.appendChild(homeItem);
 
-      const section = document.createElement('div');
-      section.className = 'nav-category';
-      section.innerHTML = `<div class="nav-cat-title">Отделы клиники</div>`;
+      for (const [catKey, catName] of Object.entries(CATEGORIES)) {
+        if (catKey === 'general') continue;
+        const catPages = pagesList.filter(p => p.category === catKey);
+        if (catPages.length === 0) continue;
 
-      departments.forEach(dept => {
-        const item = document.createElement('div');
-        item.className = `nav-item ${currentNav.deptId === dept.id && currentNav.type === 'dept' ? 'active' : ''}`;
-        item.onclick = () => { openDept(dept.id); if (window.innerWidth <= 900) toggleMobileSidebar(); };
-        item.innerHTML = `<span>${dept.icon} ${dept.title}</span>`;
-        section.appendChild(item);
-      });
+        const section = document.createElement('div');
+        section.className = 'nav-category';
+        section.innerHTML = `<div class="nav-cat-title">${catName}</div>`;
 
-      nav.appendChild(section);
+        catPages.forEach(p => {
+          const item = document.createElement('div');
+          item.className = `nav-item ${p.id === currentPageId ? 'active' : ''}`;
+          item.onclick = () => { openDoc(p.id); if (window.innerWidth <= 900) toggleMobileSidebar(); };
+          item.innerHTML = `<span>${p.title}</span>`;
+          section.appendChild(item);
+        });
+
+        nav.appendChild(section);
+      }
     }
 
     /* НАВИГАЦИЯ */
-    function openDoc(type) {
-      currentNav = { type: 'home', deptId: null, topicId: null };
-      renderCurrentView();
+    function openDoc(pageId, isBackAction = false) {
+      if (!isBackAction && currentPageId && currentPageId !== pageId) {
+        navHistory.push(currentPageId);
+      }
+      currentPageId = pageId;
       renderSidebar();
+      renderPage(pageId);
     }
 
-    function openDept(deptId) {
-      currentNav = { type: 'dept', deptId: deptId, topicId: null };
-      renderCurrentView();
-      renderSidebar();
+    function goBackPage() {
+      if (navHistory.length > 0) {
+        openDoc(navHistory.pop(), true);
+      } else {
+        openDoc('home', true);
+      }
     }
 
-    function openTopic(topicId) {
-      const topic = topicsList.find(t => t.id === topicId);
-      if (!topic) return;
-      currentNav = { type: 'topic', deptId: topic.deptId, topicId: topicId };
-      renderCurrentView();
-      renderSidebar();
+    /* ПРЕВРАЩЕНИЕ ТЕКСТА [Текст -> id] В КЛИКАБЕЛЬНЫЕ ССЫЛКИ */
+    function parseInternalWikiLinks(rawText) {
+      if (!rawText) return '';
+      // Регулярное выражение находит конструкцию вида [Текст ссылки -> target_id]
+      return rawText.replace(/\[(.*?)->(.*?)\]/g, function(match, linkText, targetPageId) {
+        const cleanText = linkText.trim();
+        const cleanId = targetPageId.trim();
+        return `<a class="wiki-internal-link" onclick="event.preventDefault(); openDoc('${cleanId}')" title="Перейти на страницу">${cleanText} ↗</a>`;
+      });
     }
 
-    /* ПЕРЕМЕЩЕНИЕ И КОПИРОВАНИЕ НАПРАВЛЕНИЙ (ЭТАП 1) */
-    function moveDept(index, direction, e) {
+    /* ПЕРЕМЕЩЕНИЕ И КОПИРОВАНИЕ КАРТОЧЕК НА ГЛАВНОЙ */
+    function moveCard(index, direction, e) {
       if (e) e.stopPropagation();
       const newIndex = index + direction;
-      if (newIndex < 0 || newIndex >= departments.length) return;
-      const temp = departments[index];
-      departments[index] = departments[newIndex];
-      departments[newIndex] = temp;
-      syncToCloud('depts', departments);
-      renderCurrentView();
-      renderSidebar();
+      if (newIndex < 0 || newIndex >= dashCards.length) return;
+      const temp = dashCards[index];
+      dashCards[index] = dashCards[newIndex];
+      dashCards[newIndex] = temp;
+      syncToCloud('cards_v30', dashCards);
+      renderPage('home');
     }
 
-    function duplicateDept(deptId, e) {
+    function duplicateCard(cardId, e) {
       if (e) e.stopPropagation();
-      const original = departments.find(d => d.id === deptId);
+      const original = dashCards.find(c => c.id === cardId);
       if (!original) return;
-      const newId = 'dept_' + Date.now();
-      const copy = { ...original, id: newId, title: original.title + ' (Копия)' };
-      departments.push(copy);
 
-      const relatedTopics = topicsList.filter(t => t.deptId === deptId);
-      relatedTopics.forEach(t => {
-        const newTopicId = 'top_' + Math.random().toString(36).substring(2, 9);
-        topicsList.push({
-          ...t,
-          id: newTopicId,
-          deptId: newId,
-          blocks: JSON.parse(JSON.stringify(t.blocks || []))
-        });
+      // Создаем копию страницы
+      const originalPage = pagesList.find(p => p.id === original.pageId) || { blocks: [] };
+      const newPageId = 'page_' + Date.now();
+      pagesList.push({
+        id: newPageId,
+        title: original.title + ' (Копия)',
+        category: originalPage.category || 'general',
+        badge: 'Регламент',
+        blocks: JSON.parse(JSON.stringify(originalPage.blocks || []))
       });
 
-      syncToCloud('depts', departments);
-      syncToCloud('topics', topicsList);
-      renderCurrentView();
+      // Создаем копию карточки
+      const newCardId = 'card_' + Date.now();
+      dashCards.push({
+        id: newCardId,
+        title: original.title + ' (Копия)',
+        desc: original.desc,
+        icon: original.icon,
+        pageId: newPageId,
+        color: original.color
+      });
+
+      syncToCloud('pages_v30', pagesList);
+      syncToCloud('cards_v30', dashCards);
+      renderPage('home');
       renderSidebar();
     }
 
-    /* ПЕРЕМЕЩЕНИЕ И КОПИРОВАНИЕ ТЕМ/ПОДБЛОКОВ (ЭТАП 2) */
-    function moveTopic(index, direction, e) {
-      if (e) e.stopPropagation();
-      const currentDeptTopics = topicsList.filter(t => t.deptId === currentNav.deptId);
-      const newIndex = index + direction;
-      if (newIndex < 0 || newIndex >= currentDeptTopics.length) return;
-      
-      const itemA = currentDeptTopics[index];
-      const itemB = currentDeptTopics[newIndex];
-      
-      const realIdxA = topicsList.indexOf(itemA);
-      const realIdxB = topicsList.indexOf(itemB);
-
-      topicsList[realIdxA] = itemB;
-      topicsList[realIdxB] = itemA;
-
-      syncToCloud('topics', topicsList);
-      renderCurrentView();
-    }
-
-    function duplicateTopic(topicId, e) {
-      if (e) e.stopPropagation();
-      const original = topicsList.find(t => t.id === topicId);
-      if (!original) return;
-      const newTopicId = 'top_' + Date.now();
-      const copy = {
-        ...original,
-        id: newTopicId,
-        title: original.title + ' (Копия)',
-        blocks: JSON.parse(JSON.stringify(original.blocks || []))
-      };
-      topicsList.push(copy);
-      syncToCloud('topics', topicsList);
-      renderCurrentView();
-    }
-
-    /* ПЕРЕМЕЩЕНИЕ И КОПИРОВАНИЕ ПУНКТОВ ВНУТРИ ТЕМЫ (ЭТАП 3) */
+    /* ПЕРЕМЕЩЕНИЕ И КОПИРОВАНИЕ ПУНКТОВ ВНУТРИ СТАТЬИ */
     function moveArticleBlock(index, direction) {
-      const topic = topicsList.find(t => t.id === currentNav.topicId);
-      if (!topic || !topic.blocks) return;
+      const page = pagesList.find(p => p.id === currentPageId);
+      if (!page || !page.blocks) return;
       const newIndex = index + direction;
-      if (newIndex < 0 || newIndex >= topic.blocks.length) return;
-      const temp = topic.blocks[index];
-      topic.blocks[index] = topic.blocks[newIndex];
-      topic.blocks[newIndex] = temp;
-      syncToCloud('topics', topicsList);
-      renderCurrentView();
+      if (newIndex < 0 || newIndex >= page.blocks.length) return;
+      const temp = page.blocks[index];
+      page.blocks[index] = page.blocks[newIndex];
+      page.blocks[newIndex] = temp;
+      syncToCloud('pages_v30', pagesList);
+      renderPage(currentPageId);
     }
 
     function duplicateArticleBlock(index) {
-      const topic = topicsList.find(t => t.id === currentNav.topicId);
-      if (!topic || !topic.blocks[index]) return;
-      const copy = JSON.parse(JSON.stringify(topic.blocks[index]));
+      const page = pagesList.find(p => p.id === currentPageId);
+      if (!page || !page.blocks[index]) return;
+      const copy = JSON.parse(JSON.stringify(page.blocks[index]));
       copy.title = (copy.title || '') + ' (Копия)';
-      topic.blocks.splice(index + 1, 0, copy);
-      syncToCloud('topics', topicsList);
-      renderCurrentView();
+      page.blocks.splice(index + 1, 0, copy);
+      syncToCloud('pages_v30', pagesList);
+      renderPage(currentPageId);
     }
 
-    /* РЕДАКТИРОВАНИЕ ЗАГОЛОВКА ТЕМЫ */
-    function openEditPageHeaderModal() {
-      const topic = topicsList.find(t => t.id === currentNav.topicId);
-      if (!topic) return;
-      document.getElementById('editPageHeaderTitle').value = topic.title;
-      document.getElementById('editPageHeaderDesc').value = topic.desc || '';
-      document.getElementById('editPageHeaderModal').classList.add('active');
-    }
-
-    function savePageHeader() {
-      const topic = topicsList.find(t => t.id === currentNav.topicId);
-      if (!topic) return;
-      const title = document.getElementById('editPageHeaderTitle').value.trim();
-      const desc = document.getElementById('editPageHeaderDesc').value.trim();
-      if (!title) return alert('Введите название!');
-      topic.title = title;
-      topic.desc = desc;
-      syncToCloud('topics', topicsList);
-      document.getElementById('editPageHeaderModal').classList.remove('active');
-      renderCurrentView();
-    }
-
-    /* РЕНДЕР ТЕКУЩЕГО ЭКРАНА */
-    function renderCurrentView() {
+    /* РЕНДЕР СТРАНИЦЫ */
+    function renderPage(pageId) {
       const area = document.getElementById('documentArea');
       const canEdit = currentUser && (currentUser.role === 'admin' || currentUser.role === 'head');
 
-      // 1. ЭТАП 1: ГЛАВНЫЕ НАПРАВЛЕНИЯ КЛИНИКИ
-      if (currentNav.type === 'home') {
-        const cardsHtml = departments.map((d, idx) => {
-          const subCount = topicsList.filter(t => t.deptId === d.id).length;
+      // 1. ГЛАВНАЯ СТРАНИЦА (ПЛИТКИ НАПРАВЛЕНИЙ)
+      if (pageId === 'home') {
+        const cardsHtml = dashCards.map((c, idx) => {
           const editTools = canEdit ? `
             <div class="dash-card-actions">
-              <button class="card-tool-btn" title="Сдвинуть влево" onclick="moveDept(${idx}, -1, event)">◀</button>
-              <button class="card-tool-btn" title="Сдвинуть вправо" onclick="moveDept(${idx}, 1, event)">▶</button>
-              <button class="card-tool-btn" title="Копировать блок" onclick="duplicateDept('${d.id}', event)">📋</button>
-              <button class="card-tool-btn" title="Редактировать" onclick="openEditDeptModal('${d.id}', event)">✏️</button>
-              <button class="card-tool-btn" title="Удалить" style="color:var(--accent-red);" onclick="deleteDept('${d.id}', event)">🗑️</button>
+              <button class="card-tool-btn" title="Сдвинуть влево" onclick="moveCard(${idx}, -1, event)">◀</button>
+              <button class="card-tool-btn" title="Сдвинуть вправо" onclick="moveCard(${idx}, 1, event)">▶</button>
+              <button class="card-tool-btn" title="Копировать блок" onclick="duplicateCard('${c.id}', event)">📋</button>
+              <button class="card-tool-btn" title="Редактировать" onclick="openEditCardModal('${c.id}', event)">✏️</button>
+              <button class="card-tool-btn" title="Удалить" style="color:var(--accent-red);" onclick="deleteCard('${c.id}', event)">🗑️</button>
             </div>
           ` : '';
 
           return `
-            <div class="dash-card" onclick="openDept('${d.id}')">
+            <div class="dash-card" onclick="openDoc('${c.pageId}')">
               ${editTools}
-              <div class="dash-card-img" style="background:${d.color};">${d.icon}</div>
+              <div class="dash-card-img" style="background:${c.color || 'var(--brand-blue)'};">${c.icon || '📌'}</div>
               <div class="dash-card-content">
-                <div class="dash-card-title">${d.title}</div>
-                <div class="dash-card-desc">${d.desc}</div>
+                <div class="dash-card-title">${c.title}</div>
+                <div class="dash-card-desc">${c.desc}</div>
                 <div class="dash-card-footer">
-                  <span>Темы и подблоки: ${subCount}</span>
-                  <span>Перейти в модуль →</span>
+                  <span>Перейти в модуль</span>
+                  <span>→</span>
                 </div>
               </div>
             </div>
@@ -945,305 +993,242 @@
               <h1 class="doc-title">Операционные направления клиники</h1>
               <div class="doc-meta"><span class="tag tag-blue">Актуально на 2026 г.</span></div>
             </div>
-            ${canEdit ? `<button class="btn btn-primary" onclick="openCreateDeptModal()">+ Добавить направление</button>` : ''}
+            ${canEdit ? `
+              <div style="display:flex; gap:8px;">
+                <button class="btn btn-primary" onclick="openCreateCardModal()">+ Добавить направление</button>
+              </div>
+            ` : ''}
           </div>
           <div class="dashboard-grid">${cardsHtml}</div>
         `;
         return;
       }
 
-      // 2. ЭТАП 2: ПОДБЛОКИ И ТЕМЫ ВНУТРИ ВЫБРАННОГО НАПРАВЛЕНИЯ
-      if (currentNav.type === 'dept') {
-        const dept = departments.find(d => d.id === currentNav.deptId);
-        if (!dept) return openDoc('home');
+      // 2. ВНУТРЕННЯЯ СТРАНИЦА РЕГЛАМЕНТА
+      const page = pagesList.find(p => p.id === pageId) || pagesList[0];
 
-        let subTopics = topicsList.filter(t => t.deptId === dept.id);
-        
-        // Автоматически создаем тему, если раздел пуст
-        if (subTopics.length === 0) {
-          const autoTopic = {
-            id: 'top_' + dept.id + '_intro',
-            deptId: dept.id,
-            title: 'Базовые регламенты: ' + dept.title,
-            desc: 'Инструкции, алгоритмы действий и рабочие стандарты отделения.',
-            icon: dept.icon,
-            blocks: [
-              { type: 'banner', title: 'Основное положение регламента', text: 'Заполните содержание инструкций и стандартов отделения...' }
-            ]
-          };
-          topicsList.push(autoTopic);
-          syncToCloud('topics', topicsList);
-          subTopics = [autoTopic];
-        }
+      let blocksHtml = (page.blocks || []).map((b, idx) => {
+        const editBlockTools = canEdit ? `
+          <div class="page-block-tools">
+            <button class="card-tool-btn" title="Вверх" onclick="moveArticleBlock(${idx}, -1)">▲</button>
+            <button class="card-tool-btn" title="Вниз" onclick="moveArticleBlock(${idx}, 1)">▼</button>
+            <button class="card-tool-btn" title="Копировать пункт" onclick="duplicateArticleBlock(${idx})">📋</button>
+            <button class="card-tool-btn" title="Изменить" onclick="openEditArticleBlockModal(${idx})">✏️</button>
+            <button class="card-tool-btn" title="Удалить" style="color:var(--accent-red);" onclick="deleteArticleBlock(${idx})">🗑️</button>
+          </div>
+        ` : '';
 
-        const topicsGridHtml = subTopics.map((t, idx) => {
-          const editTools = canEdit ? `
-            <div class="dash-card-actions">
-              <button class="card-tool-btn" title="Сдвинуть влево" onclick="moveTopic(${idx}, -1, event)">◀</button>
-              <button class="card-tool-btn" title="Сдвинуть вправо" onclick="moveTopic(${idx}, 1, event)">▶</button>
-              <button class="card-tool-btn" title="Копировать тему" onclick="duplicateTopic('${t.id}', event)">📋</button>
-              <button class="card-tool-btn" title="Редактировать карточку" onclick="openEditTopicModal('${t.id}', event)">✏️</button>
-              <button class="card-tool-btn" title="Удалить" style="color:var(--accent-red);" onclick="deleteTopic('${t.id}', event)">🗑️</button>
-            </div>
-          ` : '';
-
-          return `
-            <div class="dash-card" onclick="openTopic('${t.id}')">
-              ${editTools}
-              <div class="dash-card-img" style="background:${dept.color}; font-size:2.4rem;">${t.icon || '📄'}</div>
-              <div class="dash-card-content">
-                <div class="dash-card-title">${t.title}</div>
-                <div class="dash-card-desc">${t.desc || 'Подробный регламент, медиа-материалы и инструкции...'}</div>
-                <div class="dash-card-footer">
-                  <span>Стандарт клиники</span>
-                  <span>Открыть тему →</span>
-                </div>
-              </div>
+        let contentHtml = '';
+        if (b.type === 'checklist') {
+          const listItems = (b.items || []).map(i => `<label class="check-item"><input type="checkbox"> <span>${parseInternalWikiLinks(i)}</span></label>`).join('');
+          contentHtml = `<div><h3 style="color:var(--brand-deep); margin-bottom:10px;">${b.title}</h3><div class="checklist">${listItems}</div></div>`;
+        } else if (b.type === 'image') {
+          contentHtml = `
+            <div class="media-card">
+              ${b.title ? `<div class="media-card-title">${b.title}</div>` : ''}
+              <img src="${b.url}" alt="${b.title || 'Изображение'}">
+              ${b.text ? `<div style="padding:10px 16px; font-size:0.88rem; color:var(--text-muted);">${parseInternalWikiLinks(b.text)}</div>` : ''}
             </div>
           `;
-        }).join('');
-
-        area.innerHTML = `
-          <div class="doc-header">
-            <div>
-              <div class="doc-nav-row">
-                <button class="btn-back" onclick="openDoc('home')">← Все направления</button>
-                <div class="breadcrumbs"><a onclick="openDoc('home')">База знаний</a> / ${dept.title}</div>
-              </div>
-              <h1 class="doc-title">${dept.title}</h1>
-              <div class="doc-meta"><span class="tag tag-blue">Раздел операционного направления</span></div>
+        } else if (b.type === 'video') {
+          let embedUrl = b.url || '';
+          if (embedUrl.includes('watch?v=')) embedUrl = embedUrl.replace('watch?v=', 'embed/');
+          contentHtml = `
+            <div class="media-card">
+              ${b.title ? `<div class="media-card-title">🎥 ${b.title}</div>` : ''}
+              <div class="media-video-wrap"><iframe src="${embedUrl}" allowfullscreen></iframe></div>
+              ${b.text ? `<div style="padding:10px 16px; font-size:0.88rem; color:var(--text-muted);">${parseInternalWikiLinks(b.text)}</div>` : ''}
             </div>
-            ${canEdit ? `<button class="btn btn-primary" onclick="openCreateTopicModal('${dept.id}')">+ Добавить подблок (тему)</button>` : ''}
+          `;
+        } else if (b.type === 'file') {
+          contentHtml = `
+            <div class="file-attachment-box">
+              <div>
+                <strong style="color:var(--brand-deep); font-size:0.95rem;">📄 ${b.title || 'Документ для ознакомления'}</strong>
+                ${b.text ? `<div style="font-size:0.8rem; color:var(--text-muted); margin-top:2px;">${parseInternalWikiLinks(b.text)}</div>` : ''}
+              </div>
+              <a href="${b.url || '#'}" target="_blank" class="btn btn-outline">Скачать файл 📥</a>
+            </div>
+          `;
+        } else {
+          contentHtml = `<div class="info-banner"><strong>${b.title}</strong><br><div style="margin-top:6px;">${parseInternalWikiLinks(b.text)}</div></div>`;
+        }
+
+        return `<div class="page-block-wrapper">${editBlockTools}${contentHtml}</div>`;
+      }).join('');
+
+      area.innerHTML = `
+        <div class="doc-header">
+          <div>
+            <div class="doc-nav-row">
+              <button class="btn-back" onclick="goBackPage()">← Назад</button>
+              <div class="breadcrumbs"><a onclick="openDoc('home')">База знаний</a> / ${CATEGORIES[page.category] || 'Раздел'}</div>
+            </div>
+            <h1 class="doc-title">${page.title}</h1>
+            <div class="doc-meta">
+              <span class="tag tag-blue">${CATEGORIES[page.category] || 'Регламент'}</span>
+              <span class="tag tag-green">Актуально на 2026 г.</span>
+            </div>
           </div>
-          <div class="dashboard-grid">${topicsGridHtml}</div>
-        `;
-        return;
-      }
-
-      // 3. ЭТАП 3: РАЗВЕРНУТЫЙ ОТВЕТ С ВИДЕО, КАРТИНКАМИ И ФАЙЛАМИ
-      if (currentNav.type === 'topic') {
-        const topic = topicsList.find(t => t.id === currentNav.topicId);
-        if (!topic) return openDoc('home');
-        const dept = departments.find(d => d.id === topic.deptId) || { title: 'Отдел', id: 'home', color: 'var(--brand-blue)' };
-
-        let blocksHtml = (topic.blocks || []).map((b, idx) => {
-          const editBlockTools = canEdit ? `
-            <div class="page-block-tools">
-              <button class="card-tool-btn" title="Вверх" onclick="moveArticleBlock(${idx}, -1)">▲</button>
-              <button class="card-tool-btn" title="Вниз" onclick="moveArticleBlock(${idx}, 1)">▼</button>
-              <button class="card-tool-btn" title="Копировать пункт" onclick="duplicateArticleBlock(${idx})">📋</button>
-              <button class="card-tool-btn" title="Изменить" onclick="openEditArticleBlockModal(${idx})">✏️</button>
-              <button class="card-tool-btn" title="Удалить" style="color:var(--accent-red);" onclick="deleteArticleBlock(${idx})">🗑️</button>
+          ${canEdit ? `
+            <div style="display:flex; gap:8px;">
+              <button class="btn btn-primary" onclick="openCreateArticleBlockModal()">+ Добавить пункт</button>
+              <button class="btn btn-outline" style="color:var(--accent-red); border-color:var(--accent-red);" onclick="deletePage('${page.id}')">🗑️ Удалить страницу</button>
             </div>
-          ` : '';
+          ` : ''}
+        </div>
+        <div class="doc-body">${blocksHtml || '<div style="padding:24px; background:#fff; border-radius:10px; border:1px solid var(--brand-border); text-align:center; color:var(--text-muted);">На этой странице пока нет пунктов. Нажмите «+ Добавить пункт», чтобы добавить текст, чек-лист, видео или фото.</div>'}</div>
+      `;
 
-          let contentHtml = '';
-          if (b.type === 'checklist') {
-            const listItems = (b.items || []).map(i => `<label class="check-item"><input type="checkbox"> <span>${i}</span></label>`).join('');
-            contentHtml = `<div><h3 style="color:var(--brand-deep); margin-bottom:10px;">${b.title}</h3><div class="checklist">${listItems}</div></div>`;
-          } else if (b.type === 'image') {
-            contentHtml = `
-              <div class="media-card">
-                ${b.title ? `<div class="media-card-title">${b.title}</div>` : ''}
-                <img src="${b.url}" alt="${b.title || 'Изображение'}">
-                ${b.text ? `<div style="padding:10px 16px; font-size:0.88rem; color:var(--text-muted);">${b.text}</div>` : ''}
-              </div>
-            `;
-          } else if (b.type === 'video') {
-            let embedUrl = b.url || '';
-            if (embedUrl.includes('watch?v=')) embedUrl = embedUrl.replace('watch?v=', 'embed/');
-            contentHtml = `
-              <div class="media-card">
-                ${b.title ? `<div class="media-card-title">🎥 ${b.title}</div>` : ''}
-                <div class="media-video-wrap">
-                  <iframe src="${embedUrl}" allowfullscreen></iframe>
-                </div>
-                ${b.text ? `<div style="padding:10px 16px; font-size:0.88rem; color:var(--text-muted);">${b.text}</div>` : ''}
-              </div>
-            `;
-          } else if (b.type === 'file') {
-            contentHtml = `
-              <div class="file-attachment-box">
-                <div>
-                  <strong style="color:var(--brand-deep); font-size:0.95rem;">📄 ${b.title || 'Документ для ознакомления'}</strong>
-                  ${b.text ? `<div style="font-size:0.8rem; color:var(--text-muted); margin-top:2px;">${b.text}</div>` : ''}
-                </div>
-                <a href="${b.url || '#'}" target="_blank" class="btn btn-outline">Скачать файл 📥</a>
-              </div>
-            `;
-          } else {
-            contentHtml = `<div class="info-banner"><strong>${b.title}</strong><br><div style="margin-top:6px;">${b.text}</div></div>`;
-          }
-
-          return `<div class="page-block-wrapper">${editBlockTools}${contentHtml}</div>`;
-        }).join('');
-
-        area.innerHTML = `
-          <div class="doc-header">
-            <div>
-              <div class="doc-nav-row">
-                <button class="btn-back" onclick="openDept('${dept.id}')">← К списку тем</button>
-                <div class="breadcrumbs"><a onclick="openDoc('home')">База знаний</a> / <a onclick="openDept('${dept.id}')">${dept.title}</a></div>
-              </div>
-              <h1 class="doc-title">${topic.title}</h1>
-              <div class="doc-meta">
-                <span class="tag tag-blue">${dept.title}</span>
-                <span class="tag tag-green">Актуально на 2026 г.</span>
-              </div>
-            </div>
-            ${canEdit ? `
-              <div style="display:flex; gap:8px;">
-                <button class="btn btn-outline" onclick="openEditPageHeaderModal()">✏️ Название темы</button>
-                <button class="btn btn-primary" onclick="openCreateArticleBlockModal()">+ Добавить материал</button>
-                <button class="btn btn-outline" style="color:var(--accent-red); border-color:var(--accent-red);" onclick="deleteTopic('${topic.id}')">🗑️ Удалить тему</button>
-              </div>
-            ` : ''}
-          </div>
-          <div class="doc-body">${blocksHtml}</div>
-        `;
-
-        area.querySelectorAll('.check-item input').forEach(input => {
-          input.addEventListener('change', (e) => {
-            if (e.target.checked) e.target.parentElement.classList.add('done');
-            else e.target.parentElement.classList.remove('done');
-          });
+      area.querySelectorAll('.check-item input').forEach(input => {
+        input.addEventListener('change', (e) => {
+          if (e.target.checked) e.target.parentElement.classList.add('done');
+          else e.target.parentElement.classList.remove('done');
         });
-        return;
-      }
+      });
     }
 
-    /* МОДАЛЬНЫЕ ОКНА НАПРАВЛЕНИЙ */
-    function openCreateDeptModal() {
-      document.getElementById('modalTargetType').value = 'dept';
-      document.getElementById('modalItemId').value = '';
-      document.getElementById('moduleModalTitle').innerText = 'Новое операционное направление клиники';
-      document.getElementById('modalDeptSelectGroup').style.display = 'none';
+    /* УПРАВЛЕНИЕ КАРТОЧКАМИ НА ГЛАВНОЙ */
+    function populatePageSelect(selectEl, selectedPageId) {
+      selectEl.innerHTML = pagesList.map(p => `
+        <option value="${p.id}" ${p.id === selectedPageId ? 'selected' : ''}>
+          ${p.title} (${CATEGORIES[p.category] || p.category})
+        </option>
+      `).join('');
+    }
+
+    function openCreateCardModal() {
+      document.getElementById('modalCardId').value = '';
+      document.getElementById('moduleModalTitle').innerText = 'Новое операционное направление';
       document.getElementById('modalTitleInput').value = '';
       document.getElementById('modalDescInput').value = '';
-      document.getElementById('modalIconInput').value = '⚡';
+      document.getElementById('modalIconInput').value = '📌';
+      populatePageSelect(document.getElementById('modalPageSelect'), 'home');
       document.getElementById('moduleModal').classList.add('active');
     }
 
-    function openEditDeptModal(deptId, e) {
+    function openEditCardModal(cardId, e) {
       if (e) e.stopPropagation();
-      const d = departments.find(x => x.id === deptId);
-      if (!d) return;
-      document.getElementById('modalTargetType').value = 'dept';
-      document.getElementById('modalItemId').value = d.id;
+      const c = dashCards.find(x => x.id === cardId);
+      if (!c) return;
+
+      document.getElementById('modalCardId').value = c.id;
       document.getElementById('moduleModalTitle').innerText = 'Редактировать направление';
-      document.getElementById('modalDeptSelectGroup').style.display = 'none';
-      document.getElementById('modalTitleInput').value = d.title;
-      document.getElementById('modalDescInput').value = d.desc;
-      document.getElementById('modalIconInput').value = d.icon;
+      document.getElementById('modalTitleInput').value = c.title;
+      document.getElementById('modalDescInput').value = c.desc;
+      document.getElementById('modalIconInput').value = c.icon || '📌';
+      document.getElementById('modalColorSelect').value = c.color || 'linear-gradient(135deg, #0088D4, #00A6FF)';
+      
+      populatePageSelect(document.getElementById('modalPageSelect'), c.pageId);
       document.getElementById('moduleModal').classList.add('active');
-    }
-
-    function deleteDept(deptId, e) {
-      if (e) e.stopPropagation();
-      if (confirm('Удалить направление со всеми вложенными темами?')) {
-        departments = departments.filter(d => d.id !== deptId);
-        topicsList = topicsList.filter(t => t.deptId !== deptId);
-        syncToCloud('depts', departments);
-        syncToCloud('topics', topicsList);
-        renderCurrentView();
-      }
-    }
-
-    /* МОДАЛЬНЫЕ ОКНА ТЕМ */
-    function openCreateTopicModal(presetDeptId) {
-      document.getElementById('modalTargetType').value = 'topic';
-      document.getElementById('modalItemId').value = '';
-      document.getElementById('moduleModalTitle').innerText = 'Новый подблок / Тема регламента';
-      document.getElementById('modalDeptSelectGroup').style.display = 'block';
-
-      const sel = document.getElementById('modalDeptSelect');
-      sel.innerHTML = departments.map(d => `<option value="${d.id}" ${d.id === presetDeptId ? 'selected' : ''}>${d.title}</option>`).join('');
-
-      document.getElementById('modalTitleInput').value = '';
-      document.getElementById('modalDescInput').value = '';
-      document.getElementById('modalIconInput').value = '📄';
-      document.getElementById('moduleModal').classList.add('active');
-    }
-
-    function openEditTopicModal(topicId, e) {
-      if (e) e.stopPropagation();
-      const t = topicsList.find(x => x.id === topicId);
-      if (!t) return;
-      document.getElementById('modalTargetType').value = 'topic';
-      document.getElementById('modalItemId').value = t.id;
-      document.getElementById('moduleModalTitle').innerText = 'Редактировать тему';
-      document.getElementById('modalDeptSelectGroup').style.display = 'block';
-
-      const sel = document.getElementById('modalDeptSelect');
-      sel.innerHTML = departments.map(d => `<option value="${d.id}" ${d.id === t.deptId ? 'selected' : ''}>${d.title}</option>`).join('');
-
-      document.getElementById('modalTitleInput').value = t.title;
-      document.getElementById('modalDescInput').value = t.desc || '';
-      document.getElementById('modalIconInput').value = t.icon || '📄';
-      document.getElementById('moduleModal').classList.add('active');
-    }
-
-    function deleteTopic(topicId, e) {
-      if (e) e.stopPropagation();
-      if (confirm('Удалить эту тему?')) {
-        const t = topicsList.find(x => x.id === topicId);
-        const deptId = t ? t.deptId : 'home';
-        topicsList = topicsList.filter(x => x.id !== topicId);
-        syncToCloud('topics', topicsList);
-        openDept(deptId);
-      }
     }
 
     function closeModuleModal() {
       document.getElementById('moduleModal').classList.remove('active');
     }
 
-    function saveModuleItem() {
-      const type = document.getElementById('modalTargetType').value;
-      const id = document.getElementById('modalItemId').value;
+    function saveCardItem() {
+      const id = document.getElementById('modalCardId').value;
       const title = document.getElementById('modalTitleInput').value.trim();
       const desc = document.getElementById('modalDescInput').value.trim();
       const icon = document.getElementById('modalIconInput').value.trim() || '📌';
       const color = document.getElementById('modalColorSelect').value;
+      let pageId = document.getElementById('modalPageSelect').value;
 
-      if (!title) return alert('Введите название!');
+      if (!title) return alert('Введите название направления!');
 
-      if (type === 'dept') {
-        let targetDeptId = id;
-        if (id) {
-          const idx = departments.findIndex(d => d.id === id);
-          if (idx !== -1) departments[idx] = { ...departments[idx], title, desc, icon, color };
-        } else {
-          targetDeptId = 'dept_' + Date.now();
-          departments.push({ id: targetDeptId, title, desc, icon, color });
-        }
-        syncToCloud('depts', departments);
-        closeModuleModal();
-        openDept(targetDeptId);
+      // Если страница для карточки не выбрана, автоматически создаем её
+      if (!pageId || pageId === 'home') {
+        pageId = 'page_' + Date.now();
+        pagesList.push({
+          id: pageId,
+          title: title,
+          category: 'general',
+          badge: 'Регламент',
+          blocks: [{ type: 'banner', title: 'Основное положение', text: 'Заполните содержание регламента...' }]
+        });
+        syncToCloud('pages_v30', pagesList);
+      }
+
+      if (id) {
+        const idx = dashCards.findIndex(x => x.id === id);
+        if (idx !== -1) dashCards[idx] = { id, title, desc, icon, pageId, color };
       } else {
-        const deptId = document.getElementById('modalDeptSelect').value;
-        let targetTopicId = id;
-        if (id) {
-          const idx = topicsList.findIndex(t => t.id === id);
-          if (idx !== -1) topicsList[idx] = { ...topicsList[idx], deptId, title, desc, icon };
-        } else {
-          targetTopicId = 'topic_' + Date.now();
-          topicsList.push({
-            id: targetTopicId,
-            deptId: deptId,
-            title: title,
-            desc: desc,
-            icon: icon,
-            blocks: [{ type: 'banner', title: 'Основной регламент', text: 'Заполните содержание инструкции...' }]
-          });
-        }
-        syncToCloud('topics', topicsList);
-        closeModuleModal();
-        openTopic(targetTopicId);
+        dashCards.push({ id: 'card_' + Date.now(), title, desc, icon, pageId, color });
+      }
+
+      syncToCloud('cards_v30', dashCards);
+      closeModuleModal();
+      renderPage('home');
+      renderSidebar();
+    }
+
+    function deleteCard(cardId, e) {
+      if (e) e.stopPropagation();
+      if (confirm('Удалить эту карточку направления?')) {
+        dashCards = dashCards.filter(c => c.id !== cardId);
+        syncToCloud('cards_v30', dashCards);
+        renderPage('home');
       }
     }
 
-    /* МОДАЛЬНЫЕ ОКНА ПУНКТОВ СТАТЬИ */
+    /* СОЗДАНИЕ НОВОЙ СТРАНИЦЫ И ПРИВЯЗКА К БЛОКУ */
+    function openCreatePageRecordModal() {
+      document.getElementById('newPageRecordTitle').value = '';
+      
+      const cardSelect = document.getElementById('newPageAttachCardSelect');
+      cardSelect.innerHTML = `<option value="none">-- Не привязывать (только в боковое меню) --</option>` + 
+        dashCards.map(c => `<option value="${c.id}">К карточке: «${c.title}»</option>`).join('');
+
+      document.getElementById('pageRecordModal').classList.add('active');
+    }
+
+    function saveNewPageRecord() {
+      const title = document.getElementById('newPageRecordTitle').value.trim();
+      const category = document.getElementById('newPageRecordCategory').value;
+      const attachCardId = document.getElementById('newPageAttachCardSelect').value;
+
+      if (!title) return alert('Введите название страницы!');
+
+      const newPageId = 'page_' + Date.now();
+      pagesList.push({
+        id: newPageId,
+        title: title,
+        category: category,
+        badge: 'Регламент',
+        blocks: [{ type: 'banner', title: 'Основное положение', text: 'Заполните инструкцию или алгоритм действий...' }]
+      });
+
+      // Если выбрана привязка к карточке, сразу привязываем её к этой странице!
+      if (attachCardId !== 'none') {
+        const card = dashCards.find(c => c.id === attachCardId);
+        if (card) {
+          card.pageId = newPageId;
+          syncToCloud('cards_v30', dashCards);
+        }
+      }
+
+      syncToCloud('pages_v30', pagesList);
+      document.getElementById('pageRecordModal').classList.remove('active');
+      renderSidebar();
+      openDoc(newPageId);
+    }
+
+    function deletePage(pageId) {
+      if (confirm('Удалить эту страницу регламента?')) {
+        pagesList = pagesList.filter(p => p.id !== pageId);
+        // Сбрасываем привязку у карточек, которые на неё вели
+        dashCards.forEach(c => {
+          if (c.pageId === pageId) c.pageId = 'home';
+        });
+        syncToCloud('pages_v30', pagesList);
+        syncToCloud('cards_v30', dashCards);
+        renderSidebar();
+        openDoc('home');
+      }
+    }
+
+    /* РЕДАКТИРОВАНИЕ ПУНКТОВ РЕГЛАМЕНТА */
     function toggleArticleBlockFields() {
       const type = document.getElementById('articleBlockTypeSelect').value;
       const grpUrl = document.getElementById('grpBlockUrl');
@@ -1252,7 +1237,7 @@
 
     function openCreateArticleBlockModal() {
       document.getElementById('articleBlockIndex').value = '';
-      document.getElementById('articleBlockModalTitle').innerText = 'Добавить новый материал / пункт';
+      document.getElementById('articleBlockModalTitle').innerText = 'Добавить новый пункт регламента';
       document.getElementById('articleBlockTitleInput').value = '';
       document.getElementById('articleBlockTextInput').value = '';
       document.getElementById('articleBlockUrlInput').value = '';
@@ -1262,9 +1247,9 @@
     }
 
     function openEditArticleBlockModal(idx) {
-      const topic = topicsList.find(t => t.id === currentNav.topicId);
-      if (!topic || !topic.blocks[idx]) return;
-      const b = topic.blocks[idx];
+      const page = pagesList.find(p => p.id === currentPageId);
+      if (!page || !page.blocks[idx]) return;
+      const b = page.blocks[idx];
 
       document.getElementById('articleBlockIndex').value = idx;
       document.getElementById('articleBlockModalTitle').innerText = 'Редактировать пункт';
@@ -1281,8 +1266,8 @@
     }
 
     function saveArticleBlock() {
-      const topic = topicsList.find(t => t.id === currentNav.topicId);
-      if (!topic) return;
+      const page = pagesList.find(p => p.id === currentPageId);
+      if (!page) return;
 
       const idxStr = document.getElementById('articleBlockIndex').value;
       const type = document.getElementById('articleBlockTypeSelect').value;
@@ -1290,7 +1275,7 @@
       const text = document.getElementById('articleBlockTextInput').value;
       const url = document.getElementById('articleBlockUrlInput').value.trim();
 
-      topic.blocks = topic.blocks || [];
+      page.blocks = page.blocks || [];
 
       const newBlock = { type, title, text, url };
       if (type === 'checklist') {
@@ -1298,24 +1283,42 @@
       }
 
       if (idxStr !== '') {
-        topic.blocks[parseInt(idxStr)] = newBlock;
+        page.blocks[parseInt(idxStr)] = newBlock;
       } else {
-        topic.blocks.push(newBlock);
+        page.blocks.push(newBlock);
       }
 
-      syncToCloud('topics', topicsList);
+      syncToCloud('pages_v30', pagesList);
       closeArticleBlockModal();
-      renderCurrentView();
+      renderPage(currentPageId);
     }
 
     function deleteArticleBlock(idx) {
-      const topic = topicsList.find(t => t.id === currentNav.topicId);
-      if (!topic) return;
+      const page = pagesList.find(p => p.id === currentPageId);
+      if (!page) return;
       if (confirm('Удалить этот пункт?')) {
-        topic.blocks.splice(idx, 1);
-        syncToCloud('topics', topicsList);
-        renderCurrentView();
+        page.blocks.splice(idx, 1);
+        syncToCloud('pages_v30', pagesList);
+        renderPage(currentPageId);
       }
+    }
+
+    /* ПОМОЩНИК ВСТАВКИ ССЫЛКИ В ТЕКСТ */
+    function openLinkHelperModal() {
+      document.getElementById('helperLinkText').value = '';
+      populatePageSelect(document.getElementById('helperLinkTargetPage'), 'home');
+      document.getElementById('linkHelperModal').classList.add('active');
+    }
+
+    function insertLinkCodeIntoTextarea() {
+      const linkText = document.getElementById('helperLinkText').value.trim() || 'перейти к регламенту';
+      const targetId = document.getElementById('helperLinkTargetPage').value;
+      const textarea = document.getElementById('articleBlockTextInput');
+
+      const tag = `[${linkText} -> ${targetId}]`;
+      textarea.value += (textarea.value ? ' ' : '') + tag;
+
+      document.getElementById('linkHelperModal').classList.remove('active');
     }
 
     /* ПОЛЬЗОВАТЕЛИ */
@@ -1345,7 +1348,7 @@
 
       if (!fullName || !username || !password || !email) return alert('Заполните все поля!');
       usersList.push({ id: 'u_' + Date.now(), fullName, email, username, password, role, roleName });
-      syncToCloud('users', usersList);
+      syncToCloud('users_v30', usersList);
       document.getElementById('newUserModal').classList.remove('active');
       openUsersModal();
       alert('Сотрудник зарегистрирован!');
@@ -1354,7 +1357,7 @@
     function deleteUser(id) {
       if (confirm('Удалить сотрудника?')) {
         usersList = usersList.filter(u => u.id !== id);
-        syncToCloud('users', usersList);
+        syncToCloud('users_v30', usersList);
         openUsersModal();
       }
     }
