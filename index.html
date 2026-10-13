@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>База знаний и корпоративное обучение | Ветклиника «Надежда»</title>
+  <title>База знаний | Ветклиника «Надежда»</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:ital@1&display=swap" rel="stylesheet">
@@ -101,10 +101,10 @@
     .btn-yandex:hover { background: #FFF4F2; }
 
     .btn-back {
-      display: inline-flex; align-items: center; gap: 6px; background: #FFFFFF; border: 1px solid var(--brand-border);
+      display: inline-flex; align-items: center; gap: 6px; background: #FFFFFF; border: 1.5px solid var(--brand-border);
       color: var(--brand-deep); padding: 6px 14px; border-radius: 6px; font-size: 0.85rem; font-weight: 700; cursor: pointer;
     }
-    .btn-back:hover { background: var(--brand-light); color: var(--brand-blue); }
+    .btn-back:hover { background: var(--brand-light); color: var(--brand-blue); border-color: var(--brand-blue); }
 
     .cloud-indicator {
       display: flex; align-items: center; gap: 5px; font-size: 0.72rem; color: var(--accent-green);
@@ -183,7 +183,7 @@
     
     /* Тулбар управления на карточке */
     .dash-card-actions {
-      position: absolute; top: 8px; right: 8px; display: flex; gap: 3px;
+      position: absolute; top: 8px; right: 8px; display: flex; gap: 4px;
       background: rgba(255, 255, 255, 0.95); padding: 4px 6px; border-radius: 6px;
       box-shadow: 0 2px 6px rgba(0,0,0,0.15); z-index: 10;
     }
@@ -273,7 +273,7 @@
 </head>
 <body>
 
-  <!-- Экран входа -->
+  <!-- Авторизация -->
   <div class="auth-overlay" id="authScreen">
     <div class="auth-box">
       <img id="authLogoImg" class="auth-logo-img" src="" alt="Логотип Надежда">
@@ -337,7 +337,7 @@
   </main>
 
   <!-- МОДАЛЬНЫЕ ОКНА КОНСТРУКТОРА -->
-  <!-- Создание/редактирование карточки модуля/направления или подблока темы -->
+  <!-- Создание/редактирование карточки направления или подблока темы -->
   <div class="modal-overlay" id="moduleModal">
     <div class="modal-window">
       <div class="modal-title" id="moduleModalTitle">Карточка блока</div>
@@ -526,7 +526,7 @@
       { id: "laboratory", title: "Лаборатория", desc: "Правила взятия биоматериала, хранение, экспресс-тесты.", icon: "🔬", color: "linear-gradient(135deg, #059669, #34D399)" }
     ];
 
-    /* НАЧАЛЬНЫЕ ПОДБЛОКИ И ТЕМЫ */
+    /* ПОДБЛОКИ И ТЕМЫ ДЛЯ КАЖДОГО ОТДЕЛА */
     const DEFAULT_TOPICS = [
       {
         id: "top_scripts",
@@ -632,17 +632,17 @@
       }
     ];
 
-    // Ключ версии v21
-    let departments = JSON.parse(localStorage.getItem('nadezhda_depts_v21')) || DEFAULT_DEPARTMENTS;
-    let topicsList = JSON.parse(localStorage.getItem('nadezhda_topics_v21')) || DEFAULT_TOPICS;
-    let usersList = JSON.parse(localStorage.getItem('nadezhda_users_v21')) || DEFAULT_USERS;
+    // Ключ версии v25 автоматически перезаписывает старый кэш
+    let departments = JSON.parse(localStorage.getItem('nadezhda_depts_v25')) || DEFAULT_DEPARTMENTS;
+    let topicsList = JSON.parse(localStorage.getItem('nadezhda_topics_v25')) || DEFAULT_TOPICS;
+    let usersList = JSON.parse(localStorage.getItem('nadezhda_users_v25')) || DEFAULT_USERS;
 
     let currentUser = JSON.parse(sessionStorage.getItem('nadezhda_active_user')) || null;
     let currentNav = { type: 'home', deptId: null, topicId: null };
 
     /* ОБЛАЧНАЯ СИНХРОНИЗАЦИЯ */
     function syncToCloud(key, data) {
-      localStorage.setItem('nadezhda_' + key + '_v21', JSON.stringify(data));
+      localStorage.setItem('nadezhda_' + key + '_v25', JSON.stringify(data));
       if (firebaseDb && isCloudOnline) {
         firebaseDb.ref(key).set(data).catch(e => console.error("Firebase write error:", e));
       }
@@ -881,7 +881,7 @@
       renderCurrentView();
     }
 
-    /* РЕДАКТИРОВАНИЕ ЗАГОЛОВКА ТЕМЫ (ЭТАП 3) */
+    /* РЕДАКТИРОВАНИЕ ЗАГОЛОВКА ТЕМЫ */
     function openEditPageHeaderModal() {
       const topic = topicsList.find(t => t.id === currentNav.topicId);
       if (!topic) return;
@@ -959,7 +959,7 @@
 
         let subTopics = topicsList.filter(t => t.deptId === dept.id);
         
-        // Создание стартовой темы при отсутствии
+        // Автоматически создаем тему, если раздел пуст
         if (subTopics.length === 0) {
           const autoTopic = {
             id: 'top_' + dept.id + '_intro',
