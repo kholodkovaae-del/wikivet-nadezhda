@@ -3,7 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>База знаний | Ветклиника «Надежда»</title>
+ <button id="mobileMenuBtn" class="mobile-menu-btn" type="button" aria-label="Меню">
+  <span></span>
+  <span></span>
+  <span></span>
+</button> <title>База знаний | Ветклиника «Надежда»</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:ital@1&display=swap" rel="stylesheet">
@@ -1788,6 +1792,101 @@
       area.innerHTML = `
         <div class="doc-header"><div><button class="btn-back" onclick="goBackPage()">← Назад</button><h1 class="doc-title" style="margin-top:10px;">ИИ поиск: «${q}»</h1></div></div>
         <div class="doc-body">${resHtml || '<p style="color:var(--text-muted);">Ничего не найдено.</p>'}</div>
+        /* Кнопка меню на компьютере не видна */
+.mobile-menu-btn {
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 26px;
+  height: 20px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  margin-right: 12px;
+  flex-shrink: 0;
+}
+
+.mobile-menu-btn span {
+  display: block;
+  height: 3px;
+  width: 100%;
+  background-color: #0288d1; /* синий цвет под стиль клиники */
+  border-radius: 2px;
+}
+
+/* Затемнение экрана при открытом меню */
+.menu-backdrop {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  z-index: 998;
+}
+
+.menu-backdrop.active {
+  display: block;
+}
+
+/* --- ПРАВИЛА ДЛЯ ТЕЛЕФОНОВ (экраны уже 768 пикселей) --- */
+@media (max-width: 768px) {
+  /* Показываем кнопку три полоски */
+  .mobile-menu-btn {
+    display: flex;
+  }
+
+  /* Шапка становится аккуратной в одну строку */
+  header, .header {
+    display: flex !important;
+    align-items: center !important;
+    padding: 8px 12px !important;
+    gap: 8px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Поле ИИ-поиска не вылезает за экран */
+  .header input, 
+  .header .search-container, 
+  .search-box {
+    max-width: 160px !important;
+    font-size: 12px !important;
+  }
+
+  /* БОКОВОЕ МЕНЮ: прячем за левый край экрана */
+  aside, .sidebar, nav.sidebar {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    bottom: 0 !important;
+    width: 280px !important;
+    max-width: 85vw !important;
+    height: 100vh !important;
+    background: #ffffff !important;
+    z-index: 999 !important;
+    transform: translateX(-100%) !important;
+    transition: transform 0.3s ease !important;
+    box-shadow: 4px 0 16px rgba(0, 0, 0, 0.15) !important;
+    overflow-y: auto !important;
+    padding-top: 50px !important;
+  }
+
+  /* Когда нажали кнопку — меню выезжает */
+  aside.menu-open, 
+  .sidebar.menu-open, 
+  nav.sidebar.menu-open {
+    transform: translateX(0) !important;
+  }
+
+  /* ТЕКСТ СТАТЬИ: разворачивается во всю ширину экрана */
+  main, .main-content, .content {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin-left: 0 !important;
+    padding: 14px !important;
+    box-sizing: border-box !important;
+  }
+}
       `;
     }
 
@@ -1818,5 +1917,38 @@
 
     initApp();
   </script>
+<div id="menuBackdrop" class="menu-backdrop"></div>
+  <script>
+  (function() {
+    const btn = document.getElementById('mobileMenuBtn');
+    const backdrop = document.getElementById('menuBackdrop');
+    // Ищем боковое меню (по тегу aside или классу .sidebar)
+    const sidebar = document.querySelector('aside') || document.querySelector('.sidebar');
+
+    if (!btn || !sidebar) return;
+
+    function toggleMenu() {
+      const isOpen = sidebar.classList.toggle('menu-open');
+      backdrop.classList.toggle('active', isOpen);
+    }
+
+    function closeMenu() {
+      sidebar.classList.remove('menu-open');
+      backdrop.classList.remove('active');
+    }
+
+    btn.addEventListener('click', toggleMenu);
+    backdrop.addEventListener('click', closeMenu);
+
+    // Закрывать меню автоматически, если кликнули по пункту меню
+    sidebar.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        if (window.innerWidth <= 768) {
+          closeMenu();
+        }
+      });
+    });
+  })();
+</script>
 </body>
 </html>
