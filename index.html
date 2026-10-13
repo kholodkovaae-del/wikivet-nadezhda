@@ -101,7 +101,7 @@
     .btn-yandex:hover { background: #FFF4F2; }
 
     .btn-back {
-      display: inline-flex; align-items: center; gap: 6px; background: #FFFFFF; border: 1px solid var(--brand-border);
+      display: inline-flex; align-items: center; gap: 6px; background: #FFFFFF; border: 1.5px solid var(--brand-border);
       color: var(--brand-deep); padding: 6px 14px; border-radius: 6px; font-size: 0.85rem; font-weight: 700; cursor: pointer;
     }
     .btn-back:hover { background: var(--brand-light); color: var(--brand-blue); border-color: var(--brand-blue); }
@@ -124,8 +124,8 @@
 
     /* Сайдбар */
     .sidebar {
-      width: 290px; background: #FFFFFF; border-right: 1px solid var(--brand-border); margin-top: 72px;
-      height: calc(100vh - 72px); overflow-y: auto; padding: 16px 0; flex-shrink: 0;
+      width: 300px; background: #FFFFFF; border-right: 1px solid var(--brand-border); margin-top: 72px;
+      height: calc(100vh - 72px); overflow-y: auto; padding: 14px 0; flex-shrink: 0;
       display: flex; flex-direction: column; justify-content: space-between;
       transition: transform 0.25s ease; z-index: 1200;
     }
@@ -133,14 +133,41 @@
       display: none; position: fixed; top: 72px; left: 0; right: 0; bottom: 0;
       background: rgba(11,37,62,0.5); z-index: 1100;
     }
+    .sidebar-content { flex: 1; }
     .nav-category { margin-bottom: 14px; }
-    .nav-cat-title { padding: 6px 18px; font-size: 0.72rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.6px; }
+    .nav-cat-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 6px 16px;
+    }
+    .nav-cat-title { font-size: 0.73rem; font-weight: 800; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; }
+    .btn-cat-add {
+      background: none; border: none; color: var(--brand-blue); font-size: 0.95rem; font-weight: 700;
+      cursor: pointer; padding: 0 4px; border-radius: 4px; line-height: 1;
+    }
+    .btn-cat-add:hover { background: var(--brand-light); }
+
     .nav-item {
-      display: flex; align-items: center; justify-content: space-between; padding: 10px 18px; font-size: 0.85rem;
+      display: flex; align-items: center; justify-content: space-between; padding: 9px 16px; font-size: 0.86rem;
       color: var(--brand-deep); cursor: pointer; border-left: 4px solid transparent; transition: all 0.15s;
+      position: relative;
     }
     .nav-item:hover { background: var(--brand-light); color: var(--brand-blue); }
     .nav-item.active { background: var(--brand-light); color: var(--brand-blue); font-weight: 700; border-left-color: var(--brand-blue); }
+    .nav-item-title { flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; padding-right: 6px; }
+
+    /* Кнопки управления пунктом меню при наведении */
+    .nav-item-actions {
+      display: none; align-items: center; gap: 3px;
+    }
+    .nav-item:hover .nav-item-actions { display: flex; }
+    .nav-action-btn {
+      background: none; border: none; cursor: pointer; font-size: 0.75rem; padding: 2px 4px;
+      border-radius: 3px; opacity: 0.7; color: var(--brand-deep);
+    }
+    .nav-action-btn:hover { opacity: 1; background: #CBD5E1; }
+
+    .sidebar-footer { padding: 14px 16px; border-top: 1px solid var(--brand-border); background: #FAFCFE; }
+    .sidebar-footer button { width: 100%; margin-bottom: 6px; font-size: 0.78rem; justify-content: center; }
 
     /* Контентная зона */
     .main-content { flex: 1; margin-top: 72px; height: calc(100vh - 72px); overflow-y: auto; padding: 24px 32px; }
@@ -172,8 +199,7 @@
     .dash-card {
       background: #FFFFFF; border-radius: 12px; border: 1.5px solid var(--brand-border); overflow: hidden;
       display: flex; flex-direction: column; box-shadow: 0 2px 8px rgba(11, 53, 88, 0.05); position: relative; transition: all 0.2s ease;
-      cursor: pointer;
-      user-select: none;
+      cursor: pointer; user-select: none;
     }
     .dash-card:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(11, 53, 88, 0.12); border-color: var(--brand-blue); }
     .dash-card-img { height: 110px; display: flex; align-items: center; justify-content: center; font-size: 2.8rem; color: white; pointer-events: none; }
@@ -182,7 +208,6 @@
     .dash-card-desc { font-size: 0.82rem; color: var(--text-muted); line-height: 1.4; margin-bottom: 12px; flex: 1; }
     .dash-card-footer { font-size: 0.82rem; font-weight: 700; color: var(--brand-blue); display: flex; justify-content: space-between; align-items: center; }
     
-    /* Тулбар на карточке */
     .dash-card-actions {
       position: absolute; top: 8px; right: 8px; display: flex; gap: 3px;
       background: rgba(255, 255, 255, 0.95); padding: 4px 6px; border-radius: 6px;
@@ -196,25 +221,11 @@
 
     /* Ссылки внутри текста */
     .wiki-internal-link {
-      color: var(--brand-blue);
-      background: var(--brand-light);
-      padding: 3px 8px;
-      border-radius: 6px;
-      text-decoration: none;
-      font-weight: 700;
-      border: 1px solid var(--brand-border);
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      margin: 0 2px;
-      transition: all 0.15s;
+      color: var(--brand-blue); background: var(--brand-light); padding: 3px 8px; border-radius: 6px;
+      text-decoration: none; font-weight: 700; border: 1px solid var(--brand-border); cursor: pointer;
+      display: inline-flex; align-items: center; gap: 4px; margin: 0 2px; transition: all 0.15s;
     }
-    .wiki-internal-link:hover {
-      background: var(--brand-blue);
-      color: #fff;
-      border-color: var(--brand-blue);
-    }
+    .wiki-internal-link:hover { background: var(--brand-blue); color: #fff; border-color: var(--brand-blue); }
 
     /* Блоки статьи */
     .page-block-wrapper { position: relative; margin-bottom: 22px; border-radius: 8px; }
@@ -330,7 +341,7 @@
     <div class="header-actions">
       <div class="cloud-indicator" id="cloudStatusBadge">☁️ Облако онлайн</div>
 
-      <button class="btn btn-primary" id="btnCreateNewPageHeader" style="display:none;" onclick="openCreatePageRecordModal()">📄 Создать страницу</button>
+      <button class="btn btn-primary" id="btnCreateNewPageHeader" style="display:none;" onclick="openCreatePageRecordModal()">+ Новая страница</button>
       <button class="btn btn-outline" id="usersManageBtn" style="display:none;" onclick="openUsersModal()">👥 Сотрудники и права</button>
 
       <a id="headerYandexBtn" href="https://disk.yandex.ru/d/5HlCdgS2idp2Gg" target="_blank" class="btn btn-yandex" title="Открыть диск клиники">
@@ -350,9 +361,15 @@
 
   <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleMobileSidebar()"></div>
 
-  <!-- Сайдбар -->
+  <!-- Боковое меню -->
   <aside class="sidebar" id="sidebar">
-    <div id="navContainer"></div>
+    <div class="sidebar-content" id="navContainer"></div>
+    <div class="sidebar-footer" id="adminSidebarFooter" style="display:none;">
+      <button class="btn btn-outline" onclick="openCreatePageRecordModal()">+ Создать окно / страницу</button>
+      <button class="btn btn-outline" onclick="exportData()">📥 Бэкап системы (JSON)</button>
+      <button class="btn btn-outline" onclick="document.getElementById('importFile').click()">📤 Восстановить базу</button>
+      <input type="file" id="importFile" style="display:none" onchange="importData(event)" accept=".json">
+    </div>
   </aside>
 
   <!-- Рабочая зона -->
@@ -361,7 +378,39 @@
   </main>
 
   <!-- МОДАЛЬНЫЕ ОКНА КОНСТРУКТОРА -->
-  <!-- 1. Создание/редактирование карточки направления с привязкой к странице -->
+  <!-- 1. Создание/редактирование страницы / окна сайдбара -->
+  <div class="modal-overlay" id="pageRecordModal">
+    <div class="modal-window">
+      <div class="modal-title" id="pageRecordModalTitle">Новая страница / окно</div>
+      <input type="hidden" id="editPageRecordId">
+      
+      <div class="form-group">
+        <label>Название страницы (пункта меню)</label>
+        <input type="text" id="newPageRecordTitle" placeholder="Скрипты звонков и консультаций">
+      </div>
+
+      <div class="form-group">
+        <label>Раздел / Категория</label>
+        <div style="display:flex; gap:8px;">
+          <select id="newPageRecordCategorySelect" onchange="handleCatSelectChange(this)" style="flex:1;"></select>
+          <button type="button" class="btn btn-outline" onclick="enableCustomCategoryInput()">+ Новый раздел</button>
+        </div>
+        <input type="text" id="newPageRecordCustomCategory" placeholder="Введите название нового раздела..." style="display:none; margin-top:8px;">
+      </div>
+
+      <div class="form-group" style="background:var(--brand-light); padding:12px; border-radius:8px; border:1px solid var(--brand-border);">
+        <label style="color:var(--brand-deep); font-weight:800;">Привязать к карточке на главной:</label>
+        <select id="newPageAttachCardSelect" style="background:#fff;"></select>
+      </div>
+
+      <div class="modal-actions">
+        <button class="btn btn-outline" onclick="closePageRecordModal()">Отмена</button>
+        <button class="btn btn-primary" onclick="savePageRecord()">Сохранить страницу</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. Создание/редактирование карточки направления на главной -->
   <div class="modal-overlay" id="moduleModal">
     <div class="modal-window">
       <div class="modal-title" id="moduleModalTitle">Карточка направления / блока</div>
@@ -405,42 +454,7 @@
     </div>
   </div>
 
-  <!-- 2. Создание новой страницы с привязкой -->
-  <div class="modal-overlay" id="pageRecordModal">
-    <div class="modal-window">
-      <div class="modal-title">Создание новой страницы регламента</div>
-      <div class="form-group">
-        <label>Название страницы</label>
-        <input type="text" id="newPageRecordTitle" placeholder="Протокол дезинфекции операционной...">
-      </div>
-      <div class="form-group">
-        <label>Категория в боковом меню</label>
-        <select id="newPageRecordCategory">
-          <option value="general">Общие стандарты клиники</option>
-          <option value="operators">Колл-центр и операторы</option>
-          <option value="heads">Заведующие отделениями</option>
-          <option value="surgery">Хирургия и оперблок</option>
-          <option value="admin">Администраторы и служба заботы</option>
-          <option value="therapy">Терапия</option>
-          <option value="assistants">Ассистенты</option>
-          <option value="mri_ct">Отделение МРТ/КТ</option>
-          <option value="regulations">Регламенты работы</option>
-          <option value="anesthesia">Анестезиология</option>
-          <option value="laboratory">Лаборатория</option>
-        </select>
-      </div>
-      <div class="form-group" style="background:var(--brand-light); padding:12px; border-radius:8px; border:1px solid var(--brand-border);">
-        <label style="color:var(--brand-deep); font-weight:800;">Связать с карточкой на главной странице:</label>
-        <select id="newPageAttachCardSelect" style="background:#fff;"></select>
-      </div>
-      <div class="modal-actions">
-        <button class="btn btn-outline" onclick="document.getElementById('pageRecordModal').classList.remove('active')">Отмена</button>
-        <button class="btn btn-primary" onclick="saveNewPageRecord()">Создать и открыть</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- 3. Добавление пункта с текстом, ссылкой, фото, видео или файлом -->
+  <!-- 3. Добавление пункта статьи с текстом, ссылкой, фото, видео или файлом -->
   <div class="modal-overlay" id="articleBlockModal">
     <div class="modal-window">
       <div class="modal-title" id="articleBlockModalTitle">Пункт регламента / Материал</div>
@@ -482,7 +496,7 @@
     </div>
   </div>
 
-  <!-- Помощник вставки ссылки в текст -->
+  <!-- Вспомогательное окно для быстрой вставки ссылки на страницу -->
   <div class="modal-overlay" id="linkHelperModal" style="z-index: 2800;">
     <div class="modal-window" style="max-width:480px;">
       <div class="modal-title">Вставить ссылку на страницу базы</div>
@@ -544,7 +558,7 @@
   </div>
 
   <script>
-    /* ПАРАМЕТРЫ FIREBASE ПРОЕКТА */
+    /* ПАРАМЕТРЫ FIREBASE */
     const firebaseConfig = {
       apiKey: "AIzaSyD_jmZbvNN73hL4fOiSbSpzH-v43wLSkGw",
       authDomain: "wikivet-nadezhda.firebaseapp.com",
@@ -575,7 +589,7 @@
       { id: "u_head", fullName: "Елена Валерьевна", email: "head@nadezhda.vet", username: "head_med", password: "1234", role: "head", roleName: "Заведующая отделением" }
     ];
 
-    /* СТРАНИЦЫ БАЗЫ ЗНАНИЙ (КАЖДАЯ СТРАНИЦА ИМЕЕТ СВОЙ УНИКАЛЬНЫЙ ID) */
+    /* СТРАНИЦЫ БАЗЫ ЗНАНИЙ */
     const DEFAULT_PAGES = [
       {
         id: "home",
@@ -695,9 +709,9 @@
       { id: "c_laboratory", title: "Лаборатория", desc: "Правила взятия биоматериала, хранение, экспресс-тесты.", icon: "🔬", pageId: "page_laboratory", color: "linear-gradient(135deg, #059669, #34D399)" }
     ];
 
-    const CATEGORIES = {
-      general: "Общие стандарты клиники",
-      operators: "Колл-центр и операторы",
+    const DEFAULT_CATEGORIES = {
+      general: "Общие сведения",
+      operators: "Операторы (Колл-центр)",
       heads: "Заведующие отделениями",
       surgery: "Хирургия и оперблок",
       admin: "Администраторы и рецепция",
@@ -709,10 +723,11 @@
       laboratory: "Лаборатория"
     };
 
-    // Ключ версии v50 очищает все зависшие ошибки кэша в браузере
-    let pagesList = JSON.parse(localStorage.getItem('nadezhda_pages_v50')) || DEFAULT_PAGES;
-    let dashCards = JSON.parse(localStorage.getItem('nadezhda_cards_v50')) || DEFAULT_DASH_CARDS;
-    let usersList = JSON.parse(localStorage.getItem('nadezhda_users_v50')) || DEFAULT_USERS;
+    // Ключ версии v55 гарантирует чистую загрузку без остаточных ошибок
+    let pagesList = JSON.parse(localStorage.getItem('nadezhda_pages_v55')) || DEFAULT_PAGES;
+    let dashCards = JSON.parse(localStorage.getItem('nadezhda_cards_v55')) || DEFAULT_DASH_CARDS;
+    let categoriesList = JSON.parse(localStorage.getItem('nadezhda_categories_v55')) || DEFAULT_CATEGORIES;
+    let usersList = JSON.parse(localStorage.getItem('nadezhda_users_v55')) || DEFAULT_USERS;
 
     let currentUser = JSON.parse(sessionStorage.getItem('nadezhda_active_user')) || null;
     let currentPageId = "home";
@@ -720,9 +735,9 @@
 
     /* ОБЛАЧНАЯ СИНХРОНИЗАЦИЯ */
     function syncToCloud(key, data) {
-      localStorage.setItem('nadezhda_' + key + '_v50', JSON.stringify(data));
+      localStorage.setItem('nadezhda_' + key + '_v55', JSON.stringify(data));
       if (firebaseDb && isCloudOnline) {
-        firebaseDb.ref(key).set(data).catch(e => console.error("Firebase write error:", e));
+        firebaseDb.ref(key + '_v55').set(data).catch(e => console.error("Firebase write error:", e));
       }
     }
 
@@ -733,9 +748,10 @@
         return;
       }
 
-      firebaseDb.ref('pages_v50').on('value', s => { if (s.val()) { pagesList = s.val(); renderPage(currentPageId); renderSidebar(); } });
-      firebaseDb.ref('cards_v50').on('value', s => { if (s.val()) { dashCards = s.val(); if (currentPageId === 'home') renderPage('home'); } });
-      firebaseDb.ref('users_v50').on('value', s => { if (s.val()) { usersList = s.val(); } });
+      firebaseDb.ref('pages_v55').on('value', s => { if (s.val()) { pagesList = s.val(); renderPage(currentPageId); renderSidebar(); } });
+      firebaseDb.ref('cards_v55').on('value', s => { if (s.val()) { dashCards = s.val(); if (currentPageId === 'home') renderPage('home'); } });
+      firebaseDb.ref('categories_v55').on('value', s => { if (s.val()) { categoriesList = s.val(); renderSidebar(); } });
+      firebaseDb.ref('users_v55').on('value', s => { if (s.val()) { usersList = s.val(); } });
     }
 
     function initApp() {
@@ -776,7 +792,7 @@
       let targetList = usersList;
       if (firebaseDb && isCloudOnline) {
         try {
-          const snap = await firebaseDb.ref('users_v50').once('value');
+          const snap = await firebaseDb.ref('users_v55').once('value');
           if (snap.val()) targetList = snap.val();
         } catch(err) {}
       }
@@ -815,48 +831,102 @@
       const canManage = currentUser.role === 'admin' || currentUser.role === 'head';
       document.getElementById('usersManageBtn').style.display = canManage ? 'inline-flex' : 'none';
       document.getElementById('btnCreateNewPageHeader').style.display = canManage ? 'inline-flex' : 'none';
+      document.getElementById('adminSidebarFooter').style.display = canManage ? 'block' : 'none';
     }
 
-    /* САЙДБАР */
+    /* САЙДБАР (С УДАЛЕНИЕМ И РЕДАКТИРОВАНИЕМ СТРАНИЦ) */
     function renderSidebar() {
       const nav = document.getElementById('navContainer');
       nav.innerHTML = '';
+      const canManage = currentUser && (currentUser.role === 'admin' || currentUser.role === 'head');
+
+      // 1. Тестирования
+      const testItem = document.createElement('div');
+      testItem.className = `nav-item ${currentPageId === 'my_tests' ? 'active' : ''}`;
+      testItem.onclick = () => { openDoc('my_tests'); if (window.innerWidth <= 900) toggleMobileSidebar(); };
+      testItem.innerHTML = `<span class="nav-item-title">🎓 Мои тестирования</span>`;
+      nav.appendChild(testItem);
+
+      // 2. Главный раздел «ОБЩИЕ СВЕДЕНИЯ»
+      const generalSection = document.createElement('div');
+      generalSection.className = 'nav-category';
+      generalSection.innerHTML = `
+        <div class="nav-cat-header">
+          <span class="nav-cat-title">${categoriesList.general || 'ОБЩИЕ СВЕДЕНИЯ'}</span>
+          ${canManage ? `<button class="btn-cat-add" title="Добавить страницу в этот раздел" onclick="openCreatePageRecordModal('general')">+</button>` : ''}
+        </div>
+      `;
 
       const homeItem = document.createElement('div');
       homeItem.className = `nav-item ${currentPageId === 'home' ? 'active' : ''}`;
       homeItem.onclick = () => { openDoc('home'); if (window.innerWidth <= 900) toggleMobileSidebar(); };
-      homeItem.innerHTML = `<span>🏛️ Главная (Все направления)</span>`;
-      nav.appendChild(homeItem);
+      homeItem.innerHTML = `<span class="nav-item-title">Главная страница базы знаний</span>`;
+      generalSection.appendChild(homeItem);
 
-      for (const [catKey, catName] of Object.entries(CATEGORIES)) {
+      // Дополнительные страницы общих сведений
+      pagesList.filter(p => p.category === 'general' && p.id !== 'home').forEach(p => {
+        generalSection.appendChild(createNavItemElement(p, canManage));
+      });
+      nav.appendChild(generalSection);
+
+      // 3. Остальные разделы сайдбара
+      for (const [catKey, catName] of Object.entries(categoriesList)) {
         if (catKey === 'general') continue;
         const catPages = pagesList.filter(p => p.category === catKey);
-        if (catPages.length === 0) continue;
 
         const section = document.createElement('div');
         section.className = 'nav-category';
-        section.innerHTML = `<div class="nav-cat-title">${catName}</div>`;
+        section.innerHTML = `
+          <div class="nav-cat-header">
+            <span class="nav-cat-title">${catName}</span>
+            ${canManage ? `<button class="btn-cat-add" title="Добавить страницу в этот раздел" onclick="openCreatePageRecordModal('${catKey}')">+</button>` : ''}
+          </div>
+        `;
 
-        catPages.forEach(p => {
-          const item = document.createElement('div');
-          item.className = `nav-item ${p.id === currentPageId ? 'active' : ''}`;
-          item.onclick = () => { openDoc(p.id); if (window.innerWidth <= 900) toggleMobileSidebar(); };
-          item.innerHTML = `<span>${p.title}</span>`;
-          section.appendChild(item);
-        });
+        if (catPages.length === 0) {
+          const emptyHint = document.createElement('div');
+          emptyHint.style.cssText = 'padding:6px 16px; font-size:0.75rem; color:var(--text-muted); font-style:italic;';
+          emptyHint.innerText = 'Нет страниц';
+          section.appendChild(emptyHint);
+        } else {
+          catPages.forEach(p => {
+            section.appendChild(createNavItemElement(p, canManage));
+          });
+        }
 
         nav.appendChild(section);
       }
     }
 
-    /* НАДЁЖНЫЙ КЛИК ПО КАРТОЧКЕ (ОТКРЫВАЕТ ИЛИ СОЗДАЕТ СТРАНИЦУ) */
+    function createNavItemElement(page, canManage) {
+      const item = document.createElement('div');
+      item.className = `nav-item ${page.id === currentPageId ? 'active' : ''}`;
+      item.onclick = (e) => {
+        openDoc(page.id);
+        if (window.innerWidth <= 900) toggleMobileSidebar();
+      };
+
+      const actionsHtml = canManage ? `
+        <div class="nav-item-actions" onclick="event.stopPropagation();">
+          <button class="nav-action-btn" title="Редактировать название и раздел" onclick="openEditPageRecordModal('${page.id}')">✏️</button>
+          <button class="nav-action-btn" title="Удалить окно" style="color:var(--accent-red);" onclick="deletePageRecord('${page.id}')">🗑️</button>
+        </div>
+      ` : '';
+
+      item.innerHTML = `
+        <span class="nav-item-title" title="${page.title}">${page.title}</span>
+        ${actionsHtml}
+      `;
+      return item;
+    }
+
+    /* КЛИК ПО КАРТОЧКЕ */
     function handleCardClick(cardId) {
       const card = dashCards.find(c => c.id === cardId);
       if (!card) return;
 
       let targetPageId = card.pageId;
 
-      // Если карточка вела на саму главную страницу или страница удалена - создаем страницу на лету
       if (!targetPageId || targetPageId === 'home' || !pagesList.some(p => p.id === targetPageId)) {
         targetPageId = 'page_' + card.id.replace('c_', '');
         pagesList.push({
@@ -869,8 +939,8 @@
           ]
         });
         card.pageId = targetPageId;
-        syncToCloud('pages_v50', pagesList);
-        syncToCloud('cards_v50', dashCards);
+        syncToCloud('pages_v55', pagesList);
+        syncToCloud('cards_v55', dashCards);
       }
 
       openDoc(targetPageId);
@@ -894,7 +964,6 @@
       }
     }
 
-    /* ПРЕВРАЩЕНИЕ ТЕКСТА [Текст -> id] В КЛИКАБЕЛЬНЫЕ ССЫЛКИ */
     function parseInternalWikiLinks(rawText) {
       if (!rawText) return '';
       return rawText.replace(/\[(.*?)->(.*?)\]/g, function(match, linkText, targetPageId) {
@@ -904,7 +973,7 @@
       });
     }
 
-    /* ПЕРЕМЕЩЕНИЕ И КОПИРОВАНИЕ КАРТОЧЕК НА ГЛАВНОЙ */
+    /* КАРТОЧКИ НА ГЛАВНОЙ */
     function moveCard(index, direction, e) {
       if (e) e.stopPropagation();
       const newIndex = index + direction;
@@ -912,7 +981,7 @@
       const temp = dashCards[index];
       dashCards[index] = dashCards[newIndex];
       dashCards[newIndex] = temp;
-      syncToCloud('cards_v50', dashCards);
+      syncToCloud('cards_v55', dashCards);
       renderPage('home');
     }
 
@@ -941,13 +1010,12 @@
         color: original.color
       });
 
-      syncToCloud('pages_v50', pagesList);
-      syncToCloud('cards_v50', dashCards);
+      syncToCloud('pages_v55', pagesList);
+      syncToCloud('cards_v55', dashCards);
       renderPage('home');
       renderSidebar();
     }
 
-    /* ПЕРЕМЕЩЕНИЕ И КОПИРОВАНИЕ ПУНКТОВ ВНУТРИ СТАТЬИ */
     function moveArticleBlock(index, direction) {
       const page = pagesList.find(p => p.id === currentPageId);
       if (!page || !page.blocks) return;
@@ -956,7 +1024,7 @@
       const temp = page.blocks[index];
       page.blocks[index] = page.blocks[newIndex];
       page.blocks[newIndex] = temp;
-      syncToCloud('pages_v50', pagesList);
+      syncToCloud('pages_v55', pagesList);
       renderPage(currentPageId);
     }
 
@@ -966,7 +1034,7 @@
       const copy = JSON.parse(JSON.stringify(page.blocks[index]));
       copy.title = (copy.title || '') + ' (Копия)';
       page.blocks.splice(index + 1, 0, copy);
-      syncToCloud('pages_v50', pagesList);
+      syncToCloud('pages_v55', pagesList);
       renderPage(currentPageId);
     }
 
@@ -975,7 +1043,7 @@
       const area = document.getElementById('documentArea');
       const canEdit = currentUser && (currentUser.role === 'admin' || currentUser.role === 'head');
 
-      // 1. ГЛАВНАЯ СТРАНИЦА (ПЛИТКИ НАПРАВЛЕНИЙ)
+      // 1. Главная страница
       if (pageId === 'home') {
         const cardsHtml = dashCards.map((c, idx) => {
           const editTools = canEdit ? `
@@ -1022,7 +1090,7 @@
         return;
       }
 
-      // 2. ВНУТРЕННЯЯ СТРАНИЦА РЕГЛАМЕНТА
+      // 2. Внутренняя страница регламента
       const page = pagesList.find(p => p.id === pageId) || pagesList[0];
 
       let blocksHtml = (page.blocks || []).map((b, idx) => {
@@ -1080,18 +1148,18 @@
           <div>
             <div class="doc-nav-row">
               <button class="btn-back" onclick="goBackPage()">← Назад</button>
-              <div class="breadcrumbs"><a onclick="openDoc('home')">База знаний</a> / ${CATEGORIES[page.category] || 'Раздел'}</div>
+              <div class="breadcrumbs"><a onclick="openDoc('home')">База знаний</a> / ${categoriesList[page.category] || page.category || 'Раздел'}</div>
             </div>
             <h1 class="doc-title">${page.title}</h1>
             <div class="doc-meta">
-              <span class="tag tag-blue">${CATEGORIES[page.category] || 'Регламент'}</span>
+              <span class="tag tag-blue">${categoriesList[page.category] || page.category || 'Регламент'}</span>
               <span class="tag tag-green">Актуально на 2026 г.</span>
             </div>
           </div>
           ${canEdit ? `
             <div style="display:flex; gap:8px;">
               <button class="btn btn-primary" onclick="openCreateArticleBlockModal()">+ Добавить пункт</button>
-              <button class="btn btn-outline" style="color:var(--accent-red); border-color:var(--accent-red);" onclick="deletePage('${page.id}')">🗑️ Удалить страницу</button>
+              <button class="btn btn-outline" style="color:var(--accent-red); border-color:var(--accent-red);" onclick="deletePageRecord('${page.id}')">🗑️ Удалить окно</button>
             </div>
           ` : ''}
         </div>
@@ -1106,11 +1174,129 @@
       });
     }
 
-    /* УПРАВЛЕНИЕ КАРТОЧКАМИ НА ГЛАВНОЙ */
+    /* УПРАВЛЕНИЕ СТРАНИЦАМИ / ОКНАМИ САЙДБАРА */
+    function populateCategorySelect(selectEl, selectedKey) {
+      selectEl.innerHTML = Object.entries(categoriesList).map(([k, v]) => `
+        <option value="${k}" ${k === selectedKey ? 'selected' : ''}>${v}</option>
+      `).join('');
+    }
+
+    function openCreatePageRecordModal(presetCatKey = 'general') {
+      document.getElementById('pageRecordModalTitle').innerText = 'Создать новое окно / страницу';
+      document.getElementById('editPageRecordId').value = '';
+      document.getElementById('newPageRecordTitle').value = '';
+      document.getElementById('newPageRecordCustomCategory').style.display = 'none';
+      document.getElementById('newPageRecordCustomCategory').value = '';
+
+      populateCategorySelect(document.getElementById('newPageRecordCategorySelect'), presetCatKey);
+
+      const cardSelect = document.getElementById('newPageAttachCardSelect');
+      cardSelect.innerHTML = `<option value="none">-- Не привязывать (только в боковое меню) --</option>` + 
+        dashCards.map(c => `<option value="${c.id}">К карточке: «${c.title}»</option>`).join('');
+
+      document.getElementById('pageRecordModal').classList.add('active');
+    }
+
+    function openEditPageRecordModal(pageId) {
+      const page = pagesList.find(p => p.id === pageId);
+      if (!page) return;
+
+      document.getElementById('pageRecordModalTitle').innerText = 'Редактировать окно / страницу';
+      document.getElementById('editPageRecordId').value = page.id;
+      document.getElementById('newPageRecordTitle').value = page.title;
+      document.getElementById('newPageRecordCustomCategory').style.display = 'none';
+
+      populateCategorySelect(document.getElementById('newPageRecordCategorySelect'), page.category);
+
+      const attachedCard = dashCards.find(c => c.pageId === page.id);
+      const cardSelect = document.getElementById('newPageAttachCardSelect');
+      cardSelect.innerHTML = `<option value="none">-- Не привязывать --</option>` + 
+        dashCards.map(c => `<option value="${c.id}" ${attachedCard && attachedCard.id === c.id ? 'selected' : ''}>К карточке: «${c.title}»</option>`).join('');
+
+      document.getElementById('pageRecordModal').classList.add('active');
+    }
+
+    function closePageRecordModal() {
+      document.getElementById('pageRecordModal').classList.remove('active');
+    }
+
+    function enableCustomCategoryInput() {
+      const input = document.getElementById('newPageRecordCustomCategory');
+      input.style.display = 'block';
+      input.focus();
+    }
+
+    function handleCatSelectChange(sel) {
+      document.getElementById('newPageRecordCustomCategory').style.display = 'none';
+    }
+
+    function savePageRecord() {
+      const pageId = document.getElementById('editPageRecordId').value;
+      const title = document.getElementById('newPageRecordTitle').value.trim();
+      let category = document.getElementById('newPageRecordCategorySelect').value;
+      const customCategoryName = document.getElementById('newPageRecordCustomCategory').value.trim();
+      const attachCardId = document.getElementById('newPageAttachCardSelect').value;
+
+      if (!title) return alert('Введите название страницы!');
+
+      // Если ввели абсолютно новую категорию
+      if (customCategoryName) {
+        const newCatKey = 'cat_' + Date.now();
+        categoriesList[newCatKey] = customCategoryName;
+        category = newCatKey;
+        syncToCloud('categories', categoriesList);
+      }
+
+      if (pageId) {
+        // Редактирование
+        const page = pagesList.find(p => p.id === pageId);
+        if (page) {
+          page.title = title;
+          page.category = category;
+        }
+      } else {
+        // Создание
+        const newId = 'page_' + Date.now();
+        pagesList.push({
+          id: newId,
+          title: title,
+          category: category,
+          badge: 'Регламент',
+          blocks: [{ type: 'banner', title: 'Основное положение', text: 'Заполните содержание регламента...' }]
+        });
+
+        if (attachCardId !== 'none') {
+          const card = dashCards.find(c => c.id === attachCardId);
+          if (card) card.pageId = newId;
+        }
+      }
+
+      syncToCloud('pages', pagesList);
+      syncToCloud('cards', dashCards);
+      closePageRecordModal();
+      renderSidebar();
+      if (pageId) renderPage(pageId);
+    }
+
+    function deletePageRecord(pageId) {
+      if (pageId === 'home') return alert('Главную страницу нельзя удалить!');
+      if (confirm('Удалить это окно со всеми вложенными материалами?')) {
+        pagesList = pagesList.filter(p => p.id !== pageId);
+        dashCards.forEach(c => {
+          if (c.pageId === pageId) c.pageId = 'home';
+        });
+        syncToCloud('pages', pagesList);
+        syncToCloud('cards', dashCards);
+        renderSidebar();
+        openDoc('home');
+      }
+    }
+
+    /* КАРТОЧКИ НА ГЛАВНОЙ */
     function populatePageSelect(selectEl, selectedPageId) {
       selectEl.innerHTML = pagesList.filter(p => p.id !== 'home').map(p => `
         <option value="${p.id}" ${p.id === selectedPageId ? 'selected' : ''}>
-          ${p.title} (${CATEGORIES[p.category] || p.category})
+          ${p.title} (${categoriesList[p.category] || p.category})
         </option>
       `).join('');
     }
@@ -1155,7 +1341,6 @@
 
       if (!title) return alert('Введите название направления!');
 
-      // Если страница для карточки не выбрана, автоматически создаем её
       if (!pageId || pageId === 'home') {
         pageId = 'page_' + Date.now();
         pagesList.push({
@@ -1165,7 +1350,7 @@
           badge: 'Регламент',
           blocks: [{ type: 'banner', title: 'Основное положение: ' + title, text: desc || 'Заполните содержание регламента...' }]
         });
-        syncToCloud('pages_v50', pagesList);
+        syncToCloud('pages', pagesList);
       }
 
       if (id) {
@@ -1175,7 +1360,7 @@
         dashCards.push({ id: 'card_' + Date.now(), title, desc, icon, pageId, color });
       }
 
-      syncToCloud('cards_v50', dashCards);
+      syncToCloud('cards', dashCards);
       closeModuleModal();
       renderPage('home');
       renderSidebar();
@@ -1185,63 +1370,8 @@
       if (e) e.stopPropagation();
       if (confirm('Удалить эту карточку направления?')) {
         dashCards = dashCards.filter(c => c.id !== cardId);
-        syncToCloud('cards_v50', dashCards);
+        syncToCloud('cards', dashCards);
         renderPage('home');
-      }
-    }
-
-    /* СОЗДАНИЕ НОВОЙ СТРАНИЦЫ И ПРИВЯЗКА К БЛОКУ */
-    function openCreatePageRecordModal() {
-      document.getElementById('newPageRecordTitle').value = '';
-      
-      const cardSelect = document.getElementById('newPageAttachCardSelect');
-      cardSelect.innerHTML = `<option value="none">-- Не привязывать (только в боковое меню) --</option>` + 
-        dashCards.map(c => `<option value="${c.id}">К карточке: «${c.title}»</option>`).join('');
-
-      document.getElementById('pageRecordModal').classList.add('active');
-    }
-
-    function saveNewPageRecord() {
-      const title = document.getElementById('newPageRecordTitle').value.trim();
-      const category = document.getElementById('newPageRecordCategory').value;
-      const attachCardId = document.getElementById('newPageAttachCardSelect').value;
-
-      if (!title) return alert('Введите название страницы!');
-
-      const newPageId = 'page_' + Date.now();
-      pagesList.push({
-        id: newPageId,
-        title: title,
-        category: category,
-        badge: 'Регламент',
-        blocks: [{ type: 'banner', title: 'Основное положение', text: 'Заполните инструкцию или алгоритм действий...' }]
-      });
-
-      // Привязываем выбранную карточку к новой странице
-      if (attachCardId !== 'none') {
-        const card = dashCards.find(c => c.id === attachCardId);
-        if (card) {
-          card.pageId = newPageId;
-          syncToCloud('cards_v50', dashCards);
-        }
-      }
-
-      syncToCloud('pages_v50', pagesList);
-      document.getElementById('pageRecordModal').classList.remove('active');
-      renderSidebar();
-      openDoc(newPageId);
-    }
-
-    function deletePage(pageId) {
-      if (confirm('Удалить эту страницу регламента?')) {
-        pagesList = pagesList.filter(p => p.id !== pageId);
-        dashCards.forEach(c => {
-          if (c.pageId === pageId) c.pageId = 'home';
-        });
-        syncToCloud('pages_v50', pagesList);
-        syncToCloud('cards_v50', dashCards);
-        renderSidebar();
-        openDoc('home');
       }
     }
 
@@ -1305,7 +1435,7 @@
         page.blocks.push(newBlock);
       }
 
-      syncToCloud('pages_v50', pagesList);
+      syncToCloud('pages', pagesList);
       closeArticleBlockModal();
       renderPage(currentPageId);
     }
@@ -1315,7 +1445,7 @@
       if (!page) return;
       if (confirm('Удалить этот пункт?')) {
         page.blocks.splice(idx, 1);
-        syncToCloud('pages_v50', pagesList);
+        syncToCloud('pages', pagesList);
         renderPage(currentPageId);
       }
     }
@@ -1365,7 +1495,7 @@
 
       if (!fullName || !username || !password || !email) return alert('Заполните все поля!');
       usersList.push({ id: 'u_' + Date.now(), fullName, email, username, password, role, roleName });
-      syncToCloud('users_v50', usersList);
+      syncToCloud('users', usersList);
       document.getElementById('newUserModal').classList.remove('active');
       openUsersModal();
       alert('Сотрудник зарегистрирован!');
@@ -1374,9 +1504,38 @@
     function deleteUser(id) {
       if (confirm('Удалить сотрудника?')) {
         usersList = usersList.filter(u => u.id !== id);
-        syncToCloud('users_v50', usersList);
+        syncToCloud('users', usersList);
         openUsersModal();
       }
+    }
+
+    function exportData() {
+      const blob = new Blob([JSON.stringify({ pages: pagesList, cards: dashCards, categories: categoriesList, users: usersList }, null, 2)], { type: 'application/json' });
+      const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
+      a.download = `nadezhda_full_${new Date().toISOString().slice(0,10)}.json`; a.click();
+    }
+
+    function importData(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function(evt) {
+        try {
+          const d = JSON.parse(evt.target.result);
+          if (d.pages) {
+            pagesList = d.pages;
+            dashCards = d.cards || dashCards;
+            categoriesList = d.categories || categoriesList;
+            usersList = d.users || usersList;
+            syncToCloud('pages', pagesList);
+            syncToCloud('cards', dashCards);
+            syncToCloud('categories', categoriesList);
+            syncToCloud('users', usersList);
+            location.reload();
+          }
+        } catch(err) { alert('Ошибка импорта'); }
+      };
+      reader.readAsText(file);
     }
 
     initApp();
