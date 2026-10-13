@@ -101,10 +101,10 @@
     .btn-yandex:hover { background: #FFF4F2; }
 
     .btn-back {
-      display: inline-flex; align-items: center; gap: 6px; background: #FFFFFF; border: 1.5px solid var(--brand-border);
+      display: inline-flex; align-items: center; gap: 6px; background: #FFFFFF; border: 1px solid var(--brand-border);
       color: var(--brand-deep); padding: 6px 14px; border-radius: 6px; font-size: 0.85rem; font-weight: 700; cursor: pointer;
     }
-    .btn-back:hover { background: var(--brand-light); color: var(--brand-blue); }
+    .btn-back:hover { background: var(--brand-light); color: var(--brand-blue); border-color: var(--brand-blue); }
 
     .cloud-indicator {
       display: flex; align-items: center; gap: 5px; font-size: 0.72rem; color: var(--accent-green);
@@ -173,10 +173,11 @@
       background: #FFFFFF; border-radius: 12px; border: 1.5px solid var(--brand-border); overflow: hidden;
       display: flex; flex-direction: column; box-shadow: 0 2px 8px rgba(11, 53, 88, 0.05); position: relative; transition: all 0.2s ease;
       cursor: pointer;
+      user-select: none;
     }
     .dash-card:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(11, 53, 88, 0.12); border-color: var(--brand-blue); }
-    .dash-card-img { height: 110px; display: flex; align-items: center; justify-content: center; font-size: 2.8rem; color: white; }
-    .dash-card-content { padding: 16px; flex: 1; display: flex; flex-direction: column; }
+    .dash-card-img { height: 110px; display: flex; align-items: center; justify-content: center; font-size: 2.8rem; color: white; pointer-events: none; }
+    .dash-card-content { padding: 16px; flex: 1; display: flex; flex-direction: column; pointer-events: none; }
     .dash-card-title { font-size: 1.05rem; font-weight: 700; color: var(--brand-deep); margin-bottom: 6px; }
     .dash-card-desc { font-size: 0.82rem; color: var(--text-muted); line-height: 1.4; margin-bottom: 12px; flex: 1; }
     .dash-card-footer { font-size: 0.82rem; font-weight: 700; color: var(--brand-blue); display: flex; justify-content: space-between; align-items: center; }
@@ -185,7 +186,7 @@
     .dash-card-actions {
       position: absolute; top: 8px; right: 8px; display: flex; gap: 3px;
       background: rgba(255, 255, 255, 0.95); padding: 4px 6px; border-radius: 6px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.15); z-index: 10;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.15); z-index: 20;
     }
     .card-tool-btn {
       background: none; border: none; font-size: 0.85rem; cursor: pointer; padding: 2px 5px; border-radius: 4px;
@@ -197,20 +198,22 @@
     .wiki-internal-link {
       color: var(--brand-blue);
       background: var(--brand-light);
-      padding: 2px 7px;
-      border-radius: 5px;
+      padding: 3px 8px;
+      border-radius: 6px;
       text-decoration: none;
-      font-weight: 600;
-      border-bottom: 1.5px solid var(--brand-blue);
+      font-weight: 700;
+      border: 1px solid var(--brand-border);
       cursor: pointer;
       display: inline-flex;
       align-items: center;
-      gap: 3px;
+      gap: 4px;
+      margin: 0 2px;
       transition: all 0.15s;
     }
     .wiki-internal-link:hover {
       background: var(--brand-blue);
       color: #fff;
+      border-color: var(--brand-blue);
     }
 
     /* Блоки статьи */
@@ -298,7 +301,7 @@
     <div class="auth-box">
       <img id="authLogoImg" class="auth-logo-img" src="" alt="Логотип Надежда">
       <h2>Клиника «Надежда»</h2>
-      <p>Корпоративная база знаний и обучение</p>
+      <p>Корпоративная база знаний</p>
       
       <form class="auth-form" onsubmit="handleLogin(event)">
         <label>Логин или Email</label>
@@ -358,7 +361,7 @@
   </main>
 
   <!-- МОДАЛЬНЫЕ ОКНА КОНСТРУКТОРА -->
-  <!-- 1. Создание/редактирование карточки модуля с привязкой к ЛЮБОЙ странице -->
+  <!-- 1. Создание/редактирование карточки направления с привязкой к странице -->
   <div class="modal-overlay" id="moduleModal">
     <div class="modal-window">
       <div class="modal-title" id="moduleModalTitle">Карточка направления / блока</div>
@@ -393,9 +396,6 @@
       <div class="form-group" style="background:var(--brand-light); padding:12px; border-radius:8px; border:1px solid var(--brand-border);">
         <label style="color:var(--brand-deep); font-weight:800;">Куда ведёт клик (Привязанная страница):</label>
         <select id="modalPageSelect" style="background:#fff;"></select>
-        <small style="color:var(--text-muted); font-size:0.75rem; display:block; margin-top:4px;">
-          Выберите, какую именно страницу открывать при клике на эту карточку.
-        </small>
       </div>
 
       <div class="modal-actions">
@@ -405,7 +405,7 @@
     </div>
   </div>
 
-  <!-- 2. Создание новой отдельной страницы с привязкой к блоку -->
+  <!-- 2. Создание новой страницы с привязкой -->
   <div class="modal-overlay" id="pageRecordModal">
     <div class="modal-window">
       <div class="modal-title">Создание новой страницы регламента</div>
@@ -432,9 +432,6 @@
       <div class="form-group" style="background:var(--brand-light); padding:12px; border-radius:8px; border:1px solid var(--brand-border);">
         <label style="color:var(--brand-deep); font-weight:800;">Связать с карточкой на главной странице:</label>
         <select id="newPageAttachCardSelect" style="background:#fff;"></select>
-        <small style="color:var(--text-muted); font-size:0.75rem; display:block; margin-top:4px;">
-          Если выбрать карточку, то клик по ней сразу будет открывать эту новую страницу!
-        </small>
       </div>
       <div class="modal-actions">
         <button class="btn btn-outline" onclick="document.getElementById('pageRecordModal').classList.remove('active')">Отмена</button>
@@ -468,12 +465,9 @@
       <div class="form-group" id="grpBlockText">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:5px;">
           <label style="margin:0;">Текст описания / Инструкция</label>
-          <button type="button" class="btn btn-outline" style="padding:2px 8px; font-size:0.75rem;" onclick="openLinkHelperModal()">🔗 Добавить ссылку на страницу</button>
+          <button type="button" class="btn btn-outline" style="padding:2px 8px; font-size:0.75rem;" onclick="openLinkHelperModal()">🔗 Вставить ссылку на страницу</button>
         </div>
         <textarea id="articleBlockTextInput" style="min-height:120px;"></textarea>
-        <small style="color:var(--text-muted); font-size:0.74rem;">
-          Подсказка: чтобы сделать слово ссылкой на другую страницу базы, используйте формат: <code>[Текст ссылки -> id_страницы]</code>
-        </small>
       </div>
 
       <div class="form-group" id="grpBlockUrl" style="display:none;">
@@ -488,12 +482,12 @@
     </div>
   </div>
 
-  <!-- Вспомогательное окно для быстрой вставки ссылки на страницу -->
+  <!-- Помощник вставки ссылки в текст -->
   <div class="modal-overlay" id="linkHelperModal" style="z-index: 2800;">
     <div class="modal-window" style="max-width:480px;">
       <div class="modal-title">Вставить ссылку на страницу базы</div>
       <div class="form-group">
-        <label>Текст, который будет кликабельным:</label>
+        <label>Текст, который станет ссылкой:</label>
         <input type="text" id="helperLinkText" placeholder="Например: алгоритм подготовки оперблока">
       </div>
       <div class="form-group">
@@ -687,7 +681,7 @@
       }
     ];
 
-    /* КАРТОЧКИ НА ГЛАВНОЙ СТРАНИЦЕ (С ПРЯМОЙ ПРИВЯЗКОЙ К СТРАНИЦАМ) */
+    /* КАРТОЧКИ НА ГЛАВНОЙ СТРАНИЦЕ */
     const DEFAULT_DASH_CARDS = [
       { id: "c_operators", title: "Колл-центр и операторы", desc: "Скрипты консультаций, запись к узким специалистам, триаж.", icon: "🎧", pageId: "page_operators", color: "linear-gradient(135deg, #0088D4, #00A6FF)" },
       { id: "c_heads", title: "Заведующие отделениями", desc: "Контроль историй болезни, аудит смен, консилиумы.", icon: "🏛️", pageId: "page_heads", color: "linear-gradient(135deg, #0B3558, #185285)" },
@@ -715,10 +709,10 @@
       laboratory: "Лаборатория"
     };
 
-    // Ключ версии v30 гарантирует мгновенное применение новых связей и сброс зависшего кэша
-    let pagesList = JSON.parse(localStorage.getItem('nadezhda_pages_v30')) || DEFAULT_PAGES;
-    let dashCards = JSON.parse(localStorage.getItem('nadezhda_cards_v30')) || DEFAULT_DASH_CARDS;
-    let usersList = JSON.parse(localStorage.getItem('nadezhda_users_v30')) || DEFAULT_USERS;
+    // Ключ версии v50 очищает все зависшие ошибки кэша в браузере
+    let pagesList = JSON.parse(localStorage.getItem('nadezhda_pages_v50')) || DEFAULT_PAGES;
+    let dashCards = JSON.parse(localStorage.getItem('nadezhda_cards_v50')) || DEFAULT_DASH_CARDS;
+    let usersList = JSON.parse(localStorage.getItem('nadezhda_users_v50')) || DEFAULT_USERS;
 
     let currentUser = JSON.parse(sessionStorage.getItem('nadezhda_active_user')) || null;
     let currentPageId = "home";
@@ -726,7 +720,7 @@
 
     /* ОБЛАЧНАЯ СИНХРОНИЗАЦИЯ */
     function syncToCloud(key, data) {
-      localStorage.setItem('nadezhda_' + key + '_v30', JSON.stringify(data));
+      localStorage.setItem('nadezhda_' + key + '_v50', JSON.stringify(data));
       if (firebaseDb && isCloudOnline) {
         firebaseDb.ref(key).set(data).catch(e => console.error("Firebase write error:", e));
       }
@@ -739,9 +733,9 @@
         return;
       }
 
-      firebaseDb.ref('pages_v30').on('value', s => { if (s.val()) { pagesList = s.val(); renderPage(currentPageId); renderSidebar(); } });
-      firebaseDb.ref('cards_v30').on('value', s => { if (s.val()) { dashCards = s.val(); if (currentPageId === 'home') renderPage('home'); } });
-      firebaseDb.ref('users_v30').on('value', s => { if (s.val()) { usersList = s.val(); } });
+      firebaseDb.ref('pages_v50').on('value', s => { if (s.val()) { pagesList = s.val(); renderPage(currentPageId); renderSidebar(); } });
+      firebaseDb.ref('cards_v50').on('value', s => { if (s.val()) { dashCards = s.val(); if (currentPageId === 'home') renderPage('home'); } });
+      firebaseDb.ref('users_v50').on('value', s => { if (s.val()) { usersList = s.val(); } });
     }
 
     function initApp() {
@@ -782,7 +776,7 @@
       let targetList = usersList;
       if (firebaseDb && isCloudOnline) {
         try {
-          const snap = await firebaseDb.ref('users_v30').once('value');
+          const snap = await firebaseDb.ref('users_v50').once('value');
           if (snap.val()) targetList = snap.val();
         } catch(err) {}
       }
@@ -855,6 +849,33 @@
       }
     }
 
+    /* НАДЁЖНЫЙ КЛИК ПО КАРТОЧКЕ (ОТКРЫВАЕТ ИЛИ СОЗДАЕТ СТРАНИЦУ) */
+    function handleCardClick(cardId) {
+      const card = dashCards.find(c => c.id === cardId);
+      if (!card) return;
+
+      let targetPageId = card.pageId;
+
+      // Если карточка вела на саму главную страницу или страница удалена - создаем страницу на лету
+      if (!targetPageId || targetPageId === 'home' || !pagesList.some(p => p.id === targetPageId)) {
+        targetPageId = 'page_' + card.id.replace('c_', '');
+        pagesList.push({
+          id: targetPageId,
+          title: card.title,
+          category: 'general',
+          badge: 'Регламент',
+          blocks: [
+            { type: 'banner', title: 'Основное положение: ' + card.title, text: card.desc || 'Опишите стандарты и алгоритмы действий отделения...' }
+          ]
+        });
+        card.pageId = targetPageId;
+        syncToCloud('pages_v50', pagesList);
+        syncToCloud('cards_v50', dashCards);
+      }
+
+      openDoc(targetPageId);
+    }
+
     /* НАВИГАЦИЯ */
     function openDoc(pageId, isBackAction = false) {
       if (!isBackAction && currentPageId && currentPageId !== pageId) {
@@ -876,11 +897,10 @@
     /* ПРЕВРАЩЕНИЕ ТЕКСТА [Текст -> id] В КЛИКАБЕЛЬНЫЕ ССЫЛКИ */
     function parseInternalWikiLinks(rawText) {
       if (!rawText) return '';
-      // Регулярное выражение находит конструкцию вида [Текст ссылки -> target_id]
       return rawText.replace(/\[(.*?)->(.*?)\]/g, function(match, linkText, targetPageId) {
         const cleanText = linkText.trim();
         const cleanId = targetPageId.trim();
-        return `<a class="wiki-internal-link" onclick="event.preventDefault(); openDoc('${cleanId}')" title="Перейти на страницу">${cleanText} ↗</a>`;
+        return `<a class="wiki-internal-link" onclick="openDoc('${cleanId}')" title="Перейти на страницу">${cleanText} ↗</a>`;
       });
     }
 
@@ -892,7 +912,7 @@
       const temp = dashCards[index];
       dashCards[index] = dashCards[newIndex];
       dashCards[newIndex] = temp;
-      syncToCloud('cards_v30', dashCards);
+      syncToCloud('cards_v50', dashCards);
       renderPage('home');
     }
 
@@ -901,7 +921,6 @@
       const original = dashCards.find(c => c.id === cardId);
       if (!original) return;
 
-      // Создаем копию страницы
       const originalPage = pagesList.find(p => p.id === original.pageId) || { blocks: [] };
       const newPageId = 'page_' + Date.now();
       pagesList.push({
@@ -912,7 +931,6 @@
         blocks: JSON.parse(JSON.stringify(originalPage.blocks || []))
       });
 
-      // Создаем копию карточки
       const newCardId = 'card_' + Date.now();
       dashCards.push({
         id: newCardId,
@@ -923,8 +941,8 @@
         color: original.color
       });
 
-      syncToCloud('pages_v30', pagesList);
-      syncToCloud('cards_v30', dashCards);
+      syncToCloud('pages_v50', pagesList);
+      syncToCloud('cards_v50', dashCards);
       renderPage('home');
       renderSidebar();
     }
@@ -938,7 +956,7 @@
       const temp = page.blocks[index];
       page.blocks[index] = page.blocks[newIndex];
       page.blocks[newIndex] = temp;
-      syncToCloud('pages_v30', pagesList);
+      syncToCloud('pages_v50', pagesList);
       renderPage(currentPageId);
     }
 
@@ -948,7 +966,7 @@
       const copy = JSON.parse(JSON.stringify(page.blocks[index]));
       copy.title = (copy.title || '') + ' (Копия)';
       page.blocks.splice(index + 1, 0, copy);
-      syncToCloud('pages_v30', pagesList);
+      syncToCloud('pages_v50', pagesList);
       renderPage(currentPageId);
     }
 
@@ -961,7 +979,7 @@
       if (pageId === 'home') {
         const cardsHtml = dashCards.map((c, idx) => {
           const editTools = canEdit ? `
-            <div class="dash-card-actions">
+            <div class="dash-card-actions" onclick="event.stopPropagation();">
               <button class="card-tool-btn" title="Сдвинуть влево" onclick="moveCard(${idx}, -1, event)">◀</button>
               <button class="card-tool-btn" title="Сдвинуть вправо" onclick="moveCard(${idx}, 1, event)">▶</button>
               <button class="card-tool-btn" title="Копировать блок" onclick="duplicateCard('${c.id}', event)">📋</button>
@@ -971,7 +989,7 @@
           ` : '';
 
           return `
-            <div class="dash-card" onclick="openDoc('${c.pageId}')">
+            <div class="dash-card" onclick="handleCardClick('${c.id}')">
               ${editTools}
               <div class="dash-card-img" style="background:${c.color || 'var(--brand-blue)'};">${c.icon || '📌'}</div>
               <div class="dash-card-content">
@@ -1009,7 +1027,7 @@
 
       let blocksHtml = (page.blocks || []).map((b, idx) => {
         const editBlockTools = canEdit ? `
-          <div class="page-block-tools">
+          <div class="page-block-tools" onclick="event.stopPropagation();">
             <button class="card-tool-btn" title="Вверх" onclick="moveArticleBlock(${idx}, -1)">▲</button>
             <button class="card-tool-btn" title="Вниз" onclick="moveArticleBlock(${idx}, 1)">▼</button>
             <button class="card-tool-btn" title="Копировать пункт" onclick="duplicateArticleBlock(${idx})">📋</button>
@@ -1090,7 +1108,7 @@
 
     /* УПРАВЛЕНИЕ КАРТОЧКАМИ НА ГЛАВНОЙ */
     function populatePageSelect(selectEl, selectedPageId) {
-      selectEl.innerHTML = pagesList.map(p => `
+      selectEl.innerHTML = pagesList.filter(p => p.id !== 'home').map(p => `
         <option value="${p.id}" ${p.id === selectedPageId ? 'selected' : ''}>
           ${p.title} (${CATEGORIES[p.category] || p.category})
         </option>
@@ -1103,7 +1121,7 @@
       document.getElementById('modalTitleInput').value = '';
       document.getElementById('modalDescInput').value = '';
       document.getElementById('modalIconInput').value = '📌';
-      populatePageSelect(document.getElementById('modalPageSelect'), 'home');
+      populatePageSelect(document.getElementById('modalPageSelect'), '');
       document.getElementById('moduleModal').classList.add('active');
     }
 
@@ -1145,9 +1163,9 @@
           title: title,
           category: 'general',
           badge: 'Регламент',
-          blocks: [{ type: 'banner', title: 'Основное положение', text: 'Заполните содержание регламента...' }]
+          blocks: [{ type: 'banner', title: 'Основное положение: ' + title, text: desc || 'Заполните содержание регламента...' }]
         });
-        syncToCloud('pages_v30', pagesList);
+        syncToCloud('pages_v50', pagesList);
       }
 
       if (id) {
@@ -1157,7 +1175,7 @@
         dashCards.push({ id: 'card_' + Date.now(), title, desc, icon, pageId, color });
       }
 
-      syncToCloud('cards_v30', dashCards);
+      syncToCloud('cards_v50', dashCards);
       closeModuleModal();
       renderPage('home');
       renderSidebar();
@@ -1167,7 +1185,7 @@
       if (e) e.stopPropagation();
       if (confirm('Удалить эту карточку направления?')) {
         dashCards = dashCards.filter(c => c.id !== cardId);
-        syncToCloud('cards_v30', dashCards);
+        syncToCloud('cards_v50', dashCards);
         renderPage('home');
       }
     }
@@ -1199,16 +1217,16 @@
         blocks: [{ type: 'banner', title: 'Основное положение', text: 'Заполните инструкцию или алгоритм действий...' }]
       });
 
-      // Если выбрана привязка к карточке, сразу привязываем её к этой странице!
+      // Привязываем выбранную карточку к новой странице
       if (attachCardId !== 'none') {
         const card = dashCards.find(c => c.id === attachCardId);
         if (card) {
           card.pageId = newPageId;
-          syncToCloud('cards_v30', dashCards);
+          syncToCloud('cards_v50', dashCards);
         }
       }
 
-      syncToCloud('pages_v30', pagesList);
+      syncToCloud('pages_v50', pagesList);
       document.getElementById('pageRecordModal').classList.remove('active');
       renderSidebar();
       openDoc(newPageId);
@@ -1217,12 +1235,11 @@
     function deletePage(pageId) {
       if (confirm('Удалить эту страницу регламента?')) {
         pagesList = pagesList.filter(p => p.id !== pageId);
-        // Сбрасываем привязку у карточек, которые на неё вели
         dashCards.forEach(c => {
           if (c.pageId === pageId) c.pageId = 'home';
         });
-        syncToCloud('pages_v30', pagesList);
-        syncToCloud('cards_v30', dashCards);
+        syncToCloud('pages_v50', pagesList);
+        syncToCloud('cards_v50', dashCards);
         renderSidebar();
         openDoc('home');
       }
@@ -1288,7 +1305,7 @@
         page.blocks.push(newBlock);
       }
 
-      syncToCloud('pages_v30', pagesList);
+      syncToCloud('pages_v50', pagesList);
       closeArticleBlockModal();
       renderPage(currentPageId);
     }
@@ -1298,7 +1315,7 @@
       if (!page) return;
       if (confirm('Удалить этот пункт?')) {
         page.blocks.splice(idx, 1);
-        syncToCloud('pages_v30', pagesList);
+        syncToCloud('pages_v50', pagesList);
         renderPage(currentPageId);
       }
     }
@@ -1306,7 +1323,7 @@
     /* ПОМОЩНИК ВСТАВКИ ССЫЛКИ В ТЕКСТ */
     function openLinkHelperModal() {
       document.getElementById('helperLinkText').value = '';
-      populatePageSelect(document.getElementById('helperLinkTargetPage'), 'home');
+      populatePageSelect(document.getElementById('helperLinkTargetPage'), '');
       document.getElementById('linkHelperModal').classList.add('active');
     }
 
@@ -1348,7 +1365,7 @@
 
       if (!fullName || !username || !password || !email) return alert('Заполните все поля!');
       usersList.push({ id: 'u_' + Date.now(), fullName, email, username, password, role, roleName });
-      syncToCloud('users_v30', usersList);
+      syncToCloud('users_v50', usersList);
       document.getElementById('newUserModal').classList.remove('active');
       openUsersModal();
       alert('Сотрудник зарегистрирован!');
@@ -1357,7 +1374,7 @@
     function deleteUser(id) {
       if (confirm('Удалить сотрудника?')) {
         usersList = usersList.filter(u => u.id !== id);
-        syncToCloud('users_v30', usersList);
+        syncToCloud('users_v50', usersList);
         openUsersModal();
       }
     }
